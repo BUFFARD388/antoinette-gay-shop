@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import PhotoZoom from "./PhotoZoom";
 
 type Props = {
   photos: string[];
@@ -11,6 +12,8 @@ type Props = {
 // cliquables dès qu'il y a plusieurs photos (1 à 3 vues d'une même bouteille).
 // Avec une seule photo, les vignettes n'apparaissent pas — comportement
 // identique à l'ancien affichage à photo unique.
+// La grande photo s'agrandit en plein écran au clic (PhotoZoom, ajouté le
+// 02/09/2026) ; les vignettes, elles, changent seulement la photo affichée.
 export default function GalerieProduit({ photos, nom }: Props) {
   const [index, setIndex] = useState(0);
   const photoActive = photos[index] ?? photos[0];
@@ -18,8 +21,7 @@ export default function GalerieProduit({ photos, nom }: Props) {
   return (
     <div>
       <div style={visuelPhoto}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={photoActive} alt={nom} style={imgPhoto} />
+        <PhotoZoom src={photoActive} alt={nom} style={imgPhoto} />
       </div>
 
       {photos.length > 1 && (

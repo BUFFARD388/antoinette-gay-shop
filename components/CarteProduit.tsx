@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { type Produit } from "@/lib/produits";
 import Sceau from "./Sceau";
+import PhotoZoom from "./PhotoZoom";
 
 type Props = {
   produit: Produit;
@@ -13,6 +14,8 @@ type Props = {
 // Pas de vraie photo produit pour l'instant (public/images est vide) : on
 // affiche le sceau de la Maison sur fond couleur plutot qu'une image cassee.
 // Des que tu as de vraies photos, remplace ce bloc par <Image src={produit.image} ... />.
+// Quand une photo existe, elle s'agrandit en plein écran au clic (PhotoZoom,
+// ajouté le 02/09/2026, à la demande de Laurent).
 export default function CarteProduit({ produit, quantite, compteur, onAjouter, onRetirer }: Props) {
   const pourcentage =
     produit.editionLimitee !== null
@@ -25,8 +28,7 @@ export default function CarteProduit({ produit, quantite, compteur, onAjouter, o
     <div style={carte}>
       <div style={premierePhoto ? visuelPhoto : visuel}>
         {premierePhoto ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={premierePhoto} alt={produit.nom} style={imgPhoto} />
+          <PhotoZoom src={premierePhoto} alt={produit.nom} style={imgPhoto} />
         ) : (
           <Sceau taille={64} couleur="#F3ECDA" />
         )}
