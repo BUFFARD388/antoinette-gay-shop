@@ -7,20 +7,48 @@
 // Dénomination définitive confirmée par Laurent le 23/08/2026 (remplace les
 // noms d'étiquette "Fragola — Vendange Tardive" / "Rhubarbe" / "Vestiges") :
 //   Cuvée I   — Le Jardin de l'Angélique (permanente, au raisin fragola)
-//   Cuvée II  — Cuvée Rhubarbe (saisonnière, printemps/été)
-//   Cuvée III — Le Gin de Noël (éphémère, hiver)
-// Les slugs techniques (fragola/rhubarbe/vestiges) n'ont pas changé, seuls
-// le nom affiché et la mention de statut évoluent.
+//   Cuvée II  — anciennement "Cuvée Rhubarbe", renommée "Le Secret
+//               d'Antoinette" le 02/09/2026 (voir plus bas).
+//   Cuvée III — anciennement "Le Gin de Noël" puis "Cuvée Décembre",
+//               renommée "Le Vœu de Fourvière" le 02/09/2026 (voir plus bas).
 //
 // Correction du 23/08/2026 : la description et les ingrédients de la
-// Cuvée III (Gin de Noël) mentionnaient à tort un genièvre au whisky
-// tourbé. Laurent a précisé la vraie recette : épices douces (très
-// puissantes), genièvre poussé au maximum, et pomme pour la gourmandise.
+// Cuvée III mentionnaient à tort un genièvre au whisky tourbé. Laurent a
+// précisé la vraie recette : épices douces (très puissantes), genièvre
+// poussé au maximum, et pomme pour la gourmandise. Cette recette n'a pas
+// changé depuis.
 //
-// Prix (42€/70cl, 49€/coffret) et éditions limitées (100 par cuvée, 100
-// coffrets) confirmés par Laurent. stripePriceId n'est pas utilisé pendant
-// la phase précommande (aucun paiement n'est pris) : il resservira au vrai
-// lancement 2027 quand la boutique passera en paiement Stripe.
+// Renommage du 02/09/2026, en deux temps, pendant que Laurent travaille sur
+// les étiquettes définitives :
+//
+// 1) Cuvée III : Laurent souhaite mettre moins en avant "Noël" et
+//    davantage le vœu fait par les Lyonnais à Notre-Dame de Fourvière (juste
+//    au-dessus du Passage Gay), tenu chaque 8 décembre en allumant des
+//    lumignons aux fenêtres — la Fête des Lumières. Après un premier essai
+//    "Cuvée Décembre", le nom retenu est "Le Vœu de Fourvière", qui garde aussi
+//    la dimension épices/pomme/gourmandise de la recette. Le slug technique
+//    passe de "vestiges" à "decembre" (mis à jour aussi dans
+//    app/notre-histoire/page.tsx et le coffret ci-dessous) ; recette
+//    inchangée.
+//
+// 2) Cuvée II : rebaptisée "Le Secret d'Antoinette" (à la place de "Cuvée
+//    Rhubarbe"), en écho au fait que c'est la cuvée préférée de Laurent en
+//    dégustation. Au passage, correction d'une incohérence géographique :
+//    la description situait le jardin à l'Ouest lyonnais, alors que
+//    l'ACCROCHE du site (lib/config.ts) et l'adresse réelle de la Maison
+//    (Neuville-sur-Saône) situent bien la Maison au nord de Lyon — corrigé
+//    ici et dans app/notre-histoire/page.tsx. Slug technique inchangé
+//    ("rhubarbe").
+//
+// Le même jour, Laurent a précisé les quantités définitives pour l'année
+// 2027 : 100 bouteilles par cuvée (déjà en place ci-dessous) et 50
+// coffrets "Coffret Découverte" (le coffret garde son nom, seule sa
+// editionLimitee passe de 100 à 50).
+//
+// Prix : 42€/70cl, coffret passé de 49€ à 59€ le 02/09/2026 (confirmés par Laurent). stripePriceId n'est
+// pas utilisé pendant la phase précommande (aucun paiement n'est pris) :
+// il resservira au vrai lancement 2027 quand la boutique passera en
+// paiement Stripe.
 //
 // `signature` reprend, mot pour mot, la phrase de clôture propre à chaque
 // cuvée telle qu'imprimée au dos de la bouteille (couleur reprise de
@@ -49,7 +77,7 @@ export type Produit = {
   categorie: string; // ex: "Gin aromatisé" — la famille de spiritueux, affichée à côté de la cuvée
   ingredients: string; // ex: "Raisin fragola rouge et genièvre" — repris du recto de l'étiquette
   description: string;
-  prix: number; // en centimes — confirmé (42€/70cl, 49€/coffret)
+  prix: number; // en centimes — 42€/70cl, coffret 59€ (mis à jour le 02/09/2026)
   stripePriceId: string; // pour le vrai lancement 2027, pas utilisé en précommande
   image: string;
   degre: number;
@@ -107,13 +135,13 @@ export const produits: Produit[] = [
   },
   {
     slug: "rhubarbe",
-    nom: "Cuvée Rhubarbe",
+    nom: "Le Secret d'Antoinette",
     cuvee: "Cuvée II",
     mention: "Le saisonnier — printemps / été",
     categorie: "Gin aromatisé",
     ingredients: "Rhubarbe et genièvre",
     description:
-      "Gin distillé à la rhubarbe et au genièvre. La fraîcheur acidulée d'un jardin de l'Ouest lyonnais — le même Ouest lyonnais où poussait déjà, un siècle plus tôt, celui d'Antoinette.",
+      "Gin distillé à la rhubarbe et au genièvre. La fraîcheur acidulée d'un jardin au nord de Lyon — le même nord lyonnais où poussait déjà, un siècle plus tôt, celui d'Antoinette.",
     prix: 4200,
     stripePriceId: "price_REMPLACER_RHUBARBE",
     image: "/images/rhubarbe.jpg",
@@ -128,7 +156,7 @@ export const produits: Produit[] = [
     // photographiée. Celle-ci correspond déjà à la bonne cuvée.
     photos: ["/images/bouteille-antoinette-gay.jpg", "/images/bouchon-sceau-ag.jpg"],
     signature: {
-      texte: "Aujourd'hui, c'est un jardin de ce même Ouest lyonnais qui prête sa fraîcheur à cette cuvée.",
+      texte: "Aujourd'hui, c'est un jardin de ce même nord lyonnais qui prête sa fraîcheur à cette cuvée.",
       couleur: "#a23b56",
     },
     ginTonic: {
@@ -143,17 +171,17 @@ export const produits: Produit[] = [
     },
   },
   {
-    slug: "vestiges",
-    nom: "Le Gin de Noël",
+    slug: "decembre",
+    nom: "Le Vœu de Fourvière",
     cuvee: "Cuvée III",
-    mention: "L'éphémère d'hiver",
+    mention: "Le 8 décembre, Fête des Lumières",
     categorie: "Gin aromatisé",
     ingredients: "Épices douces, pomme et genièvre",
     description:
-      "Un gin de Noël aux épices douces très puissantes, où le genièvre est poussé au maximum. La pomme apporte la gourmandise pour en faire un gin chaleureux.",
+      "Un gin aux épices douces très puissantes, où le genièvre est poussé au maximum. La pomme apporte la gourmandise pour en faire un gin chaleureux, pensé pour les soirées du 8 décembre, quand Lyon s'illumine pour la Fête des Lumières.",
     prix: 4200,
-    stripePriceId: "price_REMPLACER_VESTIGES",
-    image: "/images/vestiges.jpg",
+    stripePriceId: "price_REMPLACER_DECEMBRE",
+    image: "/images/decembre.jpg",
     degre: 42,
     format: "70cl",
     type: "cuvee",
@@ -163,22 +191,22 @@ export const produits: Produit[] = [
     // et bouchon en cire rose au sceau AG, fournies par Laurent — réutilisées
     // pour les 3 cuvées en attendant que chacune ait sa propre bouteille
     // photographiée. L'étiquette visible ("RHUBARBE") ne correspond donc pas
-    // encore à cette fiche Gin de Noël : à remplacer dès que possible.
+    // encore à cette fiche Le Vœu de Fourvière : à remplacer dès que possible.
     photos: ["/images/bouteille-antoinette-gay.jpg", "/images/bouchon-sceau-ag.jpg"],
     signature: {
       texte:
-        "Comme les fragments antiques qu'il exposait sur son promontoire, cette cuvée porte un goût d'ailleurs, façonné ici.",
+        "Chaque 8 décembre, Lyon pose un lumignon à ses fenêtres en mémoire du vœu fait à Notre-Dame de Fourvière, tout près du Passage Gay.",
       couleur: "#3f4a4a",
     },
     ginTonic: {
       titre: "Le Tonic des Lumières",
       recette:
-        "4 cl de Gin de Noël, 12 cl de tonic premium neutre, beaucoup de glaçons. En garniture : une étoile de badiane (anis étoilé) ou un bâton de cannelle.",
+        "4 cl de Vœu de Fourvière, 12 cl de tonic premium neutre, beaucoup de glaçons. En garniture : une étoile de badiane (anis étoilé) ou un bâton de cannelle.",
     },
     cocktail: {
       titre: "Le Royal 8 Décembre",
       recette:
-        "3 cl de Gin de Noël, 1 cl de jus de citron jaune, 1 cl de sirop de sucre, à allonger au crémant de Bourgogne ou au champagne.",
+        "3 cl de Vœu de Fourvière, 1 cl de jus de citron jaune, 1 cl de sirop de sucre, à allonger au crémant de Bourgogne ou au champagne.",
     },
   },
   {
@@ -186,18 +214,18 @@ export const produits: Produit[] = [
     nom: "Coffret Découverte",
     cuvee: "Les trois cuvées",
     categorie: "Coffret de gins aromatisés",
-    ingredients: "Jardin de l'Angélique, Rhubarbe, Gin de Noël",
+    ingredients: "Le Jardin de l'Angélique, Le Secret d'Antoinette, Le Vœu de Fourvière",
     description:
-      "Les trois cuvées de la Maison en format 20cl, pour découvrir l'ensemble de la première série — Le Jardin de l'Angélique, Cuvée Rhubarbe, Le Gin de Noël.",
-    prix: 4900,
+      "Les trois cuvées de la Maison en format 20cl, pour découvrir l'ensemble de la première série — Le Jardin de l'Angélique, Le Secret d'Antoinette, Le Vœu de Fourvière.",
+    prix: 5900,
     stripePriceId: "price_REMPLACER_COFFRET",
     image: "/images/coffret-decouverte.jpg",
     degre: 42,
     format: "3 x 20cl",
     type: "coffret",
-    editionLimitee: 100,
+    editionLimitee: 50,
     accent: "#1F3D2E",
-    cuveesIncluses: ["fragola", "rhubarbe", "vestiges"],
+    cuveesIncluses: ["fragola", "rhubarbe", "decembre"],
     // Vraie photo (25/08/2026) : le coffret 3 bouteilles vu de dessus,
     // recadrée par Claude pour retirer la table en bois autour du carton
     // (fournie par Laurent, bouteilles encore vides sur cette prise de vue).

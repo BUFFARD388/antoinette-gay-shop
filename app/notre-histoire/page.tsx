@@ -45,8 +45,9 @@ const GALERIE = [
 
 // Résumés punchy par cuvée pour cette page (distincts de `signature` dans
 // lib/produits.ts, qui reste la phrase de clôture imprimée au dos de la
-// bouteille — celle-ci n'a pas changé et reste affichée sur les fiches
-// produit). Texte fourni par Laurent le 23/08/2026.
+// bouteille). Texte fourni par Laurent le 23/08/2026, mis à jour le
+// 02/09/2026 suite au renommage Cuvée II "Le Secret d'Antoinette" (et
+// correction Ouest → nord de Lyon) et Cuvée III "Le Vœu de Fourvière".
 const CUVEES_RESUME = [
   {
     slug: "fragola",
@@ -54,11 +55,11 @@ const CUVEES_RESUME = [
   },
   {
     slug: "rhubarbe",
-    texte: "La fraîcheur brute d'un jardin secret de l'Ouest lyonnais.",
+    texte: "La fraîcheur brute d'un jardin secret au nord de Lyon.",
   },
   {
-    slug: "vestiges",
-    texte: "Un goût d'ailleurs façonné ici, inspiré des objets antiques exposés par Pierre Gay sur sa colline.",
+    slug: "decembre",
+    texte: "Un hommage au vœu fait à Notre-Dame de Fourvière, tout près du Passage Gay, que Lyon célèbre chaque 8 décembre.",
   },
 ];
 
@@ -280,3 +281,4 @@ const periodeEtape: React.CSSProperties = {
   textTransform: "uppercase",
   color: "#93670f",
 };
+
