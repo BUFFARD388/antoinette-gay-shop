@@ -11,9 +11,7 @@ export const EMAIL_CONTACT = "laurent-buffard@wanadoo.fr";
 export const TELEPHONE_CONTACT = "06 87 76 33 40";
 export const ADRESSE_MAISON = "18, avenue Carnot, 69250 Neuville-sur-Saône";
 export const DIRECTEUR_PUBLICATION = "Laurent Buffard";
-export const NOM_DOMAINE = "www.maisonantoinettegay.fr";
 
-export const NOM_DOMAINE = "www.maisonantoinettegay.fr";
 
 export const SIREN = "401 801 204";
 
@@ -23,3 +21,5 @@ export const HEBERGEUR_ADRESSE = "440 N Barranca Ave #4133, Covina, CA 91723, É
 export const FRAIS_PORT = 900;
 
 export const SEUIL_PORT_GRATUIT = 2;
+export const NOM_DOMAINE = "www.maisonantoinettegay.fr";
+export const URL_SITE = `https://${NOM_DOMAINE}`;
