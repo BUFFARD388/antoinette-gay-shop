@@ -5,7 +5,7 @@ import {
   ADRESSE_MAISON,
   DIRECTEUR_PUBLICATION,
   NOM_DOMAINE,
-  SIRET,
+  SIREN,
   HEBERGEUR_NOM,
   HEBERGEUR_ADRESSE,
 } from "@/lib/config";
@@ -19,9 +19,11 @@ export const metadata = {
 // générale des douanes et droits indirects, LCEN/SREN) citées en bas de page.
 //
 // Coordonnées de l'éditeur (lib/config.ts) fournies par Laurent le
-// 23/08/2026. Deux points à vérifier avec lui avant l'ouverture publique :
-//   - SIRET donné ("40180120") ne fait que 8 chiffres — un SIRET français
-//     en compte normalement 14 (SIREN 9 + NIC 5).
+// 23/08/2026. Le SIREN (401 801 204) a été confirmé le 26/08/2026 par le
+// compte-rendu d'entretien avec les douanes ; Laurent a précisé que seul le
+// SIREN (9 chiffres) est obligatoire dans les mentions légales, pas le
+// SIRET complet (14 chiffres) — c'est donc le SIREN qui est affiché.
+// Reste à vérifier avec Laurent avant l'ouverture publique :
 //   - Forme juridique et numéro RCS n'ont pas été fournis : à ajouter une
 //     fois la structure juridique de la Maison immatriculée (le champ reste
 //     marqué [À COMPLÉTER] ci-dessous).
@@ -100,7 +102,7 @@ export default function PageReglementation() {
           <li>
             <strong>Éditeur du site</strong> — {NOM_MAISON}, {DIRECTEUR_PUBLICATION}. Forme juridique
             et numéro RCS : [À COMPLÉTER] une fois la structure juridique de la Maison immatriculée.
-            SIRET : {SIRET}. Adresse : {ADRESSE_MAISON}.
+            SIREN : {SIREN}. Adresse : {ADRESSE_MAISON}.
           </li>
           <li>
             <strong>Directeur de la publication</strong> — {DIRECTEUR_PUBLICATION}.
