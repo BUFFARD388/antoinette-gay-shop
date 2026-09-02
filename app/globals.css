@@ -1,0 +1,14 @@
+/* Polices auto-hébergées via @fontsource (aucune requête vers Google Fonts,
+   fonctionne même dans des environnements au réseau restreint). */
+@import "@fontsource/fraunces/400.css";
+@import "@fontsource/fraunces/500.css";
+@import "@fontsource/fraunces/600.css";
+@import "@fontsource/fraunces/400-italic.css";
+@import "@fontsource/work-sans/400.css";
+@import "@fontsource/work-sans/500.css";
+@import "@fontsource/work-sans/600.css";
+
+:root {
+  --font-display: "Fraunces", Georgia, serif;
+  --font-ui: "Work Sans", Arial, sans-serif;
+}
