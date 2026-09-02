@@ -50,6 +50,20 @@
 // il resservira au vrai lancement 2027 quand la boutique passera en
 // paiement Stripe.
 //
+// Mentions (phrase courte sous le nom) revues le 02/09/2026 :
+//   Cuvée I  — "Permanent au raisin fragola" → "Fragola de notre jardin".
+//     Laurent a précisé que le fragola n'est pas un choix générique : ce
+//     sont ses propres pieds de fragola (rouge et blanc) dans son jardin,
+//     et le rouge (utilisé pour cette cuvée) apporte un vrai goût de fraise
+//     des bois — plus marqué que le blanc. Description enrichie en
+//     conséquence ("de notre jardin", "goût de fraise des bois"). Le blanc
+//     n'est pas utilisé dans cette cuvée (récolte 2026 abondante en blanc,
+//     mais pas assez typé ; la cuvée 2027 sera bien au fragola rouge).
+//   Cuvée II — "Le saisonnier — printemps / été" → "Le secret du
+//     printemps". Laurent a confirmé au passage que le "jardin au nord de
+//     Lyon" mentionné dans la description est bien son propre jardin (pas
+//     une image).
+//
 // `signature` reprend, mot pour mot, la phrase de clôture propre à chaque
 // cuvée telle qu'imprimée au dos de la bouteille (couleur reprise de
 // l'étiquette). `accent` est la couleur d'accent de la cuvée, également
@@ -98,11 +112,11 @@ export const produits: Produit[] = [
     slug: "fragola",
     nom: "Le Jardin de l'Angélique",
     cuvee: "Cuvée I",
-    mention: "Permanent au raisin fragola",
+    mention: "Fragola de notre jardin",
     categorie: "Gin aromatisé",
     ingredients: "Raisin fragola rouge et genièvre",
     description:
-      "Gin distillé à partir de raisin fragola rouge vendangé tardivement et de genièvre. Un clin d'œil aux « cures de raisin » qu'inventait déjà Pierre Gay sur la colline de Fourvière, il y a plus d'un siècle.",
+      "Gin distillé à partir de raisin fragola rouge de notre jardin, vendangé tardivement, et de genièvre — une variété rare qui apporte un vrai goût de fraise des bois. Un clin d'œil aux « cures de raisin » qu'inventait déjà Pierre Gay sur la colline de Fourvière, il y a plus d'un siècle.",
     prix: 4200,
     stripePriceId: "price_REMPLACER_FRAGOLA",
     image: "/images/fragola.jpg",
@@ -137,7 +151,7 @@ export const produits: Produit[] = [
     slug: "rhubarbe",
     nom: "Le Secret d'Antoinette",
     cuvee: "Cuvée II",
-    mention: "Le saisonnier — printemps / été",
+    mention: "Le secret du printemps",
     categorie: "Gin aromatisé",
     ingredients: "Rhubarbe et genièvre",
     description:
