@@ -9,6 +9,7 @@ const LIENS = [
   { href: "/#cuvees", label: "Nos cuvées" },
   { href: "/notre-histoire", label: "Notre Histoire" },
   { href: "/reglementation", label: "Réglementation" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export default function EnTete() {

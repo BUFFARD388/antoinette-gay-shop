@@ -1,7 +1,11 @@
 import Link from "next/link";
-import { NOM_MAISON, EMAIL_CONTACT } from "@/lib/config";
+import { NOM_MAISON, TELEPHONE_CONTACT } from "@/lib/config";
 import Sceau from "./Sceau";
 
+// Le lien "Contact" pointait autrefois directement vers un mailto — il mène
+// désormais vers app/contact/page.tsx (créée le 02/09/2026 sur demande de
+// Laurent), qui affiche téléphone et email. Le téléphone est aussi repris
+// ici en clair, pour rester visible sans clic supplémentaire.
 export default function Pied() {
   return (
     <footer style={pied}>
@@ -15,12 +19,15 @@ export default function Pied() {
         <Link href="/reglementation" style={lien}>
           Réglementation &amp; mentions légales
         </Link>
-        <a href={`mailto:${EMAIL_CONTACT}`} style={lien}>
+        <Link href="/contact" style={lien}>
           Contact
-        </a>
+        </Link>
       </nav>
       <p style={{ margin: "4px 0" }}>
         {NOM_MAISON} — Distillerie artisanale, au nord de Lyon.
+      </p>
+      <p style={{ margin: "4px 0" }}>
+        Une question ? <a href={`tel:${TELEPHONE_CONTACT.replace(/\s/g, "")}`} style={lien}>{TELEPHONE_CONTACT}</a>
       </p>
       <p style={{ margin: "4px 0" }}>
         Recettes, visuels et prix indicatifs, susceptibles d&apos;évoluer avant le lancement définitif.
