@@ -6,6 +6,7 @@ import PhotoZoom from "./PhotoZoom";
 type Props = {
   photos: string[];
   nom: string;
+  genereParIA?: boolean; // affiche une mention "Visuel généré par IA" (transparence, ajouté le 03/09/2026)
 };
 
 // Galerie de la page produit : une grande photo + une rangée de vignettes
@@ -14,14 +15,15 @@ type Props = {
 // identique à l'ancien affichage à photo unique.
 // La grande photo s'agrandit en plein écran au clic (PhotoZoom, ajouté le
 // 02/09/2026) ; les vignettes, elles, changent seulement la photo affichée.
-export default function GalerieProduit({ photos, nom }: Props) {
+export default function GalerieProduit({ photos, nom, genereParIA }: Props) {
   const [index, setIndex] = useState(0);
   const photoActive = photos[index] ?? photos[0];
 
   return (
     <div>
-      <div style={visuelPhoto}>
+      <div style={{ position: "relative", ...visuelPhoto }}>
         <PhotoZoom src={photoActive} alt={nom} style={imgPhoto} />
+        {genereParIA && <span style={badgeIA}>Visuel généré par IA</span>}
       </div>
 
       {photos.length > 1 && (
@@ -59,6 +61,20 @@ const imgPhoto: React.CSSProperties = {
   maxHeight: "88%",
   objectFit: "contain",
   display: "block",
+};
+
+// Même mention de transparence que sur les cartes de la page d'accueil
+// (composants/CarteProduit.tsx) — voir le commentaire là-bas.
+const badgeIA: React.CSSProperties = {
+  position: "absolute",
+  bottom: 10,
+  right: 10,
+  fontSize: 11,
+  letterSpacing: 0.3,
+  color: "#fff",
+  background: "rgba(31, 61, 46, 0.72)",
+  padding: "4px 9px",
+  borderRadius: 2,
 };
 
 const vignettesRangee: React.CSSProperties = {

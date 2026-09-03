@@ -54,6 +54,7 @@ export default function PageProduit({ params }: { params: { slug: string } }) {
     <main style={{ maxWidth: 760, margin: "0 auto", padding: "24px 24px 80px" }}>
       <script
         type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdProduit) }}
       />
       <Link href="/#cuvees" style={retour}>
@@ -62,7 +63,7 @@ export default function PageProduit({ params }: { params: { slug: string } }) {
 
       <div style={{ display: "grid", gridTemplateColumns: "220px 1fr", gap: 32, marginTop: 24 }}>
         {produit.photos && produit.photos.length > 0 ? (
-          <GalerieProduit photos={produit.photos} nom={produit.nom} />
+          <GalerieProduit photos={produit.photos} nom={produit.nom} genereParIA={produit.photosGenereesParIA} />
         ) : (
           <div style={visuel}>
             <Sceau taille={100} couleur="#F3ECDA" />

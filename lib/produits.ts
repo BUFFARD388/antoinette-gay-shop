@@ -102,6 +102,7 @@ export type Produit = {
   signature?: Signature; // phrase de clôture au dos de l'étiquette, propre à cette cuvée
   photos?: string[]; // vraies photos de la bouteille (public/images/...), 1 à 3 vues — sinon on affiche le sceau.
   // La 1ère sert de photo de carte ; sur la page produit, toutes s'affichent en galerie avec vignettes dès qu'il y en a plus d'une.
+  photosGenereesParIA?: boolean; // true si `photos` contient des visuels générés par IA (pas de vraie photo) — affiche une mention à côté de l'image, obligation de transparence.
   cuveesIncluses?: string[]; // slugs des cuvées incluses, pour un coffret
   ginTonic?: SuggestionDegustation;
   cocktail?: SuggestionDegustation;
@@ -125,12 +126,15 @@ export const produits: Produit[] = [
     type: "cuvee",
     editionLimitee: 100,
     accent: "#b9821c",
-    // Vraies photos (25/08/2026) : bouteille étiquetée "Cuvée II Rhubarbe"
-    // et bouchon en cire rose au sceau AG, fournies par Laurent — réutilisées
-    // pour les 3 cuvées en attendant que chacune ait sa propre bouteille
-    // photographiée. L'étiquette visible ("RHUBARBE") ne correspond donc pas
-    // encore à cette fiche Fragola : à remplacer dès que possible.
-    photos: ["/images/bouteille-antoinette-gay.jpg", "/images/bouchon-sceau-ag.jpg"],
+    // Photo générique retirée le 03/09/2026 (voir historique plus bas dans
+    // le fichier), puis remplacée le 03/09/2026 par un visuel généré par IA
+    // fourni par Laurent (mise en scène avec étiquette provisoire) en
+    // attendant la vraie photo de la bouteille étiquetée. `photosGenereesParIA`
+    // affiche une mention à côté de l'image sur le site — transparence
+    // vis-à-vis des visiteurs. À remplacer par une vraie photo dès qu'elle
+    // existe (retirer aussi `photosGenereesParIA` à ce moment-là).
+    photos: ["/images/fragola-ia.jpg"],
+    photosGenereesParIA: true,
     signature: {
       texte:
         "Plus d'un siècle après ses cures de raisin, nous redistillons à notre tour le fruit de la première récolte de ce terroir.",
@@ -164,11 +168,10 @@ export const produits: Produit[] = [
     type: "cuvee",
     editionLimitee: 100,
     accent: "#a23b56",
-    // Vraies photos (25/08/2026) : bouteille étiquetée "Cuvée II Rhubarbe"
-    // et bouchon en cire rose au sceau AG, fournies par Laurent — réutilisées
-    // pour les 3 cuvées en attendant que chacune ait sa propre bouteille
-    // photographiée. Celle-ci correspond déjà à la bonne cuvée.
-    photos: ["/images/bouteille-antoinette-gay.jpg", "/images/bouchon-sceau-ag.jpg"],
+    // Visuel IA le 03/09/2026 (voir le même commentaire sur la Cuvée I
+    // ci-dessus) : à remplacer par une vraie photo dès qu'elle existe.
+    photos: ["/images/rhubarbe-ia.jpg"],
+    photosGenereesParIA: true,
     signature: {
       texte: "Aujourd'hui, c'est un jardin de ce même nord lyonnais qui prête sa fraîcheur à cette cuvée.",
       couleur: "#a23b56",
@@ -201,12 +204,10 @@ export const produits: Produit[] = [
     type: "cuvee",
     editionLimitee: 100,
     accent: "#3f4a4a",
-    // Vraies photos (25/08/2026) : bouteille étiquetée "Cuvée II Rhubarbe"
-    // et bouchon en cire rose au sceau AG, fournies par Laurent — réutilisées
-    // pour les 3 cuvées en attendant que chacune ait sa propre bouteille
-    // photographiée. L'étiquette visible ("RHUBARBE") ne correspond donc pas
-    // encore à cette fiche Le Vœu de Fourvière : à remplacer dès que possible.
-    photos: ["/images/bouteille-antoinette-gay.jpg", "/images/bouchon-sceau-ag.jpg"],
+    // Visuel IA le 03/09/2026 (voir le même commentaire sur la Cuvée I
+    // ci-dessus) : à remplacer par une vraie photo dès qu'elle existe.
+    photos: ["/images/decembre-ia.jpg"],
+    photosGenereesParIA: true,
     signature: {
       texte:
         "Chaque 8 décembre, Lyon pose un lumignon à ses fenêtres en mémoire du vœu fait à Notre-Dame de Fourvière, tout près du Passage Gay.",
@@ -240,10 +241,10 @@ export const produits: Produit[] = [
     editionLimitee: 50,
     accent: "#1F3D2E",
     cuveesIncluses: ["fragola", "rhubarbe", "decembre"],
-    // Vraie photo (25/08/2026) : le coffret 3 bouteilles vu de dessus,
-    // recadrée par Claude pour retirer la table en bois autour du carton
-    // (fournie par Laurent, bouteilles encore vides sur cette prise de vue).
-    photos: ["/images/coffret-decouverte-detoure.jpg"],
+    // Photo retirée le 03/09/2026 (même raison que les 3 cuvées ci-dessus :
+    // bouteilles encore vides sur la prise de vue, sans les vraies
+    // étiquettes) : retombe sur le sceau de la Maison en attendant la
+    // vraie photo du coffret complet.
   },
 ];
 

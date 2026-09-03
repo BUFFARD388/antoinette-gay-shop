@@ -26,11 +26,14 @@ export default function CarteProduit({ produit, quantite, compteur, onAjouter, o
 
   return (
     <div style={carte}>
-      <div style={premierePhoto ? visuelPhoto : visuel}>
+      <div style={{ position: "relative", ...(premierePhoto ? visuelPhoto : visuel) }}>
         {premierePhoto ? (
           <PhotoZoom src={premierePhoto} alt={produit.nom} style={imgPhoto} />
         ) : (
           <Sceau taille={64} couleur="#F3ECDA" />
+        )}
+        {premierePhoto && produit.photosGenereesParIA && (
+          <span style={badgeIA}>Visuel généré par IA</span>
         )}
       </div>
 
@@ -121,6 +124,22 @@ const imgPhoto: React.CSSProperties = {
   maxHeight: "88%",
   objectFit: "contain",
   display: "block",
+};
+
+// Mention de transparence ajoutée le 03/09/2026 : Laurent utilise des
+// visuels générés par IA en attendant les vraies photos des bouteilles
+// étiquetées. Affichée directement sur l'image, là où elle est la plus
+// utile (pas seulement dans les mentions légales).
+const badgeIA: React.CSSProperties = {
+  position: "absolute",
+  bottom: 8,
+  right: 8,
+  fontSize: 10.5,
+  letterSpacing: 0.3,
+  color: "#fff",
+  background: "rgba(31, 61, 46, 0.72)",
+  padding: "3px 8px",
+  borderRadius: 2,
 };
 
 const ligneSignature: React.CSSProperties = {
