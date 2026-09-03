@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { produits, getProduitBySlug } from "@/lib/produits";
 import Sceau from "@/components/Sceau";
 import GalerieProduit from "@/components/GalerieProduit";
+import { NOM_MAISON, URL_SITE } from "@/lib/config";
 
 export function generateStaticParams() {
   return produits.map((p) => ({ slug: p.slug }));
@@ -12,8 +13,17 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
   const produit = getProduitBySlug(params.slug);
   if (!produit) return {};
   return {
-    title: `${produit.nom} — Maison Antoinette Gay`,
+    title: `${produit.nom} — Gin artisanal ${produit.cuvee} | ${NOM_MAISON}`,
     description: produit.description,
+    alternates: {
+      canonical: `/produits/${produit.slug}`,
+    },
+    openGraph: {
+      title: `${produit.nom} — ${NOM_MAISON}`,
+      description: produit.description,
+      url: `${URL_SITE}/produits/${produit.slug}`,
+      images: produit.photos && produit.photos.length > 0 ? [{ url: produit.photos[0] }] : undefined,
+    },
   };
 }
 
@@ -25,8 +35,27 @@ export default function PageProduit({ params }: { params: { slug: string } }) {
     ?.map((slug) => getProduitBySlug(slug))
     .filter((p): p is NonNullable<typeof p> => Boolean(p));
 
+  const jsonLdProduit = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: produit.nom,
+    description: produit.description,
+    image: produit.photos,
+    brand: { "@type": "Brand", name: "Maison Antoinette Gay" },
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "EUR",
+      price: (produit.prix / 100).toFixed(2),
+      availability: "https://schema.org/PreOrder",
+    },
+  };
+
   return (
     <main style={{ maxWidth: 760, margin: "0 auto", padding: "24px 24px 80px" }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdProduit) }}
+      />
       <Link href="/#cuvees" style={retour}>
         ← Retour aux cuvées
       </Link>
