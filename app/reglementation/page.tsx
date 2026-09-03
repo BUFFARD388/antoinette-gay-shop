@@ -13,6 +13,9 @@ import {
 export const metadata = {
   title: `Réglementation & mentions légales — ${NOM_MAISON}`,
   description: "Cadre légal de la vente d'alcool en ligne et mentions légales du site.",
+  alternates: {
+    canonical: "/reglementation",
+  },
 };
 
 // Contenu informatif, pas un avis juridique. Sources principales (Direction
