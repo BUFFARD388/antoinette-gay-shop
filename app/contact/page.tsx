@@ -5,6 +5,9 @@ import Sceau from "@/components/Sceau";
 export const metadata = {
   title: `Contact — ${NOM_MAISON}`,
   description: "Une question sur une cuvée, ta précommande ou la Maison ? Laurent te répond directement, par téléphone ou par email.",
+  alternates: {
+    canonical: "/contact",
+  },
 };
 
 // Page créée le 02/09/2026 sur demande de Laurent, qui souhaitait un numéro
