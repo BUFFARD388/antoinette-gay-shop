@@ -3,10 +3,17 @@ import { NOM_MAISON } from "@/lib/config";
 import { getProduitBySlug } from "@/lib/produits";
 import Sceau from "@/components/Sceau";
 
+// Titre enrichi le 02/09/2026 pour le référencement (recherches "Passage
+// Gay", "Tour Métallique de Lyon", "Fourvière") — la description contenait
+// déjà "Fourvière" mais pas "Passage Gay" ni "Tour Métallique", pourtant
+// très présents dans le texte réel de la page ci-dessous.
 export const metadata = {
-  title: `Notre Histoire — ${NOM_MAISON}`,
+  title: `Du Passage Gay à la Tour Métallique de Lyon — Notre Histoire | ${NOM_MAISON}`,
   description:
-    "1861, la colline de Fourvière, un jardin nommé l'Angélique, et quatre générations plus tard, une distillerie. L'histoire vraie derrière Maison Antoinette Gay.",
+    "1861, la colline de Fourvière et le Passage Gay, tout près de la Tour Métallique de Lyon : l'histoire vraie derrière Maison Antoinette Gay, quatre générations plus tard.",
+  alternates: {
+    canonical: "/notre-histoire",
+  },
 };
 
 // Page restructurée en 4 parties le 23/08/2026, sur remarques éditoriales de
@@ -281,4 +288,3 @@ const periodeEtape: React.CSSProperties = {
   textTransform: "uppercase",
   color: "#93670f",
 };
-
