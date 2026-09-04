@@ -11,14 +11,30 @@ import { createClient } from "@supabase/supabase-js";
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-anon-key";
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Correctif du 04/09/2026 : sans ceci, les appels reseau emis par
+// @supabase/supabase-js peuvent etre mis en cache par Next.js (vu dans les
+// Logs Vercel : "Using cache ...supabase.co/rest/v1/precommande_compteurs")
+// meme sur une page en `export const dynamic = "force-dynamic"` — ce
+// reglage ne suffit pas a lui seul a empecher le cache de `fetch()` pour les
+// appels emis par cette librairie. Consequence concrete : le site affichait
+// toujours "0 precommandee" quelle que soit la vraie valeur dans Supabase,
+// car Next.js reservait la toute premiere reponse obtenue (au tout debut,
+// quand la table etait vide) au lieu de relire a chaque visite. Ce petit
+// wrapper force chaque appel a ignorer le cache.
+const fetchSansCache: typeof fetch = (url, options) => fetch(url, { ...options, cache: "no-store" });
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  global: { fetch: fetchSansCache },
+});
 
 // Cle "service role" utilisee UNIQUEMENT cote serveur (route /api/precommande,
 // webhook Stripe) pour ecrire en base sans etre bloque par les regles de
 // securite (RLS). Ne jamais exposer cette cle au navigateur.
 export function getSupabaseAdmin() {
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "placeholder-service-key";
-  return createClient(supabaseUrl, serviceKey);
+  return createClient(supabaseUrl, serviceKey, {
+    global: { fetch: fetchSansCache },
+  });
 }
 
 // Nombre de precommandes par slug (cuvee ou coffret), lecture publique
@@ -28,25 +44,9 @@ export function getSupabaseAdmin() {
 export async function getCompteursPrecommandes(): Promise<Record<string, number>> {
   try {
     const { data, error } = await supabase.from("precommande_compteurs").select("slug, compteur");
-    if (error || !data) {
-      // Trace de diagnostic temporaire (04/09/2026), pour comprendre pourquoi
-      // les compteurs s'affichent a 0 en production — visible dans Vercel >
-      // Logs. A retirer une fois le probleme identifie/resolu. N'affiche
-      // jamais la cle en entier, seulement de quoi verifier qu'elle est bien
-      // chargee (longueur + tout debut).
-      console.error("[precommande] Erreur lecture compteurs Supabase :", JSON.stringify(error));
-      console.error("[precommande] URL configuree :", supabaseUrl);
-      console.error(
-        "[precommande] Cle anon chargee :",
-        supabaseAnonKey === "placeholder-anon-key"
-          ? "NON (valeur de repli utilisee, variable non lue)"
-          : `OUI (${supabaseAnonKey.length} caracteres, commence par ${supabaseAnonKey.slice(0, 8)})`
-      );
-      return {};
-    }
+    if (error || !data) return {};
     return Object.fromEntries(data.map((ligne) => [ligne.slug, ligne.compteur as number]));
-  } catch (e) {
-    console.error("[precommande] Exception lors de la lecture des compteurs Supabase :", e);
+  } catch {
     return {};
   }
 }
