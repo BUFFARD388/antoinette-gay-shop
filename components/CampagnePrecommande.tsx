@@ -359,16 +359,14 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
 const bandeauAmbiance: React.CSSProperties = {
   marginTop: 56,
   position: "relative",
-  height: 340,
   overflow: "hidden",
   borderRadius: 4,
+  background: "#1F3D2E",
 };
 
 const imgAmbiance: React.CSSProperties = {
   width: "100%",
-  height: "100%",
-  objectFit: "cover",
-  objectPosition: "center 35%",
+  height: "auto",
   display: "block",
 };
 
