@@ -241,10 +241,12 @@ export const produits: Produit[] = [
     editionLimitee: 50,
     accent: "#1F3D2E",
     cuveesIncluses: ["fragola", "rhubarbe", "decembre"],
-    // Photo retirée le 03/09/2026 (même raison que les 3 cuvées ci-dessus :
-    // bouteilles encore vides sur la prise de vue, sans les vraies
-    // étiquettes) : retombe sur le sceau de la Maison en attendant la
-    // vraie photo du coffret complet.
+    // Visuel généré par IA ajouté le 04/09/2026 (même principe que les 3
+    // cuvées le 03/09/2026 : en attendant une vraie photo du coffret
+    // complet, avec mention de transparence obligatoire via
+    // photosGenereesParIA).
+    photos: ["/images/coffret-decouverte-ia.jpg"],
+    photosGenereesParIA: true,
   },
 ];
 
