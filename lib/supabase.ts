@@ -28,9 +28,25 @@ export function getSupabaseAdmin() {
 export async function getCompteursPrecommandes(): Promise<Record<string, number>> {
   try {
     const { data, error } = await supabase.from("precommande_compteurs").select("slug, compteur");
-    if (error || !data) return {};
+    if (error || !data) {
+      // Trace de diagnostic temporaire (04/09/2026), pour comprendre pourquoi
+      // les compteurs s'affichent a 0 en production — visible dans Vercel >
+      // Logs. A retirer une fois le probleme identifie/resolu. N'affiche
+      // jamais la cle en entier, seulement de quoi verifier qu'elle est bien
+      // chargee (longueur + tout debut).
+      console.error("[precommande] Erreur lecture compteurs Supabase :", JSON.stringify(error));
+      console.error("[precommande] URL configuree :", supabaseUrl);
+      console.error(
+        "[precommande] Cle anon chargee :",
+        supabaseAnonKey === "placeholder-anon-key"
+          ? "NON (valeur de repli utilisee, variable non lue)"
+          : `OUI (${supabaseAnonKey.length} caracteres, commence par ${supabaseAnonKey.slice(0, 8)})`
+      );
+      return {};
+    }
     return Object.fromEntries(data.map((ligne) => [ligne.slug, ligne.compteur as number]));
-  } catch {
+  } catch (e) {
+    console.error("[precommande] Exception lors de la lecture des compteurs Supabase :", e);
     return {};
   }
 }
