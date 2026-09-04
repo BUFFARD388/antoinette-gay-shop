@@ -204,6 +204,19 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
         ))}
       </section>
 
+      {/* Bannière d'ambiance au-dessus des cuvées — visuel généré par IA
+          fourni par Laurent le 04/09/2026 (mise en situation du Coffret
+          Découverte, colline de Fourvière en arrière-plan). Même principe de
+          transparence que les photos produit : mention visible sur l'image. */}
+      <div style={bandeauAmbiance}>
+        <img
+          src="/images/ambiance-coffret-ia.jpg"
+          alt="Trois amis trinquent avec un gin tonic Maison Antoinette Gay ; le Coffret Découverte est posé devant eux, la colline de Fourvière en arrière-plan"
+          style={imgAmbiance}
+        />
+        <span style={badgeIAAmbiance}>Visuel généré par IA</span>
+      </div>
+
       {/* Produits */}
       <section
         id="cuvees"
@@ -211,7 +224,7 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
           display: "grid",
           gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
           gap: 28,
-          marginTop: 56,
+          marginTop: 40,
           scrollMarginTop: 24,
         }}
       >
@@ -342,6 +355,34 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
     </main>
   );
 }
+
+const bandeauAmbiance: React.CSSProperties = {
+  marginTop: 56,
+  position: "relative",
+  height: 340,
+  overflow: "hidden",
+  borderRadius: 4,
+};
+
+const imgAmbiance: React.CSSProperties = {
+  width: "100%",
+  height: "100%",
+  objectFit: "cover",
+  objectPosition: "center 35%",
+  display: "block",
+};
+
+const badgeIAAmbiance: React.CSSProperties = {
+  position: "absolute",
+  bottom: 12,
+  right: 12,
+  fontSize: 11,
+  letterSpacing: 0.3,
+  color: "#fff",
+  background: "rgba(31, 61, 46, 0.72)",
+  padding: "4px 10px",
+  borderRadius: 2,
+};
 
 const badgePrecommande: React.CSSProperties = {
   display: "inline-block",
