@@ -65,68 +65,49 @@ export async function POST(req: NextRequest) {
   }
 
   const supabaseAdmin = getSupabaseAdmin();
-  const lignesNumerotees: LigneNumerotee[] = [];
 
-  // Attribution des numeros de serie, cuvee par cuvee, via la fonction
-  // atomique incrementer_compteur (voir supabase/schema.sql). Remarque :
-  // le controle de l'edition limitee ci-dessous est une verification "au
-  // mieux" (lecture avant increment), pas une garantie anti-concurrence
-  // stricte — largement suffisant pour le volume attendu en precommande.
-  for (const ligne of lignesValidees) {
+  // Attribution des numeros de serie ET enregistrement de la precommande en
+  // UN seul appel a la fonction atomique creer_precommande (voir
+  // supabase/schema.sql, ajoutee le 04/09/2026). Avant, ceci se faisait en
+  // plusieurs etapes separees (une par ligne, puis un insert final) : une
+  // erreur sur l'insert final pouvait laisser les compteurs incrementes
+  // sans que la commande (et l'email du client) soit enregistree — c'est ce
+  // qui est arrive le 04/09/2026 (1 precommande sur 3 perdue). Avec un seul
+  // appel a une fonction transactionnelle, soit tout reussit, soit rien
+  // n'est modifie.
+  const lignesPourFonction = lignesValidees.map((ligne) => {
     const produit = getProduitBySlug(ligne.slug)!;
-
-    if (produit.editionLimitee !== null) {
-      const { data: compteurActuel } = await supabaseAdmin
-        .from("precommande_compteurs")
-        .select("compteur")
-        .eq("slug", ligne.slug)
-        .maybeSingle();
-      const dejaPrecommandees = compteurActuel?.compteur ?? 0;
-      if (dejaPrecommandees + ligne.quantite > produit.editionLimitee) {
-        return NextResponse.json(
-          {
-            error: `Il ne reste plus assez de bouteilles disponibles en précommande pour ${produit.nom}.`,
-          },
-          { status: 409 }
-        );
-      }
-    }
-
-    const { data: nouveauTotal, error: erreurCompteur } = await supabaseAdmin.rpc(
-      "incrementer_compteur",
-      { p_slug: ligne.slug, p_quantite: ligne.quantite }
-    );
-
-    if (erreurCompteur || typeof nouveauTotal !== "number") {
-      return NextResponse.json(
-        { error: "Erreur lors de l'enregistrement de la précommande. Réessaie dans un instant." },
-        { status: 500 }
-      );
-    }
-
-    const numeros = Array.from(
-      { length: ligne.quantite },
-      (_, i) => nouveauTotal - ligne.quantite + 1 + i
-    );
-
-    lignesNumerotees.push({ ...ligne, numeros });
-  }
-
-  const { error: erreurInsertion } = await supabaseAdmin.from("precommandes").insert({
-    email,
-    prenom: prenom || null,
-    telephone: telephone || null,
-    produits: lignesNumerotees,
-    date_naissance_confirmee: true,
-    accepte_contact: accepteContact !== false,
+    return {
+      slug: ligne.slug,
+      nom: ligne.nom,
+      quantite: ligne.quantite,
+      editionLimitee: produit.editionLimitee,
+    };
   });
 
-  if (erreurInsertion) {
+  const { data: lignesNumerotees, error: erreurCreation } = await supabaseAdmin.rpc(
+    "creer_precommande",
+    {
+      p_email: email,
+      p_prenom: prenom || null,
+      p_telephone: telephone || null,
+      p_accepte_contact: accepteContact !== false,
+      p_lignes: lignesPourFonction,
+    }
+  );
+
+  if (erreurCreation) {
+    if (erreurCreation.message?.includes("edition_limitee_depassee")) {
+      return NextResponse.json(
+        { error: "Il ne reste plus assez de bouteilles disponibles en précommande pour une des cuvées choisies." },
+        { status: 409 }
+      );
+    }
     return NextResponse.json(
-      { error: "Erreur lors de l'enregistrement de la précommande." },
+      { error: "Erreur lors de l'enregistrement de la précommande. Réessaie dans un instant." },
       { status: 500 }
     );
   }
 
-  return NextResponse.json({ success: true, lignes: lignesNumerotees });
+  return NextResponse.json({ success: true, lignes: lignesNumerotees as LigneNumerotee[] });
 }
