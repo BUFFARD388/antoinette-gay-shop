@@ -14,6 +14,11 @@ type Props = {
 
 const ETAPES = [
   {
+    periode: "Les 6 derniers mois",
+    titre: "Recherche & création",
+    texte: "Mise au point des recettes, conception du packaging et de l'identité de la Maison, avant l'ouverture de la précommande.",
+  },
+  {
     periode: "Aujourd'hui",
     titre: "Précommande",
     texte: "Tu réserves ta bouteille numérotée, sans paiement — juste ton email et ton choix de cuvée.",
@@ -449,8 +454,8 @@ const btnHeroSecondaire: React.CSSProperties = {
 
 const timelineGrille: React.CSSProperties = {
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-  gap: 20,
+  gridTemplateColumns: "repeat(auto-fit, minmax(175px, 1fr))",
+  gap: 16,
   marginTop: 16,
 };
 
