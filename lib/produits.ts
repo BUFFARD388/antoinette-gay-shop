@@ -40,10 +40,13 @@
 //    ici et dans app/notre-histoire/page.tsx. Slug technique inchangé
 //    ("rhubarbe").
 //
-// Le même jour, Laurent a précisé les quantités définitives pour l'année
+// Le 02/09/2026, Laurent a précisé les quantités définitives pour l'année
 // 2027 : 100 bouteilles par cuvée (déjà en place ci-dessous) et 50
 // coffrets "Coffret Découverte" (le coffret garde son nom, seule sa
-// editionLimitee passe de 100 à 50).
+// editionLimitee passe de 100 à 50). Puis, le 11/09/2026, au vu du succès
+// du lancement (10 coffrets précommandés dès le premier jour, sur les 50
+// disponibles), Laurent a remonté editionLimitee du coffret à 100 pour
+// avoir davantage de marge.
 //
 // Prix : 42€/70cl, coffret passé de 49€ à 59€ le 02/09/2026 (confirmés par Laurent). stripePriceId n'est
 // pas utilisé pendant la phase précommande (aucun paiement n'est pris) :
@@ -238,7 +241,7 @@ export const produits: Produit[] = [
     degre: 42,
     format: "3 x 20cl",
     type: "coffret",
-    editionLimitee: 50,
+    editionLimitee: 100,
     accent: "#1F3D2E",
     cuveesIncluses: ["fragola", "rhubarbe", "decembre"],
     // Visuel généré par IA ajouté le 04/09/2026 (même principe que les 3
