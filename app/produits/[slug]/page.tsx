@@ -3,12 +3,18 @@ import { notFound } from "next/navigation";
 import { produits, getProduitBySlug } from "@/lib/produits";
 import Sceau from "@/components/Sceau";
 import GalerieProduit from "@/components/GalerieProduit";
-import { NOM_MAISON, URL_SITE } from "@/lib/config";
+import { NOM_MAISON, URL_SITE, FRAIS_PORT } from "@/lib/config";
 
 export function generateStaticParams() {
   return produits.map((p) => ({ slug: p.slug }));
 }
 
+// Titre/description enrichis le 02/09/2026 pour le référencement : le mot
+// "Gin" est ajouté explicitement au titre (il ne l'était pas avant, seul le
+// nom de la cuvée y figurait), et la description reprend telle quelle celle
+// du produit — déjà riche en mots-clés réels (Fourvière, jardin, Lyon...)
+// pour les cuvées qui les mentionnent. Voir aussi le JSON-LD Product plus
+// bas, qui aide Google à afficher prix/disponibilité dans les résultats.
 export function generateMetadata({ params }: { params: { slug: string } }) {
   const produit = getProduitBySlug(params.slug);
   if (!produit) return {};
@@ -35,6 +41,28 @@ export default function PageProduit({ params }: { params: { slug: string } }) {
     ?.map((slug) => getProduitBySlug(slug))
     .filter((p): p is NonNullable<typeof p> => Boolean(p));
 
+  // Données structurées Product (JSON-LD), ajoutées le 02/09/2026 pour le
+  // référencement : aide Google à comprendre qu'il s'agit d'une fiche
+  // produit avec un prix, et à afficher ces informations dans les
+  // résultats de recherche. availability = PreOrder tant que le site est
+  // en phase précommande (aucun paiement pris) — à repasser en InStock au
+  // vrai lancement 2027, quand la boutique passera en paiement Stripe.
+  //
+  // shippingDetails ajouté le 10/09/2026 (retour Search Console : champ
+  // manquant, avertissement non critique) — frais de port réels (voir
+  // lib/config.ts), livraison France uniquement pour l'instant (cohérent
+  // avec la page Réglementation). Pas de deliveryTime précis déclaré : le
+  // vrai délai dépend de la campagne de précommande (livraison prévue
+  // {DATE_LIVRAISON_PREVUE}, pas un délai d'expédition standard), donc rien
+  // n'est indiqué plutôt que d'afficher une estimation trompeuse.
+  //
+  // hasMerchantReturnPolicy et aggregateRating/review : volontairement PAS
+  // ajoutés. Aucun paiement n'est pris en précommande (pas de politique de
+  // retour à déclarer avant le vrai lancement 2027, à définir avec un
+  // professionnel — voir "À faire" du suivi de projet), et aucun avis
+  // client réel n'existe encore (en ajouter de faux serait trompeur et
+  // contraire aux règles de Google). Ces deux avertissements Search
+  // Console resteront donc actifs pour l'instant, ce n'est pas un oubli.
   const jsonLdProduit = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -47,6 +75,18 @@ export default function PageProduit({ params }: { params: { slug: string } }) {
       priceCurrency: "EUR",
       price: (produit.prix / 100).toFixed(2),
       availability: "https://schema.org/PreOrder",
+      shippingDetails: {
+        "@type": "OfferShippingDetails",
+        shippingRate: {
+          "@type": "MonetaryAmount",
+          value: (FRAIS_PORT / 100).toFixed(2),
+          currency: "EUR",
+        },
+        shippingDestination: {
+          "@type": "DefinedRegion",
+          addressCountry: "FR",
+        },
+      },
     },
   };
 
@@ -75,6 +115,7 @@ export default function PageProduit({ params }: { params: { slug: string } }) {
           </p>
           <h1 style={{ fontFamily: "var(--font-display), Georgia, serif", margin: "6px 0 2px", fontSize: 32 }}>
             {produit.nom}
+            {produit.sousTitreSEO && <span style={sousTitreH1}>{produit.sousTitreSEO}</span>}
           </h1>
           {produit.mention && <p style={mentionStyle}>{produit.mention}</p>}
           {produit.type === "cuvee" && (
@@ -185,6 +226,18 @@ const mentionStyle: React.CSSProperties = {
   fontStyle: "italic",
   color: "#5b6f63",
   margin: "0 0 10px",
+};
+
+// Sous-titre SEO ajouté le 14/09/2026, même principe que sur la carte produit
+// (voir components/CarteProduit.tsx) : de vrais mots-clés dans le <h1> visible,
+// sur sa propre ligne, sans écraser le nom de la cuvée.
+const sousTitreH1: React.CSSProperties = {
+  display: "block",
+  fontFamily: "var(--font-ui), Arial, sans-serif",
+  fontSize: 16,
+  fontWeight: 400,
+  color: "#5b6f63",
+  marginTop: 4,
 };
 
 const ligneSignature: React.CSSProperties = {

@@ -42,6 +42,7 @@ export default function CarteProduit({ produit, quantite, compteur, onAjouter, o
       </p>
       <h3 style={{ fontFamily: "var(--font-display), Georgia, serif", margin: "4px 0 2px" }}>
         {produit.nom}
+        {produit.sousTitreSEO && <span style={sousTitreH3}>{produit.sousTitreSEO}</span>}
       </h3>
       {produit.mention && <p style={mentionStyle}>{produit.mention}</p>}
       <p style={{ fontSize: 14, lineHeight: 1.5, minHeight: 66, margin: "8px 0 0" }}>
@@ -176,6 +177,19 @@ const mentionStyle: React.CSSProperties = {
   fontStyle: "italic",
   color: "#5b6f63",
   margin: "0 0 8px",
+};
+
+// Sous-titre SEO ajouté le 14/09/2026 : reprend de vrais mots-clés recherchés
+// (ex: "Gin Artisanal au Raisin Fragola") directement dans le <h3> visible,
+// sur sa propre ligne et en plus petit/discret pour ne pas nuire à la
+// lisibilité du nom de la cuvée qui reste la première chose lue.
+const sousTitreH3: React.CSSProperties = {
+  display: "block",
+  fontFamily: "var(--font-ui), Arial, sans-serif",
+  fontSize: 13,
+  fontWeight: 400,
+  color: "#5b6f63",
+  marginTop: 2,
 };
 
 const barreFond: React.CSSProperties = {

@@ -245,6 +245,29 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
         ))}
       </section>
 
+      {/* Bloc "SEO local" ajouté le 14/09/2026 à la demande de Laurent : un
+          court paragraphe de vrai texte visible, juste avant le formulaire
+          de précommande, pour capter les recherches des Lyonnais sans faire
+          de blog. Reprend les mots-clés déjà utilisés ailleurs sur le site
+          (Lyon, Fourvière, Fête des Lumières) mais reste rigoureusement
+          fidèle à la réalité : la Maison est au nord de Lyon (Neuville-sur-
+          Saône), pas au cœur de Lyon, et le Passage Gay est le lieu de
+          l'histoire familiale de 1861, pas l'adresse actuelle — la Maison ne
+          vend pas sur place, elle expédie dans toute la France. Garder cette
+          cohérence avec le JSON-LD (app/layout.tsx) et la fiche Google
+          Business est important pour la crédibilité du référencement local. */}
+      <section style={{ marginTop: 48 }}>
+        <p style={texteSeoLocal}>
+          Installée au nord de Lyon, la Maison Antoinette Gay perpétue le savoir-faire familial
+          initié par Pierre puis Antoinette Gay au Passage Gay, sur la colline de Fourvière, en
+          1861. Notre distillerie artisanale élabore aujourd&apos;hui des gins haut de gamme à
+          partir de baies de genièvre et de fruits frais de notre jardin. Que vous cherchiez un
+          spiritueux lyonnais original à offrir pour la Fête des Lumières ou un dry gin français
+          de caractère, réservez dès maintenant votre bouteille numérotée de notre première
+          édition, expédiée dans toute la France.
+        </p>
+      </section>
+
       {/* Formulaire / confirmation */}
       <section id="formulaire" style={{ marginTop: 64, scrollMarginTop: 24 }}>
         {succes ? (
@@ -463,6 +486,15 @@ const etapeCarte: React.CSSProperties = {
   border: "1px solid #e0d3ac",
   padding: 18,
   background: "#fff",
+};
+
+const texteSeoLocal: React.CSSProperties = {
+  fontSize: 15,
+  lineHeight: 1.7,
+  color: "#3f5346",
+  maxWidth: 760,
+  margin: "0 auto",
+  textAlign: "center",
 };
 
 const formulaire: React.CSSProperties = {

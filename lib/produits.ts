@@ -91,6 +91,9 @@ export type Produit = {
   nom: string;
   cuvee: string;
   mention?: string; // ex: "Permanent au raisin fragola" — statut de disponibilité, affiché sous le nom
+  sousTitreSEO?: string; // ex: "Gin Artisanal au Raisin Fragola" — affiché juste sous le nom, dans le <h3>
+  // de la carte produit et le <h1> de la fiche produit, pour enrichir ces titres avec de vrais mots-clés
+  // recherchés (ajouté le 14/09/2026 à la demande de Laurent, suite à des conseils SEO reçus).
   categorie: string; // ex: "Gin aromatisé" — la famille de spiritueux, affichée à côté de la cuvée
   ingredients: string; // ex: "Raisin fragola rouge et genièvre" — repris du recto de l'étiquette
   description: string;
@@ -116,6 +119,7 @@ export const produits: Produit[] = [
     slug: "fragola",
     nom: "Le Jardin de l'Angélique",
     cuvee: "Cuvée I",
+    sousTitreSEO: "Gin Artisanal au Raisin Fragola",
     mention: "Fragola de notre jardin",
     categorie: "Gin aromatisé",
     ingredients: "Raisin fragola rouge et genièvre",
@@ -158,6 +162,7 @@ export const produits: Produit[] = [
     slug: "rhubarbe",
     nom: "Le Secret d'Antoinette",
     cuvee: "Cuvée II",
+    sousTitreSEO: "Gin Distillé à la Rhubarbe (Nord de Lyon)",
     mention: "Le secret du printemps",
     categorie: "Gin aromatisé",
     ingredients: "Rhubarbe et genièvre",
@@ -194,6 +199,7 @@ export const produits: Produit[] = [
     slug: "decembre",
     nom: "Le Vœu de Fourvière",
     cuvee: "Cuvée III",
+    sousTitreSEO: "Gin aux Épices Douces (Spécial Fête des Lumières)",
     mention: "Le 8 décembre, Fête des Lumières",
     categorie: "Gin aromatisé",
     ingredients: "Épices douces, pomme et genièvre",
