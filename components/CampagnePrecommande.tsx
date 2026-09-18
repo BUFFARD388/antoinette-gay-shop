@@ -162,10 +162,21 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
           }}
         >
           {NOM_MAISON}
+          {/* Sous-titre SEO ajouté le 21/09/2026, dans le H1 lui-même (même
+              principe que sousTitreSEO sur les produits, voir
+              CarteProduit.tsx) : le H1 ne portait jusque-là que le nom de la
+              marque, sans indiquer l'activité — mot-clé réel et visible. */}
+          <span style={heroSousTitreH1}>Distillerie de Gin Artisanal à Lyon</span>
         </h1>
 
         <div style={{ marginTop: 10 }}>
-          <p style={heroSousTitreLigne}>Gins artisanaux et locaux, distillés au nord de Lyon.</p>
+          {/* Passé de <p> à <h2> le 21/09/2026 : c'est la phrase la plus
+              riche en mots-clés réels de la page (Lyon, gins artisanaux) —
+              lui donner un vrai poids de sous-titre plutôt qu'un simple
+              paragraphe. Style visuel inchangé (heroSousTitreLigne fixe déjà
+              taille/graisse/marge en inline, donc aucun changement d'affichage
+              en passant de <p> à <h2>). */}
+          <h2 style={heroSousTitreLigne}>Gins artisanaux et locaux, distillés au nord de Lyon.</h2>
           <p style={{ ...heroSousTitreLigne, margin: "4px 0 0" }}>
             Parfumés au genièvre et aux fruits frais du jardin.
           </p>
@@ -440,6 +451,17 @@ const heroSousTitreLigne: React.CSSProperties = {
   lineHeight: 1.5,
   fontWeight: 500,
   margin: 0,
+};
+
+const heroSousTitreH1: React.CSSProperties = {
+  display: "block",
+  fontFamily: "var(--font-ui), Arial, sans-serif",
+  fontStyle: "normal",
+  fontSize: 17,
+  fontWeight: 500,
+  letterSpacing: 0.2,
+  color: "#e7cd93",
+  marginTop: 6,
 };
 
 const heroReassurance: React.CSSProperties = {

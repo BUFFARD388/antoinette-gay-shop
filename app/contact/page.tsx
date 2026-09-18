@@ -32,6 +32,12 @@ export default function PageContact() {
           directement, que ce soit pour une question sur une cuvée, ta précommande, la livraison,
           ou simplement pour échanger.
         </p>
+        {/* Mention explicite ajoutée le 21/09/2026, même raisonnement que
+            components/Pied.tsx : commune réelle + "métropole de Lyon" en
+            toutes lettres. */}
+        <p style={{ ...intro, marginTop: 10, fontSize: 13.5, color: "#5b6f63" }}>
+          Notre distillerie artisanale est basée à Neuville-sur-Saône, dans la métropole de Lyon.
+        </p>
       </header>
 
       <section style={{ marginTop: 36, display: "flex", flexDirection: "column", gap: 16 }}>

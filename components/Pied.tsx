@@ -26,6 +26,13 @@ export default function Pied() {
       <p style={{ margin: "4px 0" }}>
         {NOM_MAISON} — Distillerie artisanale, au nord de Lyon.
       </p>
+      {/* Mention explicite ajoutée le 21/09/2026 : la commune réelle +
+          "métropole de Lyon" en toutes lettres, pour les recherches qui
+          tapent le mot exact "Lyon" (Neuville-sur-Saône n'apparaissait nulle
+          part ailleurs dans un texte visible du site). */}
+      <p style={{ margin: "4px 0" }}>
+        Basée à Neuville-sur-Saône, dans la métropole de Lyon.
+      </p>
       <p style={{ margin: "4px 0" }}>
         Une question ? <a href={`tel:${TELEPHONE_CONTACT.replace(/\s/g, "")}`} style={lien}>{TELEPHONE_CONTACT}</a>
       </p>
