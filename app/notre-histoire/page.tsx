@@ -59,7 +59,18 @@ const ETAPES = [
 ];
 
 // Photos d'archive du vrai Passage Gay, fournies par Laurent le 23/08/2026.
+// 3 documents supplémentaires fournis par Laurent le 21/09/2026 (photos de
+// documents de famille) : légèrement retouchés avant intégration (recadrage
+// du bois de la table et correction de l'éclairage pour la carte Buchin-Gay,
+// nettoyage/renforcement du contraste pour la gravure et la photo de la
+// tour, aucune n'a été recadrée sur son contenu). La carte "Buchin-Gay,
+// Propriétaire" porte le même nom que Pauline Gay Bûchin (voir la partie
+// "Le mot du fondateur" plus bas) — mentionné tel quel dans la légende,
+// sans reformuler le récit familial au-delà de ce que confirme ce document.
 const GALERIE = [
+  { src: "/images/histoire-photo-tour-metallique.jpg", legende: "La Tour Métallique de Fourvière, telle que la connaissaient Pierre et Antoinette." },
+  { src: "/images/histoire-gravure-observatoire.jpg", legende: "« Observatoire & Passage Gay » — l'annonce d'époque promettant « le plus riche et le plus varié » des panoramas." },
+  { src: "/images/histoire-carte-buchin-gay.jpg", legende: "Carte de la Tour Métallique, au nom de Buchin-Gay — le même nom que Pauline Gay Bûchin." },
   { src: "/images/histoire-batiment.jpg", legende: "Entrée principale de la Tour Métallique." },
   { src: "/images/histoire-carte-postale.jpg", legende: "« Antiquités du Passage Gay » — carte postale d'époque." },
   { src: "/images/histoire-entree.jpg", legende: "L'entrée du Passage Gay — restaurant, observatoire, vue merveilleuse." },
