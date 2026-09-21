@@ -27,6 +27,21 @@ export const metadata = {
 //
 // Texte transcrit du dos des étiquettes (fournies par Laurent le 23/08/2026)
 // pour la partie 1 (Pierre Gay, 1861-1894).
+//
+// Mise à jour du 21/09/2026 : Laurent a fourni un second texte d'histoire
+// ("Du Panorama de Fourvière à l'Art du Gin"), à fusionner avec celui déjà
+// en place. Repris ici : Pierre Gay présenté comme pionnier de la "plus
+// belle vue de Lyon" avant même la création du Passage Gay, les "cures de
+// raisin" qu'il organisait, la précision des dates de construction de la
+// Tour Métallique (1892-1894), le détail technique de l'alambic (cuivre,
+// 30L, colonne à plateaux + panier à gin) intégré à la citation de Laurent
+// (passé de "nous"/"notre" à "je"/"mon" pour rester cohérent avec le reste
+// de la citation, qui est à la première personne), l'image de la rhubarbe
+// en écho à la "droiture" de la tour familiale, et la phrase de clôture
+// "panorama en bouteille". Généalogie vérifiée cohérente entre les deux
+// textes : Pierre et Antoinette sont les parents de Pauline (arrière-
+// grand-mère de Laurent), donc bien les arrière-arrière-grands-parents de
+// Laurent — le texte fourni confirme ce lien sans le contredire.
 
 const ETAPES = [
   {
@@ -62,7 +77,7 @@ const CUVEES_RESUME = [
   },
   {
     slug: "rhubarbe",
-    texte: "La fraîcheur brute d'un jardin secret au nord de Lyon.",
+    texte: "Tension vive et fraîcheur brute d'un jardin secret au nord de Lyon — hommage à la droiture de notre tour familiale.",
   },
   {
     slug: "decembre",
@@ -90,17 +105,27 @@ export default function PageHistoire() {
           De Fourvière à la Tour Métallique : l&apos;héritage d&apos;Antoinette
         </h2>
         <p style={paragraphe}>
-          Tout commence en 1861. Pierre Gay crée sur la colline de Fourvière le « Passage Gay », un
-          lieu unique mêlant curiosités, restaurant et un jardin suspendu nommé l&apos;Angélique.
+          Tout commence en 1861. Notre arrière-arrière-grand-père, Pierre Gay, fut l&apos;un des
+          tout premiers à faire découvrir la colline de Fourvière aux voyageurs, gravissant les
+          pentes avec eux pour leur montrer ce qu&apos;il appelait fièrement « la plus belle vue de
+          Lyon ». Cette passion pour les hauteurs donne bientôt naissance au « Passage Gay », un
+          lieu unique mêlant curiosités, restaurant et un jardin suspendu nommé l&apos;Angélique —
+          où Pierre organisait même des « cures de raisin », célébrant la générosité des fruits de
+          ce terroir.
         </p>
         <p style={{ ...paragraphe, marginTop: 16 }}>
           En 1878, à la mort de Pierre, sa veuve Antoinette Gay reprend seule les rênes. Femme de
-          caractère et visionnaire, c&apos;est elle qui négocie en 1891 la cession du terrain pour
-          construire la célèbre Tour Métallique de Lyon. Elle y installe le restaurant familial au
-          pied de ce monument qu&apos;elle a rendu possible.
+          caractère et visionnaire, c&apos;est elle qui négocie en 1891 la cession du terrain, avant
+          que notre famille ne participe activement à l&apos;aventure de la construction de la Tour
+          Métallique de Fourvière (1892-1894), ce phare de fer forgé qui domine encore aujourd&apos;hui
+          la skyline lyonnaise. Antoinette y installe le restaurant familial au pied de ce monument
+          qu&apos;elle a rendu possible, et prend soin, dans les jardins suspendus de la colline, de
+          la terre et de l&apos;art de recevoir.
         </p>
         <p style={{ ...paragraphe, marginTop: 16 }}>
-          C&apos;est cet esprit d&apos;audace et ce nom, celui d&apos;Antoinette Gay, que notre
+          Si nos ancêtres ne distillaient pas encore, ils nous ont légué le plus précieux des
+          héritages : l&apos;amour fou de notre région, le respect des fruits et le sens de
+          l&apos;accueil. C&apos;est cet esprit, et ce nom, celui d&apos;Antoinette Gay, que notre
           distillerie fait revivre aujourd&apos;hui.
         </p>
       </section>
@@ -148,7 +173,8 @@ export default function PageHistoire() {
               <p style={{ ...citationTexte, marginTop: 16 }}>
                 Amateur de spiritueux, j&apos;ai voulu faire infuser cet héritage familial dans des
                 gins artisanaux. Sans formation initiale, j&apos;apprends l&apos;art de la
-                distillation essai après essai, cuvée après cuvée.
+                distillation essai après essai, cuvée après cuvée, à l&apos;aide de mon alambic en
+                cuivre de 30L à colonne à plateaux et de mon panier à gin.
               </p>
               <p style={{ ...citationTexte, marginTop: 16 }}>
                 Mon but ? Vous proposer un gin d&apos;exception, distillé au nord de Lyon avec le
@@ -192,6 +218,27 @@ export default function PageHistoire() {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* Phrase de clôture — reprise du second texte d'histoire fourni par
+          Laurent le 21/09/2026, en écho au thème du panorama filé dès la
+          partie 1 (Pierre, pionnier de "la plus belle vue de Lyon"). */}
+      <section style={{ marginTop: 56, textAlign: "center" }}>
+        <p
+          style={{
+            fontFamily: "var(--font-display), Georgia, serif",
+            fontStyle: "italic",
+            fontSize: 20,
+            lineHeight: 1.6,
+            color: "#1F3D2E",
+            maxWidth: 480,
+            margin: "0 auto",
+          }}
+        >
+          Hier, nous vous partagions le plus beau panorama de Lyon.
+          <br />
+          Aujourd&apos;hui, nous mettons ce panorama en bouteille.
+        </p>
       </section>
     </main>
   );
