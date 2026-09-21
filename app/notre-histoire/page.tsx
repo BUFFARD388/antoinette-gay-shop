@@ -2,6 +2,7 @@ import Link from "next/link";
 import { NOM_MAISON } from "@/lib/config";
 import { getProduitBySlug } from "@/lib/produits";
 import Sceau from "@/components/Sceau";
+import PhotoZoom from "@/components/PhotoZoom";
 
 // Titre enrichi le 02/09/2026 pour le référencement (recherches "Passage
 // Gay", "Tour Métallique de Lyon", "Fourvière") — la description contenait
@@ -141,12 +142,15 @@ export default function PageHistoire() {
         </p>
       </section>
 
+      {/* Zoom plein écran ajouté le 21/09/2026 sur demande de Laurent, même
+          composant (PhotoZoom) que sur les photos produit (GalerieProduit,
+          CarteProduit) — clic pour agrandir, Échap ou clic dehors pour
+          fermer. */}
       <section style={{ marginTop: 40 }}>
         <div style={galerieGrille}>
           {GALERIE.map((photo) => (
-            // eslint-disable-next-line @next/next/no-img-element
             <figure key={photo.src} style={{ margin: 0 }}>
-              <img src={photo.src} alt={photo.legende} style={galerieImg} />
+              <PhotoZoom src={photo.src} alt={photo.legende} style={galerieImg} />
               <figcaption style={galerieLegende}>{photo.legende}</figcaption>
             </figure>
           ))}
