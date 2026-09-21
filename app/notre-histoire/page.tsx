@@ -117,8 +117,8 @@ export default function PageHistoire() {
           En 1878, à la mort de Pierre, sa veuve Antoinette Gay reprend seule les rênes. Femme de
           caractère et visionnaire, c&apos;est elle qui négocie en 1891 la cession du terrain, avant
           que notre famille ne participe activement à l&apos;aventure de la construction de la Tour
-          Métallique de Fourvière (1892-1894), ce phare de fer forgé qui domine encore aujourd&apos;hui
-          la skyline lyonnaise. Antoinette y installe le restaurant familial au pied de ce monument
+          Métallique de Fourvière (1892-1894), cette tour de fer forgé qui domine encore aujourd&apos;hui
+          le ciel lyonnais. Antoinette y installe le restaurant familial au pied de ce monument
           qu&apos;elle a rendu possible, et prend soin, dans les jardins suspendus de la colline, de
           la terre et de l&apos;art de recevoir.
         </p>
@@ -173,8 +173,8 @@ export default function PageHistoire() {
               <p style={{ ...citationTexte, marginTop: 16 }}>
                 Amateur de spiritueux, j&apos;ai voulu faire infuser cet héritage familial dans des
                 gins artisanaux. Sans formation initiale, j&apos;apprends l&apos;art de la
-                distillation essai après essai, cuvée après cuvée, à l&apos;aide de mon alambic en
-                cuivre de 30L à colonne à plateaux et de mon panier à gin.
+                distillation essai après essai, cuvée après cuvée, à l&apos;aide de mon alambic à
+                colonne à plateaux et de mon panier à gin.
               </p>
               <p style={{ ...citationTexte, marginTop: 16 }}>
                 Mon but ? Vous proposer un gin d&apos;exception, distillé au nord de Lyon avec le
