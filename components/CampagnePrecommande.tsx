@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import type { Produit } from "@/lib/produits";
 import CarteProduit from "@/components/CarteProduit";
 import { NOM_MAISON, DATE_LIVRAISON_PREVUE, FRAIS_PORT, SEUIL_PORT_GRATUIT } from "@/lib/config";
@@ -254,6 +255,39 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
             onRetirer={() => retirer(p.slug)}
           />
         ))}
+      </section>
+
+      {/* Bloc "Notre histoire" ajouté le 23/09/2026 à la demande de Laurent,
+          pour le référencement (recherches "Passage Gay", "Tour Métallique
+          de Fourvière"). La page /notre-histoire porte déjà tout le récit
+          détaillé (1861-1894, généalogie, photos d'archive) — ce bloc ne le
+          duplique pas, il renvoie vers elle avec un texte de lien riche en
+          mots-clés, pour renforcer le maillage interne plutôt que de créer
+          un contenu concurrent sur la même page. Photo réutilisée depuis la
+          galerie Notre Histoire (histoire-photo-tour-metallique.jpg, ajoutée
+          le 21/09/2026). */}
+      <section style={blocHistoire}>
+        <div style={blocHistoireImageConteneur}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/histoire-photo-tour-metallique.jpg"
+            alt="La Tour Métallique de Fourvière, à l'époque de Pierre et Antoinette Gay"
+            style={blocHistoireImage}
+          />
+        </div>
+        <div style={blocHistoireTexte}>
+          <p style={blocHistoireEyebrow}>Depuis 1861</p>
+          <h2 style={blocHistoireTitre}>Du Passage Gay à la Tour Métallique de Fourvière</h2>
+          <p style={blocHistoireParagraphe}>
+            Notre nom vient d&apos;une vraie histoire lyonnaise : Pierre puis Antoinette Gay, qui ont
+            fait découvrir la colline de Fourvière aux voyageurs et participé à la construction de
+            la Tour Métallique dans les années 1890, avant que leur descendance ne se lance
+            aujourd&apos;hui dans la distillation.
+          </p>
+          <Link href="/notre-histoire" style={blocHistoireLien}>
+            Découvrir l&apos;histoire complète du Passage Gay et de la Tour Métallique de Fourvière →
+          </Link>
+        </div>
       </section>
 
       {/* Bloc "SEO local" ajouté le 14/09/2026 à la demande de Laurent : un
@@ -517,6 +551,72 @@ const texteSeoLocal: React.CSSProperties = {
   maxWidth: 760,
   margin: "0 auto",
   textAlign: "center",
+};
+
+// Styles du bloc "Notre histoire" (page d'accueil, ajouté le 23/09/2026) —
+// même esprit visuel que la section "Le mot du fondateur" de la page
+// /notre-histoire (photo + texte côte à côte, qui s'empilent sur mobile).
+const blocHistoire: React.CSSProperties = {
+  marginTop: 56,
+  display: "flex",
+  gap: 32,
+  alignItems: "center",
+  flexWrap: "wrap",
+  padding: "32px 0",
+  borderTop: "1px solid #e0d3ac",
+  borderBottom: "1px solid #e0d3ac",
+};
+
+const blocHistoireImageConteneur: React.CSSProperties = {
+  flex: "1 1 320px",
+  minWidth: 280,
+};
+
+const blocHistoireImage: React.CSSProperties = {
+  width: "100%",
+  height: "auto",
+  display: "block",
+  borderRadius: 2,
+};
+
+const blocHistoireTexte: React.CSSProperties = {
+  flex: "1 1 360px",
+  minWidth: 280,
+};
+
+const blocHistoireEyebrow: React.CSSProperties = {
+  fontFamily: "var(--font-ui), Arial, sans-serif",
+  fontSize: 13,
+  fontWeight: 600,
+  letterSpacing: 0.6,
+  color: "#93670f",
+  textTransform: "uppercase",
+  margin: "0 0 8px",
+};
+
+const blocHistoireTitre: React.CSSProperties = {
+  fontFamily: "var(--font-display), Georgia, serif",
+  fontSize: 26,
+  fontWeight: 600,
+  color: "#1F3D2E",
+  margin: "0 0 14px",
+  textWrap: "balance",
+};
+
+const blocHistoireParagraphe: React.CSSProperties = {
+  fontSize: 15,
+  lineHeight: 1.7,
+  color: "#3f5346",
+  margin: "0 0 18px",
+};
+
+const blocHistoireLien: React.CSSProperties = {
+  display: "inline-block",
+  color: "#1F3D2E",
+  fontWeight: 600,
+  fontSize: 14.5,
+  textDecoration: "underline",
+  textUnderlineOffset: 3,
 };
 
 const formulaire: React.CSSProperties = {
