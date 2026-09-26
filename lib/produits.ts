@@ -178,10 +178,18 @@ export const produits: Produit[] = [
     type: "cuvee",
     editionLimitee: 100,
     accent: "#a23b56",
-    // Visuel IA le 03/09/2026 (voir le même commentaire sur la Cuvée I
-    // ci-dessus) : à remplacer par une vraie photo dès qu'elle existe.
-    photos: ["/images/rhubarbe-ia.jpg"],
-    photosGenereesParIA: true,
+    // Vraies photos ajoutées le 26/09/2026 (fournies par Laurent, bouteille
+    // 70cl étiquetée réelle) — remplacent le visuel IA provisoire. Galerie à
+    // 4 vues : recto, verso (texte "Notre Histoire"), détail du cachet de
+    // cire (vert sur cette cuvée), comparatif des deux formats (70cl +
+    // mignonnette 20cl côte à côte). `photosGenereesParIA` retiré, ces
+    // photos sont réelles.
+    photos: [
+      "/images/rhubarbe-1.jpg",
+      "/images/rhubarbe-2.jpg",
+      "/images/rhubarbe-3.jpg",
+      "/images/rhubarbe-4.jpg",
+    ],
     signature: {
       texte: "Aujourd'hui, c'est un jardin de ce même nord lyonnais qui prête sa fraîcheur à cette cuvée.",
       couleur: "#a23b56",
