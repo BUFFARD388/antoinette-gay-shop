@@ -43,55 +43,92 @@ const ETAPES = [
 
 // Sélection pour le bandeau défilant (26/09/2026) : 2 photos par produit
 // (la photo principale + un détail), parmi les vraies photos déjà en place
-// sur les fiches produit depuis le même jour (voir lib/produits.ts).
+// sur les fiches produit depuis le même jour (voir lib/produits.ts). Le
+// 26/09/2026 (2), sur demande de Laurent, 3 photos d'archive (déjà présentes
+// dans la galerie de app/notre-histoire/page.tsx depuis le 21/09/2026) ont
+// été intercalées régulièrement parmi les photos produit, pour relier
+// visuellement l'histoire familiale (Passage Gay, Tour Métallique de
+// Fourvière) à la création du gin. Ces 3 photos ont un traitement visuel
+// distinct (teinte sépia, légende différente) et renvoient vers
+// /notre-histoire plutôt que vers une fiche produit — champ `archive: true`
+// et `href` dédié, au lieu du `slug` utilisé pour les photos produit.
 const PHOTOS_BANDEAU = [
   {
     slug: "fragola",
     nom: "Le Jardin de l'Angélique",
+    href: "/produits/fragola",
     src: "/images/fragola-1.jpg",
     alt: "Bouteille 70cl du Jardin de l'Angélique, de face",
   },
   {
     slug: "fragola",
     nom: "Le Jardin de l'Angélique",
+    href: "/produits/fragola",
     src: "/images/fragola-3.jpg",
     alt: "Détail du cachet de cire du Jardin de l'Angélique",
   },
   {
     slug: "rhubarbe",
     nom: "Le Secret d'Antoinette",
+    href: "/produits/rhubarbe",
     src: "/images/rhubarbe-1.jpg",
     alt: "Bouteille 70cl du Secret d'Antoinette, de face",
   },
   {
+    archive: true,
+    nom: "Depuis 1861 — La Tour Métallique",
+    href: "/notre-histoire",
+    src: "/images/histoire-photo-tour-metallique.jpg",
+    alt: "Photo d'époque de la Tour Métallique de Fourvière, telle que la connaissaient Pierre et Antoinette Gay",
+  },
+  {
     slug: "rhubarbe",
     nom: "Le Secret d'Antoinette",
+    href: "/produits/rhubarbe",
     src: "/images/rhubarbe-3.jpg",
     alt: "Détail du cachet de cire du Secret d'Antoinette",
   },
   {
     slug: "decembre",
     nom: "Le Vœu d'Antoinette",
+    href: "/produits/decembre",
     src: "/images/decembre-1.jpg",
     alt: "Bouteille 70cl du Vœu d'Antoinette, de face",
   },
   {
     slug: "decembre",
     nom: "Le Vœu d'Antoinette",
+    href: "/produits/decembre",
     src: "/images/decembre-3.jpg",
     alt: "Détail du cachet de cire du Vœu d'Antoinette",
   },
   {
+    archive: true,
+    nom: "Passage Gay, à Fourvière",
+    href: "/notre-histoire",
+    src: "/images/histoire-gravure-observatoire.jpg",
+    alt: "Gravure d'époque « Observatoire & Passage Gay », annonçant le plus riche des panoramas",
+  },
+  {
     slug: "coffret-decouverte",
     nom: "Coffret Découverte",
+    href: "/produits/coffret-decouverte",
     src: "/images/coffret-decouverte-1.jpg",
     alt: "Coffret Découverte avec ses 3 mignonnettes 20cl",
   },
   {
     slug: "coffret-decouverte",
     nom: "Coffret Découverte",
+    href: "/produits/coffret-decouverte",
     src: "/images/coffret-decouverte-3.jpg",
     alt: "Détail des 3 cachets de cire du Coffret Découverte",
+  },
+  {
+    archive: true,
+    nom: "Notre histoire familiale",
+    href: "/notre-histoire",
+    src: "/images/histoire-carte-buchin-gay.jpg",
+    alt: "Carte d'époque de la Tour Métallique au nom de Buchin-Gay, le même nom que Pauline Gay Bûchin",
   },
 ];
 
@@ -281,25 +318,36 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
           (2 photos par produit : la photo principale + un détail), boucle
           CSS pure via app/globals.css (@keyframes bandeau-defile), en pause
           au survol et désactivée si `prefers-reduced-motion` est demandé.
-          Chaque photo renvoie vers la fiche du produit concerné — le second
-          jeu de photos (nécessaire pour boucler sans coupure) est masqué aux
-          lecteurs d'écran (aria-hidden + tabIndex -1) pour ne pas dupliquer
-          les liens perçus au clavier/lecteur d'écran. */}
+          Chaque photo produit renvoie vers sa fiche produit. Depuis le
+          26/09/2026 (2), 3 photos d'archive (Passage Gay, Tour Métallique,
+          carte de famille) sont intercalées régulièrement, avec un léger
+          traitement sépia et une légende différente, et renvoient vers
+          /notre-histoire — pour relier visuellement l'histoire familiale à
+          la création du gin. Le second jeu de photos (nécessaire pour
+          boucler sans coupure) est masqué aux lecteurs d'écran (aria-hidden
+          + tabIndex -1) pour ne pas dupliquer les liens perçus au
+          clavier/lecteur d'écran. */}
       <div className="bandeauDefile" style={bandeauDefileConteneur}>
         <div className="bandeauDefileTrack" style={bandeauDefileTrack}>
           {[...PHOTOS_BANDEAU, ...PHOTOS_BANDEAU].map((photo, i) => {
             const dupliquee = i >= PHOTOS_BANDEAU.length;
             return (
               <Link
-                key={`${photo.slug}-${photo.src}-${i}`}
-                href={`/produits/${photo.slug}`}
+                key={`${photo.href}-${photo.src}-${i}`}
+                href={photo.href}
                 style={bandeauDefileItem}
                 aria-hidden={dupliquee ? true : undefined}
                 tabIndex={dupliquee ? -1 : undefined}
-                aria-label={dupliquee ? undefined : `Découvrir ${photo.nom}`}
+                aria-label={
+                  dupliquee ? undefined : photo.archive ? `Découvrir notre histoire — ${photo.nom}` : `Découvrir ${photo.nom}`
+                }
               >
-                <img src={photo.src} alt={dupliquee ? "" : photo.alt} style={bandeauDefileImg} />
-                <span style={bandeauDefileLabel}>{photo.nom}</span>
+                <img
+                  src={photo.src}
+                  alt={dupliquee ? "" : photo.alt}
+                  style={photo.archive ? bandeauDefileImgArchive : bandeauDefileImg}
+                />
+                <span style={photo.archive ? bandeauDefileLabelArchive : bandeauDefileLabel}>{photo.nom}</span>
               </Link>
             );
           })}
@@ -543,6 +591,23 @@ const bandeauDefileLabel: React.CSSProperties = {
   color: "#F3ECDA",
   fontFamily: "var(--font-ui), Arial, sans-serif",
   background: "linear-gradient(to top, rgba(20,38,29,0.85), rgba(20,38,29,0))",
+};
+
+// Photos d'archive intercalées le 26/09/2026 (2) : même gabarit que les
+// photos produit, mais teinte sépia (`filter`) et légende dorée en
+// italique pour signaler d'un coup d'œil qu'il s'agit d'une photo d'époque
+// et non d'un produit — incite à cliquer vers /notre-histoire plutôt que
+// vers une fiche produit.
+const bandeauDefileImgArchive: React.CSSProperties = {
+  ...bandeauDefileImg,
+  filter: "sepia(0.55) contrast(1.05) brightness(0.92)",
+};
+
+const bandeauDefileLabelArchive: React.CSSProperties = {
+  ...bandeauDefileLabel,
+  color: "#F3D9A0",
+  fontStyle: "italic",
+  background: "linear-gradient(to top, rgba(40,28,10,0.88), rgba(40,28,10,0))",
 };
 
 const badgePrecommande: React.CSSProperties = {
