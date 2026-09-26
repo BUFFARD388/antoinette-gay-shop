@@ -68,6 +68,12 @@ const ETAPES = [
 // Propriétaire" porte le même nom que Pauline Gay Bûchin (voir la partie
 // "Le mot du fondateur" plus bas) — mentionné tel quel dans la légende,
 // sans reformuler le récit familial au-delà de ce que confirme ce document.
+// Le 26/09/2026, Laurent a renvoyé 5 photos supplémentaires en pensant les
+// ajouter : 4 d'entre elles étaient en fait déjà sur le site (3 déjà dans
+// cette galerie depuis le 23/08/2026 — `histoire-batiment.jpg`,
+// `histoire-carte-postale.jpg`, `histoire-entree.jpg` — et le portrait de
+// Pauline Gay Bûchin, déjà utilisé plus bas sur cette page). Seule la photo
+// de la terrasse du restaurant Gay était réellement nouvelle, ajoutée ici.
 const GALERIE = [
   { src: "/images/histoire-photo-tour-metallique.jpg", legende: "La Tour Métallique de Fourvière, telle que la connaissaient Pierre et Antoinette." },
   { src: "/images/histoire-gravure-observatoire.jpg", legende: "« Observatoire & Passage Gay » — l'annonce d'époque promettant « le plus riche et le plus varié » des panoramas." },
@@ -75,6 +81,7 @@ const GALERIE = [
   { src: "/images/histoire-batiment.jpg", legende: "Entrée principale de la Tour Métallique." },
   { src: "/images/histoire-carte-postale.jpg", legende: "« Antiquités du Passage Gay » — carte postale d'époque." },
   { src: "/images/histoire-entree.jpg", legende: "L'entrée du Passage Gay — restaurant, observatoire, vue merveilleuse." },
+  { src: "/images/histoire-terrasse-restaurant-gay.jpg", legende: "« La Terrasse du Restaurant Gay » — le plus beau panorama de Lyon, à table." },
 ];
 
 // Résumés punchy par cuvée pour cette page (distincts de `signature` dans

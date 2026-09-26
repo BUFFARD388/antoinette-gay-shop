@@ -48,10 +48,14 @@ const ETAPES = [
 // dans la galerie de app/notre-histoire/page.tsx depuis le 21/09/2026) ont
 // été intercalées régulièrement parmi les photos produit, pour relier
 // visuellement l'histoire familiale (Passage Gay, Tour Métallique de
-// Fourvière) à la création du gin. Ces 3 photos ont un traitement visuel
-// distinct (teinte sépia, légende différente) et renvoient vers
-// /notre-histoire plutôt que vers une fiche produit — champ `archive: true`
-// et `href` dédié, au lieu du `slug` utilisé pour les photos produit.
+// Fourvière) à la création du gin. Complété le 26/09/2026 (3) avec 2 photos
+// d'archive supplémentaires (le portail du Passage Gay, le bâtiment de
+// l'Observatoire — déjà présentes dans la galerie Notre Histoire depuis le
+// 23/08/2026, mais pas encore reprises dans ce bandeau), 5 au total. Ces
+// photos ont un traitement visuel distinct (teinte sépia, légende
+// différente) et renvoient vers /notre-histoire plutôt que vers une fiche
+// produit — champ `archive: true` et `href` dédié, au lieu du `slug`
+// utilisé pour les photos produit.
 const PHOTOS_BANDEAU = [
   {
     slug: "fragola",
@@ -89,6 +93,13 @@ const PHOTOS_BANDEAU = [
     alt: "Détail du cachet de cire du Secret d'Antoinette",
   },
   {
+    archive: true,
+    nom: "Le portail du Passage Gay",
+    href: "/notre-histoire",
+    src: "/images/histoire-entree.jpg",
+    alt: "Photo d'époque de l'entrée du Passage Gay — restaurant, observatoire, vue merveilleuse",
+  },
+  {
     slug: "decembre",
     nom: "Le Vœu d'Antoinette",
     href: "/produits/decembre",
@@ -115,6 +126,13 @@ const PHOTOS_BANDEAU = [
     href: "/produits/coffret-decouverte",
     src: "/images/coffret-decouverte-1.jpg",
     alt: "Coffret Découverte avec ses 3 mignonnettes 20cl",
+  },
+  {
+    archive: true,
+    nom: "Le bâtiment de l'Observatoire",
+    href: "/notre-histoire",
+    src: "/images/histoire-batiment.jpg",
+    alt: "Photo d'époque de l'entrée principale de la Tour Métallique, avec ses tourelles et sa véranda",
   },
   {
     slug: "coffret-decouverte",
