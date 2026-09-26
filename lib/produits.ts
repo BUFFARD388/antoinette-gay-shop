@@ -40,15 +40,32 @@
 //    ici et dans app/notre-histoire/page.tsx. Slug technique inchangé
 //    ("rhubarbe").
 //
-// Le même jour, Laurent a précisé les quantités définitives pour l'année
+// Le 02/09/2026, Laurent a précisé les quantités définitives pour l'année
 // 2027 : 100 bouteilles par cuvée (déjà en place ci-dessous) et 50
 // coffrets "Coffret Découverte" (le coffret garde son nom, seule sa
-// editionLimitee passe de 100 à 50).
+// editionLimitee passe de 100 à 50). Puis, le 11/09/2026, au vu du succès
+// du lancement (10 coffrets précommandés dès le premier jour, sur les 50
+// disponibles), Laurent a remonté editionLimitee du coffret à 100 pour
+// avoir davantage de marge.
 //
 // Prix : 42€/70cl, coffret passé de 49€ à 59€ le 02/09/2026 (confirmés par Laurent). stripePriceId n'est
 // pas utilisé pendant la phase précommande (aucun paiement n'est pris) :
 // il resservira au vrai lancement 2027 quand la boutique passera en
 // paiement Stripe.
+//
+// Mentions (phrase courte sous le nom) revues le 02/09/2026 :
+//   Cuvée I  — "Permanent au raisin fragola" → "Fragola de notre jardin".
+//     Laurent a précisé que le fragola n'est pas un choix générique : ce
+//     sont ses propres pieds de fragola (rouge et blanc) dans son jardin,
+//     et le rouge (utilisé pour cette cuvée) apporte un vrai goût de fraise
+//     des bois — plus marqué que le blanc. Description enrichie en
+//     conséquence ("de notre jardin", "goût de fraise des bois"). Le blanc
+//     n'est pas utilisé dans cette cuvée (récolte 2026 abondante en blanc,
+//     mais pas assez typé ; la cuvée 2027 sera bien au fragola rouge).
+//   Cuvée II — "Le saisonnier — printemps / été" → "Le secret du
+//     printemps". Laurent a confirmé au passage que le "jardin au nord de
+//     Lyon" mentionné dans la description est bien son propre jardin (pas
+//     une image).
 //
 // `signature` reprend, mot pour mot, la phrase de clôture propre à chaque
 // cuvée telle qu'imprimée au dos de la bouteille (couleur reprise de
@@ -74,6 +91,9 @@ export type Produit = {
   nom: string;
   cuvee: string;
   mention?: string; // ex: "Permanent au raisin fragola" — statut de disponibilité, affiché sous le nom
+  sousTitreSEO?: string; // ex: "Gin Artisanal au Raisin Fragola" — affiché juste sous le nom, dans le <h3>
+  // de la carte produit et le <h1> de la fiche produit, pour enrichir ces titres avec de vrais mots-clés
+  // recherchés (ajouté le 14/09/2026 à la demande de Laurent, suite à des conseils SEO reçus).
   categorie: string; // ex: "Gin aromatisé" — la famille de spiritueux, affichée à côté de la cuvée
   ingredients: string; // ex: "Raisin fragola rouge et genièvre" — repris du recto de l'étiquette
   description: string;
@@ -88,6 +108,7 @@ export type Produit = {
   signature?: Signature; // phrase de clôture au dos de l'étiquette, propre à cette cuvée
   photos?: string[]; // vraies photos de la bouteille (public/images/...), 1 à 3 vues — sinon on affiche le sceau.
   // La 1ère sert de photo de carte ; sur la page produit, toutes s'affichent en galerie avec vignettes dès qu'il y en a plus d'une.
+  photosGenereesParIA?: boolean; // true si `photos` contient des visuels générés par IA (pas de vraie photo) — affiche une mention à côté de l'image, obligation de transparence.
   cuveesIncluses?: string[]; // slugs des cuvées incluses, pour un coffret
   ginTonic?: SuggestionDegustation;
   cocktail?: SuggestionDegustation;
@@ -98,11 +119,12 @@ export const produits: Produit[] = [
     slug: "fragola",
     nom: "Le Jardin de l'Angélique",
     cuvee: "Cuvée I",
-    mention: "Permanent au raisin fragola",
+    sousTitreSEO: "Gin Artisanal au Raisin Fragola",
+    mention: "Fragola de notre jardin",
     categorie: "Gin aromatisé",
     ingredients: "Raisin fragola rouge et genièvre",
     description:
-      "Gin distillé à partir de raisin fragola rouge vendangé tardivement et de genièvre. Un clin d'œil aux « cures de raisin » qu'inventait déjà Pierre Gay sur la colline de Fourvière, il y a plus d'un siècle.",
+      "Gin distillé à partir de raisin fragola rouge de notre jardin, vendangé tardivement, et de genièvre — une variété rare qui apporte un vrai goût de fraise des bois. Un clin d'œil aux « cures de raisin » qu'inventait déjà Pierre Gay sur la colline de Fourvière, il y a plus d'un siècle.",
     prix: 4200,
     stripePriceId: "price_REMPLACER_FRAGOLA",
     image: "/images/fragola.jpg",
@@ -111,12 +133,17 @@ export const produits: Produit[] = [
     type: "cuvee",
     editionLimitee: 100,
     accent: "#b9821c",
-    // Vraies photos (25/08/2026) : bouteille étiquetée "Cuvée II Rhubarbe"
-    // et bouchon en cire rose au sceau AG, fournies par Laurent — réutilisées
-    // pour les 3 cuvées en attendant que chacune ait sa propre bouteille
-    // photographiée. L'étiquette visible ("RHUBARBE") ne correspond donc pas
-    // encore à cette fiche Fragola : à remplacer dès que possible.
-    photos: ["/images/bouteille-antoinette-gay.jpg", "/images/bouchon-sceau-ag.jpg"],
+    // Vraies photos ajoutées le 26/09/2026 (fournies par Laurent, bouteille
+    // 70cl étiquetée réelle) — remplacent le visuel IA provisoire. Galerie à
+    // 4 vues : recto, verso (texte "Notre Histoire"), détail du cachet de
+    // cire, comparatif des deux formats (70cl + mignonnette 20cl côte à
+    // côte). `photosGenereesParIA` retiré, ces photos sont réelles.
+    photos: [
+      "/images/fragola-1.jpg",
+      "/images/fragola-2.jpg",
+      "/images/fragola-3.jpg",
+      "/images/fragola-4.jpg",
+    ],
     signature: {
       texte:
         "Plus d'un siècle après ses cures de raisin, nous redistillons à notre tour le fruit de la première récolte de ce terroir.",
@@ -137,7 +164,8 @@ export const produits: Produit[] = [
     slug: "rhubarbe",
     nom: "Le Secret d'Antoinette",
     cuvee: "Cuvée II",
-    mention: "Le saisonnier — printemps / été",
+    sousTitreSEO: "Gin Distillé à la Rhubarbe (Nord de Lyon)",
+    mention: "Le secret du printemps",
     categorie: "Gin aromatisé",
     ingredients: "Rhubarbe et genièvre",
     description:
@@ -150,11 +178,10 @@ export const produits: Produit[] = [
     type: "cuvee",
     editionLimitee: 100,
     accent: "#a23b56",
-    // Vraies photos (25/08/2026) : bouteille étiquetée "Cuvée II Rhubarbe"
-    // et bouchon en cire rose au sceau AG, fournies par Laurent — réutilisées
-    // pour les 3 cuvées en attendant que chacune ait sa propre bouteille
-    // photographiée. Celle-ci correspond déjà à la bonne cuvée.
-    photos: ["/images/bouteille-antoinette-gay.jpg", "/images/bouchon-sceau-ag.jpg"],
+    // Visuel IA le 03/09/2026 (voir le même commentaire sur la Cuvée I
+    // ci-dessus) : à remplacer par une vraie photo dès qu'elle existe.
+    photos: ["/images/rhubarbe-ia.jpg"],
+    photosGenereesParIA: true,
     signature: {
       texte: "Aujourd'hui, c'est un jardin de ce même nord lyonnais qui prête sa fraîcheur à cette cuvée.",
       couleur: "#a23b56",
@@ -174,6 +201,7 @@ export const produits: Produit[] = [
     slug: "decembre",
     nom: "Le Vœu de Fourvière",
     cuvee: "Cuvée III",
+    sousTitreSEO: "Gin aux Épices Douces (Spécial Fête des Lumières)",
     mention: "Le 8 décembre, Fête des Lumières",
     categorie: "Gin aromatisé",
     ingredients: "Épices douces, pomme et genièvre",
@@ -187,12 +215,10 @@ export const produits: Produit[] = [
     type: "cuvee",
     editionLimitee: 100,
     accent: "#3f4a4a",
-    // Vraies photos (25/08/2026) : bouteille étiquetée "Cuvée II Rhubarbe"
-    // et bouchon en cire rose au sceau AG, fournies par Laurent — réutilisées
-    // pour les 3 cuvées en attendant que chacune ait sa propre bouteille
-    // photographiée. L'étiquette visible ("RHUBARBE") ne correspond donc pas
-    // encore à cette fiche Le Vœu de Fourvière : à remplacer dès que possible.
-    photos: ["/images/bouteille-antoinette-gay.jpg", "/images/bouchon-sceau-ag.jpg"],
+    // Visuel IA le 03/09/2026 (voir le même commentaire sur la Cuvée I
+    // ci-dessus) : à remplacer par une vraie photo dès qu'elle existe.
+    photos: ["/images/decembre-ia.jpg"],
+    photosGenereesParIA: true,
     signature: {
       texte:
         "Chaque 8 décembre, Lyon pose un lumignon à ses fenêtres en mémoire du vœu fait à Notre-Dame de Fourvière, tout près du Passage Gay.",
@@ -223,13 +249,15 @@ export const produits: Produit[] = [
     degre: 42,
     format: "3 x 20cl",
     type: "coffret",
-    editionLimitee: 50,
+    editionLimitee: 100,
     accent: "#1F3D2E",
     cuveesIncluses: ["fragola", "rhubarbe", "decembre"],
-    // Vraie photo (25/08/2026) : le coffret 3 bouteilles vu de dessus,
-    // recadrée par Claude pour retirer la table en bois autour du carton
-    // (fournie par Laurent, bouteilles encore vides sur cette prise de vue).
-    photos: ["/images/coffret-decouverte-detoure.jpg"],
+    // Visuel généré par IA ajouté le 04/09/2026 (même principe que les 3
+    // cuvées le 03/09/2026 : en attendant une vraie photo du coffret
+    // complet, avec mention de transparence obligatoire via
+    // photosGenereesParIA).
+    photos: ["/images/coffret-decouverte-ia.jpg"],
+    photosGenereesParIA: true,
   },
 ];
 
