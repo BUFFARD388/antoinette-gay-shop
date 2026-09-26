@@ -278,12 +278,21 @@ export const produits: Produit[] = [
     editionLimitee: 100,
     accent: "#1F3D2E",
     cuveesIncluses: ["fragola", "rhubarbe", "decembre"],
-    // Visuel généré par IA ajouté le 04/09/2026 (même principe que les 3
-    // cuvées le 03/09/2026 : en attendant une vraie photo du coffret
-    // complet, avec mention de transparence obligatoire via
-    // photosGenereesParIA).
-    photos: ["/images/coffret-decouverte-ia.jpg"],
-    photosGenereesParIA: true,
+    // Vraies photos ajoutées le 26/09/2026 (fournies par Laurent, coffret
+    // réel avec ses 3 mignonnettes 20cl étiquetées) — remplacent le visuel
+    // IA provisoire. Dernier produit du catalogue à passer aux vraies
+    // photos (les 3 cuvées l'étaient déjà). Galerie à 4 vues, adaptée au
+    // coffret (pas de "cachet" unique comme sur une cuvée) : le coffret
+    // avec ses 3 bouteilles debout devant, le coffret ouvert vu de biais,
+    // détail des 3 cachets de cire (rouge/vert/orange) vus de dessus,
+    // détail des 3 étiquettes à travers les découpes du carton.
+    // `photosGenereesParIA` retiré, ces photos sont réelles.
+    photos: [
+      "/images/coffret-decouverte-1.jpg",
+      "/images/coffret-decouverte-2.jpg",
+      "/images/coffret-decouverte-3.jpg",
+      "/images/coffret-decouverte-4.jpg",
+    ],
   },
 ];
 
