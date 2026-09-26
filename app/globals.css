@@ -12,3 +12,34 @@
   --font-display: "Fraunces", Georgia, serif;
   --font-ui: "Work Sans", Arial, sans-serif;
 }
+
+/* Bandeau photos qui défile (page d'accueil, components/CampagnePrecommande.tsx),
+   ajouté le 26/09/2026 en remplacement du visuel IA de mise en situation.
+   La piste contient le jeu de photos dupliqué une fois ; l'animation glisse
+   d'exactement une largeur de jeu (-50%) puis reboucle sans coupure visible. */
+@keyframes bandeau-defile {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.bandeauDefileTrack {
+  animation: bandeau-defile 32s linear infinite;
+}
+
+.bandeauDefile:hover .bandeauDefileTrack {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bandeauDefileTrack {
+    animation: none;
+  }
+
+  .bandeauDefile {
+    overflow-x: auto;
+  }
+}

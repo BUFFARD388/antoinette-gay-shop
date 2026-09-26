@@ -41,6 +41,60 @@ const ETAPES = [
   },
 ];
 
+// Sélection pour le bandeau défilant (26/09/2026) : 2 photos par produit
+// (la photo principale + un détail), parmi les vraies photos déjà en place
+// sur les fiches produit depuis le même jour (voir lib/produits.ts).
+const PHOTOS_BANDEAU = [
+  {
+    slug: "fragola",
+    nom: "Le Jardin de l'Angélique",
+    src: "/images/fragola-1.jpg",
+    alt: "Bouteille 70cl du Jardin de l'Angélique, de face",
+  },
+  {
+    slug: "fragola",
+    nom: "Le Jardin de l'Angélique",
+    src: "/images/fragola-3.jpg",
+    alt: "Détail du cachet de cire du Jardin de l'Angélique",
+  },
+  {
+    slug: "rhubarbe",
+    nom: "Le Secret d'Antoinette",
+    src: "/images/rhubarbe-1.jpg",
+    alt: "Bouteille 70cl du Secret d'Antoinette, de face",
+  },
+  {
+    slug: "rhubarbe",
+    nom: "Le Secret d'Antoinette",
+    src: "/images/rhubarbe-3.jpg",
+    alt: "Détail du cachet de cire du Secret d'Antoinette",
+  },
+  {
+    slug: "decembre",
+    nom: "Le Vœu d'Antoinette",
+    src: "/images/decembre-1.jpg",
+    alt: "Bouteille 70cl du Vœu d'Antoinette, de face",
+  },
+  {
+    slug: "decembre",
+    nom: "Le Vœu d'Antoinette",
+    src: "/images/decembre-3.jpg",
+    alt: "Détail du cachet de cire du Vœu d'Antoinette",
+  },
+  {
+    slug: "coffret-decouverte",
+    nom: "Coffret Découverte",
+    src: "/images/coffret-decouverte-1.jpg",
+    alt: "Coffret Découverte avec ses 3 mignonnettes 20cl",
+  },
+  {
+    slug: "coffret-decouverte",
+    nom: "Coffret Découverte",
+    src: "/images/coffret-decouverte-3.jpg",
+    alt: "Détail des 3 cachets de cire du Coffret Découverte",
+  },
+];
+
 const FAQ = [
   {
     q: "Est-ce que je suis débité·e maintenant ?",
@@ -221,17 +275,35 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
         ))}
       </section>
 
-      {/* Bannière d'ambiance au-dessus des cuvées — visuel généré par IA
-          fourni par Laurent le 04/09/2026 (mise en situation du Coffret
-          Découverte, colline de Fourvière en arrière-plan). Même principe de
-          transparence que les photos produit : mention visible sur l'image. */}
-      <div style={bandeauAmbiance}>
-        <img
-          src="/images/ambiance-coffret-ia.jpg"
-          alt="Trois amis trinquent avec un gin tonic Maison Antoinette Gay ; le Coffret Découverte est posé devant eux, la colline de Fourvière en arrière-plan"
-          style={imgAmbiance}
-        />
-        <span style={badgeIAAmbiance}>Visuel généré par IA</span>
+      {/* Bandeau photos qui défile — remplace le 26/09/2026 le visuel IA de
+          mise en situation, à la demande de Laurent, qui a maintenant de
+          vraies photos pour les 4 produits. Bande continue façon "photomaton"
+          (2 photos par produit : la photo principale + un détail), boucle
+          CSS pure via app/globals.css (@keyframes bandeau-defile), en pause
+          au survol et désactivée si `prefers-reduced-motion` est demandé.
+          Chaque photo renvoie vers la fiche du produit concerné — le second
+          jeu de photos (nécessaire pour boucler sans coupure) est masqué aux
+          lecteurs d'écran (aria-hidden + tabIndex -1) pour ne pas dupliquer
+          les liens perçus au clavier/lecteur d'écran. */}
+      <div className="bandeauDefile" style={bandeauDefileConteneur}>
+        <div className="bandeauDefileTrack" style={bandeauDefileTrack}>
+          {[...PHOTOS_BANDEAU, ...PHOTOS_BANDEAU].map((photo, i) => {
+            const dupliquee = i >= PHOTOS_BANDEAU.length;
+            return (
+              <Link
+                key={`${photo.slug}-${photo.src}-${i}`}
+                href={`/produits/${photo.slug}`}
+                style={bandeauDefileItem}
+                aria-hidden={dupliquee ? true : undefined}
+                tabIndex={dupliquee ? -1 : undefined}
+                aria-label={dupliquee ? undefined : `Découvrir ${photo.nom}`}
+              >
+                <img src={photo.src} alt={dupliquee ? "" : photo.alt} style={bandeauDefileImg} />
+                <span style={bandeauDefileLabel}>{photo.nom}</span>
+              </Link>
+            );
+          })}
+        </div>
       </div>
 
       {/* Produits */}
@@ -429,30 +501,48 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
   );
 }
 
-const bandeauAmbiance: React.CSSProperties = {
+const bandeauDefileConteneur: React.CSSProperties = {
   marginTop: 56,
-  position: "relative",
   overflow: "hidden",
   borderRadius: 4,
   background: "#1F3D2E",
+  padding: "18px 0",
 };
 
-const imgAmbiance: React.CSSProperties = {
-  width: "100%",
-  height: "auto",
+const bandeauDefileTrack: React.CSSProperties = {
+  display: "flex",
+  gap: 14,
+  width: "fit-content",
+  padding: "0 14px",
+};
+
+const bandeauDefileItem: React.CSSProperties = {
+  position: "relative",
+  display: "block",
+  height: "clamp(170px, 30vw, 260px)",
+  flexShrink: 0,
+  borderRadius: 4,
+  overflow: "hidden",
+};
+
+const bandeauDefileImg: React.CSSProperties = {
+  height: "100%",
+  width: "auto",
   display: "block",
 };
 
-const badgeIAAmbiance: React.CSSProperties = {
+const bandeauDefileLabel: React.CSSProperties = {
   position: "absolute",
-  bottom: 12,
-  right: 12,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  margin: 0,
+  padding: "6px 10px",
   fontSize: 11,
   letterSpacing: 0.3,
-  color: "#fff",
-  background: "rgba(31, 61, 46, 0.72)",
-  padding: "4px 10px",
-  borderRadius: 2,
+  color: "#F3ECDA",
+  fontFamily: "var(--font-ui), Arial, sans-serif",
+  background: "linear-gradient(to top, rgba(20,38,29,0.85), rgba(20,38,29,0))",
 };
 
 const badgePrecommande: React.CSSProperties = {
