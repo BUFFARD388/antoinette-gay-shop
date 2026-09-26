@@ -74,8 +74,34 @@ const ETAPES = [
 // `histoire-carte-postale.jpg`, `histoire-entree.jpg` — et le portrait de
 // Pauline Gay Bûchin, déjà utilisé plus bas sur cette page). Seule la photo
 // de la terrasse du restaurant Gay était réellement nouvelle, ajoutée ici.
+//
+// Le 26/09/2026 (2), Laurent a envoyé 10 photos supplémentaires : aucune
+// n'était un doublon d'un visuel déjà présent sur le site (vérifié par
+// dimensions + comparaison visuelle), mais 2 d'entre elles étaient deux
+// scans de la même carte postale (« Panorama pris de la Plate-Forme » —
+// seule la version la plus nette, `histoire-panorama-plateforme.jpg`, a été
+// conservée). Les 9 photos uniques couvrent une période plus ancienne que
+// le reste de la galerie : l'annonce du projet et le chantier de
+// construction de la Tour Métallique (1892-1894), avant son achèvement.
+// Les deux pages de presse d'époque (`histoire-article-*.jpg`) sont denses
+// en texte mais citent noir sur blanc le passage Gay et son propriétaire,
+// M. Rusterholz — un document rare qui confirme le récit familial. Elles
+// ont été redimensionnées moins agressivement (1400px de large plutôt que
+// 900px) pour rester lisibles une fois agrandies via le zoom. La galerie a
+// été réordonnée pour suivre la chronologie réelle : annonce du projet →
+// chantier → tour achevée → vie du Passage Gay/famille, plutôt que de
+// simplement empiler les nouvelles photos à la suite des anciennes.
 const GALERIE = [
-  { src: "/images/histoire-photo-tour-metallique.jpg", legende: "La Tour Métallique de Fourvière, telle que la connaissaient Pierre et Antoinette." },
+  { src: "/images/histoire-article-lyon-exposition-1892.jpg", legende: "« Lyon-Exposition », 1892 — l'annonce du projet, avec son restaurant confié à « M. Rusterholz, propriétaire du passage Gay »." },
+  { src: "/images/histoire-article-construction-lyonnaise-1892.jpg", legende: "Supplément à La Construction Lyonnaise, 1er mai 1892 — le projet retenu, signé M. Collet, architecte." },
+  { src: "/images/histoire-chantier-base.jpg", legende: "La base de la Tour Métallique en construction, sous son échafaudage." },
+  { src: "/images/histoire-chantier-pavillon.jpg", legende: "Le pavillon d'entrée en cours de construction — tourelles et arcades." },
+  { src: "/images/histoire-chantier-rue.jpg", legende: "La Tour, déjà vertigineuse mais encore cernée d'échafaudages, vue depuis une rue de Fourvière." },
+  { src: "/images/histoire-chantier-ruelle.jpg", legende: "La Tour en chantier, aperçue depuis une ruelle voisine." },
+  { src: "/images/histoire-photo-tour-metallique.jpg", legende: "La Tour Métallique de Fourvière achevée, telle que la connaissaient Pierre et Antoinette." },
+  { src: "/images/histoire-panorama-plateforme.jpg", legende: "« Panorama pris de la Plate-Forme de la Tour métallique » — carte postale d'époque." },
+  { src: "/images/histoire-carte-postale-couleur.jpg", legende: "« La Tour métallique » — carte postale colorisée d'époque." },
+  { src: "/images/histoire-vue-colline-lyon.jpg", legende: "Vue sur Lyon depuis la colline de Fourvière, le pavillon de la Tour à l'horizon." },
   { src: "/images/histoire-gravure-observatoire.jpg", legende: "« Observatoire & Passage Gay » — l'annonce d'époque promettant « le plus riche et le plus varié » des panoramas." },
   { src: "/images/histoire-carte-buchin-gay.jpg", legende: "Carte de la Tour Métallique, au nom de Buchin-Gay — le même nom que Pauline Gay Bûchin." },
   { src: "/images/histoire-batiment.jpg", legende: "Entrée principale de la Tour Métallique." },

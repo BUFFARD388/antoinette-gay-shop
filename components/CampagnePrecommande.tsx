@@ -51,11 +51,16 @@ const ETAPES = [
 // Fourvière) à la création du gin. Complété le 26/09/2026 (3) avec 2 photos
 // d'archive supplémentaires (le portail du Passage Gay, le bâtiment de
 // l'Observatoire — déjà présentes dans la galerie Notre Histoire depuis le
-// 23/08/2026, mais pas encore reprises dans ce bandeau), 5 au total. Ces
-// photos ont un traitement visuel distinct (teinte sépia, légende
-// différente) et renvoient vers /notre-histoire plutôt que vers une fiche
-// produit — champ `archive: true` et `href` dédié, au lieu du `slug`
-// utilisé pour les photos produit.
+// 23/08/2026, mais pas encore reprises dans ce bandeau), 5 au total.
+// Complété le 26/09/2026 (4) avec 3 photos du chantier de construction de la
+// Tour (1892-1894, nouvellement ajoutées à la galerie Notre Histoire), sur
+// demande de Laurent — 8 photos d'archive au total, soit autant que de
+// photos produit. La cadence est donc passée d'une alternance irrégulière à
+// une stricte alternance produit/archive sur tout le bandeau. Ces photos ont
+// un traitement visuel distinct (teinte sépia, légende différente) et
+// renvoient vers /notre-histoire plutôt que vers une fiche produit — champ
+// `archive: true` et `href` dédié, au lieu du `slug` utilisé pour les
+// photos produit.
 const PHOTOS_BANDEAU = [
   {
     slug: "fragola",
@@ -65,11 +70,25 @@ const PHOTOS_BANDEAU = [
     alt: "Bouteille 70cl du Jardin de l'Angélique, de face",
   },
   {
+    archive: true,
+    nom: "Depuis 1861 — La Tour Métallique",
+    href: "/notre-histoire",
+    src: "/images/histoire-photo-tour-metallique.jpg",
+    alt: "Photo d'époque de la Tour Métallique de Fourvière, telle que la connaissaient Pierre et Antoinette Gay",
+  },
+  {
     slug: "fragola",
     nom: "Le Jardin de l'Angélique",
     href: "/produits/fragola",
     src: "/images/fragola-3.jpg",
     alt: "Détail du cachet de cire du Jardin de l'Angélique",
+  },
+  {
+    archive: true,
+    nom: "Le portail du Passage Gay",
+    href: "/notre-histoire",
+    src: "/images/histoire-entree.jpg",
+    alt: "Photo d'époque de l'entrée du Passage Gay — restaurant, observatoire, vue merveilleuse",
   },
   {
     slug: "rhubarbe",
@@ -80,10 +99,10 @@ const PHOTOS_BANDEAU = [
   },
   {
     archive: true,
-    nom: "Depuis 1861 — La Tour Métallique",
+    nom: "Passage Gay, à Fourvière",
     href: "/notre-histoire",
-    src: "/images/histoire-photo-tour-metallique.jpg",
-    alt: "Photo d'époque de la Tour Métallique de Fourvière, telle que la connaissaient Pierre et Antoinette Gay",
+    src: "/images/histoire-gravure-observatoire.jpg",
+    alt: "Gravure d'époque « Observatoire & Passage Gay », annonçant le plus riche des panoramas",
   },
   {
     slug: "rhubarbe",
@@ -94,10 +113,10 @@ const PHOTOS_BANDEAU = [
   },
   {
     archive: true,
-    nom: "Le portail du Passage Gay",
+    nom: "Le bâtiment de l'Observatoire",
     href: "/notre-histoire",
-    src: "/images/histoire-entree.jpg",
-    alt: "Photo d'époque de l'entrée du Passage Gay — restaurant, observatoire, vue merveilleuse",
+    src: "/images/histoire-batiment.jpg",
+    alt: "Photo d'époque de l'entrée principale de la Tour Métallique, avec ses tourelles et sa véranda",
   },
   {
     slug: "decembre",
@@ -105,6 +124,13 @@ const PHOTOS_BANDEAU = [
     href: "/produits/decembre",
     src: "/images/decembre-1.jpg",
     alt: "Bouteille 70cl du Vœu d'Antoinette, de face",
+  },
+  {
+    archive: true,
+    nom: "Notre histoire familiale",
+    href: "/notre-histoire",
+    src: "/images/histoire-carte-buchin-gay.jpg",
+    alt: "Carte d'époque de la Tour Métallique au nom de Buchin-Gay, le même nom que Pauline Gay Bûchin",
   },
   {
     slug: "decembre",
@@ -115,10 +141,10 @@ const PHOTOS_BANDEAU = [
   },
   {
     archive: true,
-    nom: "Passage Gay, à Fourvière",
+    nom: "1892 — La Tour en chantier",
     href: "/notre-histoire",
-    src: "/images/histoire-gravure-observatoire.jpg",
-    alt: "Gravure d'époque « Observatoire & Passage Gay », annonçant le plus riche des panoramas",
+    src: "/images/histoire-chantier-base.jpg",
+    alt: "Photo d'époque de la base de la Tour Métallique en construction, sous son échafaudage",
   },
   {
     slug: "coffret-decouverte",
@@ -129,10 +155,10 @@ const PHOTOS_BANDEAU = [
   },
   {
     archive: true,
-    nom: "Le bâtiment de l'Observatoire",
+    nom: "Le pavillon en construction",
     href: "/notre-histoire",
-    src: "/images/histoire-batiment.jpg",
-    alt: "Photo d'époque de l'entrée principale de la Tour Métallique, avec ses tourelles et sa véranda",
+    src: "/images/histoire-chantier-pavillon.jpg",
+    alt: "Photo d'époque du pavillon d'entrée de la Tour Métallique en cours de construction",
   },
   {
     slug: "coffret-decouverte",
@@ -143,10 +169,10 @@ const PHOTOS_BANDEAU = [
   },
   {
     archive: true,
-    nom: "Notre histoire familiale",
+    nom: "La Tour, encore en chantier",
     href: "/notre-histoire",
-    src: "/images/histoire-carte-buchin-gay.jpg",
-    alt: "Carte d'époque de la Tour Métallique au nom de Buchin-Gay, le même nom que Pauline Gay Bûchin",
+    src: "/images/histoire-chantier-rue.jpg",
+    alt: "Photo d'époque de la Tour Métallique presque achevée, encore cernée d'échafaudages",
   },
 ];
 
