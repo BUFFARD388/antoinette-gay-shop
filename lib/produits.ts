@@ -10,7 +10,9 @@
 //   Cuvée II  — anciennement "Cuvée Rhubarbe", renommée "Le Secret
 //               d'Antoinette" le 02/09/2026 (voir plus bas).
 //   Cuvée III — anciennement "Le Gin de Noël" puis "Cuvée Décembre",
-//               renommée "Le Vœu de Fourvière" le 02/09/2026 (voir plus bas).
+//               renommée "Le Vœu de Fourvière" le 02/09/2026 (voir plus bas),
+//               puis "Le Vœu d'Antoinette" le 26/09/2026 pour coller au nom
+//               réellement imprimé sur les étiquettes (voir plus bas).
 //
 // Correction du 23/08/2026 : la description et les ingrédients de la
 // Cuvée III mentionnaient à tort un genièvre au whisky tourbé. Laurent a
@@ -26,7 +28,11 @@
 //    au-dessus du Passage Gay), tenu chaque 8 décembre en allumant des
 //    lumignons aux fenêtres — la Fête des Lumières. Après un premier essai
 //    "Cuvée Décembre", le nom retenu est "Le Vœu de Fourvière", qui garde aussi
-//    la dimension épices/pomme/gourmandise de la recette. Le slug technique
+//    la dimension épices/pomme/gourmandise de la recette. Le 26/09/2026,
+//    renommée à nouveau "Le Vœu d'Antoinette" : les étiquettes déjà
+//    imprimées et envoyées par Laurent portent ce nom (photos reçues ce
+//    jour-là) — Laurent a confirmé vouloir aligner le site sur l'étiquette
+//    réelle plutôt que réimprimer. Le slug technique
 //    passe de "vestiges" à "decembre" (mis à jour aussi dans
 //    app/notre-histoire/page.tsx et le coffret ci-dessous) ; recette
 //    inchangée.
@@ -207,7 +213,7 @@ export const produits: Produit[] = [
   },
   {
     slug: "decembre",
-    nom: "Le Vœu de Fourvière",
+    nom: "Le Vœu d'Antoinette",
     cuvee: "Cuvée III",
     sousTitreSEO: "Gin aux Épices Douces (Spécial Fête des Lumières)",
     mention: "Le 8 décembre, Fête des Lumières",
@@ -223,10 +229,22 @@ export const produits: Produit[] = [
     type: "cuvee",
     editionLimitee: 100,
     accent: "#3f4a4a",
-    // Visuel IA le 03/09/2026 (voir le même commentaire sur la Cuvée I
-    // ci-dessus) : à remplacer par une vraie photo dès qu'elle existe.
-    photos: ["/images/decembre-ia.jpg"],
-    photosGenereesParIA: true,
+    // Vraies photos ajoutées le 26/09/2026 (fournies par Laurent, bouteille
+    // 70cl étiquetée réelle) — remplacent le visuel IA provisoire. Galerie à
+    // 4 vues : recto, verso (texte "Notre Histoire"), détail du cachet de
+    // cire (orange sur cette cuvée), comparatif des deux formats (70cl +
+    // mignonnette 20cl côte à côte). `photosGenereesParIA` retiré, ces
+    // photos sont réelles. L'étiquette imprimée affichait "Le Vœu
+    // d'Antoinette" au lieu de "Le Vœu de Fourvière" (nom du site jusque-là)
+    // — Laurent a confirmé le 26/09/2026 vouloir renommer le site pour
+    // coller à l'étiquette réelle (voir `nom` ci-dessus et le reste du
+    // fichier).
+    photos: [
+      "/images/decembre-1.jpg",
+      "/images/decembre-2.jpg",
+      "/images/decembre-3.jpg",
+      "/images/decembre-4.jpg",
+    ],
     signature: {
       texte:
         "Chaque 8 décembre, Lyon pose un lumignon à ses fenêtres en mémoire du vœu fait à Notre-Dame de Fourvière, tout près du Passage Gay.",
@@ -235,12 +253,12 @@ export const produits: Produit[] = [
     ginTonic: {
       titre: "Le Tonic des Lumières",
       recette:
-        "4 cl de Vœu de Fourvière, 12 cl de tonic premium neutre, beaucoup de glaçons. En garniture : une étoile de badiane (anis étoilé) ou un bâton de cannelle.",
+        "4 cl de Vœu d'Antoinette, 12 cl de tonic premium neutre, beaucoup de glaçons. En garniture : une étoile de badiane (anis étoilé) ou un bâton de cannelle.",
     },
     cocktail: {
       titre: "Le Royal 8 Décembre",
       recette:
-        "3 cl de Vœu de Fourvière, 1 cl de jus de citron jaune, 1 cl de sirop de sucre, à allonger au crémant de Bourgogne ou au champagne.",
+        "3 cl de Vœu d'Antoinette, 1 cl de jus de citron jaune, 1 cl de sirop de sucre, à allonger au crémant de Bourgogne ou au champagne.",
     },
   },
   {
@@ -248,9 +266,9 @@ export const produits: Produit[] = [
     nom: "Coffret Découverte",
     cuvee: "Les trois cuvées",
     categorie: "Coffret de gins aromatisés",
-    ingredients: "Le Jardin de l'Angélique, Le Secret d'Antoinette, Le Vœu de Fourvière",
+    ingredients: "Le Jardin de l'Angélique, Le Secret d'Antoinette, Le Vœu d'Antoinette",
     description:
-      "Les trois cuvées de la Maison en format 20cl, pour découvrir l'ensemble de la première série — Le Jardin de l'Angélique, Le Secret d'Antoinette, Le Vœu de Fourvière.",
+      "Les trois cuvées de la Maison en format 20cl, pour découvrir l'ensemble de la première série — Le Jardin de l'Angélique, Le Secret d'Antoinette, Le Vœu d'Antoinette.",
     prix: 5900,
     stripePriceId: "price_REMPLACER_COFFRET",
     image: "/images/coffret-decouverte.jpg",

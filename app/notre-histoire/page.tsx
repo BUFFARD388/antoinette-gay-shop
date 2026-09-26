@@ -81,7 +81,9 @@ const GALERIE = [
 // lib/produits.ts, qui reste la phrase de clôture imprimée au dos de la
 // bouteille). Texte fourni par Laurent le 23/08/2026, mis à jour le
 // 02/09/2026 suite au renommage Cuvée II "Le Secret d'Antoinette" (et
-// correction Ouest → nord de Lyon) et Cuvée III "Le Vœu de Fourvière".
+// correction Ouest → nord de Lyon) et Cuvée III "Le Vœu de Fourvière", puis
+// "Le Vœu d'Antoinette" le 26/09/2026 (voir lib/produits.ts) — le texte
+// ci-dessous ne cite pas le nom du produit donc n'a pas eu besoin de changer.
 const CUVEES_RESUME = [
   {
     slug: "fragola",
