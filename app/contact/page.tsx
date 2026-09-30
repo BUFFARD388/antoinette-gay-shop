@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { NOM_MAISON, EMAIL_CONTACT, TELEPHONE_CONTACT } from "@/lib/config";
+import { NOM_MAISON, EMAIL_CONTACT, TELEPHONE_CONTACT, INSTAGRAM_HANDLE, INSTAGRAM_URL } from "@/lib/config";
 import Sceau from "@/components/Sceau";
 
 export const metadata = {
@@ -48,6 +48,10 @@ export default function PageContact() {
         <a href={`mailto:${EMAIL_CONTACT}`} style={carteContact}>
           <p style={labelContact}>Email</p>
           <p style={valeurContact}>{EMAIL_CONTACT}</p>
+        </a>
+        <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" style={carteContact}>
+          <p style={labelContact}>Instagram</p>
+          <p style={valeurContact}>{INSTAGRAM_HANDLE}</p>
         </a>
       </section>
 

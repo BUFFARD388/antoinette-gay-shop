@@ -3,7 +3,7 @@ import BandeauLegal from "@/components/BandeauLegal";
 import VerificationAge from "@/components/VerificationAge";
 import EnTete from "@/components/EnTete";
 import Pied from "@/components/Pied";
-import { NOM_MAISON, ACCROCHE, URL_SITE, ADRESSE_MAISON, TELEPHONE_CONTACT } from "@/lib/config";
+import { NOM_MAISON, ACCROCHE, URL_SITE, ADRESSE_MAISON, TELEPHONE_CONTACT, INSTAGRAM_URL } from "@/lib/config";
 
 export const metadata = {
   metadataBase: new URL(URL_SITE),
@@ -48,6 +48,7 @@ const jsonLdMaison = {
     addressCountry: "FR",
   },
   areaServed: "Lyon",
+  sameAs: [INSTAGRAM_URL],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

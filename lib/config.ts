@@ -18,6 +18,10 @@ export const SIREN = "401 801 204";
 export const HEBERGEUR_NOM = "Vercel Inc.";
 export const HEBERGEUR_ADRESSE = "440 N Barranca Ave #4133, Covina, CA 91723, États-Unis";
 
+// Compte Instagram de la Maison, ajouté le 30/09/2026 sur demande de Laurent.
+export const INSTAGRAM_HANDLE = "@maisonantoinettegay";
+export const INSTAGRAM_URL = "https://www.instagram.com/maisonantoinettegay/";
+
 export const FRAIS_PORT = 900;
 
 export const SEUIL_PORT_GRATUIT = 2;

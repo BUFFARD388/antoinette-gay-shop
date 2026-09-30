@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { NOM_MAISON, TELEPHONE_CONTACT } from "@/lib/config";
+import { NOM_MAISON, TELEPHONE_CONTACT, INSTAGRAM_HANDLE, INSTAGRAM_URL } from "@/lib/config";
 import Sceau from "./Sceau";
 
 // Le lien "Contact" pointait autrefois directement vers un mailto — il mène
@@ -22,6 +22,9 @@ export default function Pied() {
         <Link href="/contact" style={lien}>
           Contact
         </Link>
+        <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" style={lien}>
+          Instagram
+        </a>
       </nav>
       <p style={{ margin: "4px 0" }}>
         {NOM_MAISON} — Distillerie artisanale, au nord de Lyon.
@@ -35,6 +38,12 @@ export default function Pied() {
       </p>
       <p style={{ margin: "4px 0" }}>
         Une question ? <a href={`tel:${TELEPHONE_CONTACT.replace(/\s/g, "")}`} style={lien}>{TELEPHONE_CONTACT}</a>
+      </p>
+      <p style={{ margin: "4px 0" }}>
+        Suis-nous sur Instagram :{" "}
+        <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" style={lien}>
+          {INSTAGRAM_HANDLE}
+        </a>
       </p>
       <p style={{ margin: "4px 0" }}>
         Recettes, visuels et prix indicatifs, susceptibles d&apos;évoluer avant le lancement définitif.
