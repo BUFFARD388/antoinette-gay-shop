@@ -61,8 +61,8 @@ export default function CarteProduit({ produit, quantite, compteur, onAjouter, o
             [nom de la cuvée]". Tous les noms de cuvée commencent par "Le" →
             on contracte "de le" en "du" (ex : "du Secret d'Antoinette"). */}
         {produit.type === "coffret"
-          ? "Voir la composition"
-          : `Découvrez la fiche complète et les suggestions de dégustation du ${produit.nom.replace(/^Le\s+/, "")}`}
+          ? "→ Voir la composition"
+          : `→ Découvrez la fiche complète et les suggestions de dégustation du ${produit.nom.replace(/^Le\s+/, "")}`}
       </Link>
 
       <p style={{ fontSize: 13, color: "#5b6f63", margin: "10px 0 4px" }}>
