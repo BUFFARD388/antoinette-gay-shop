@@ -56,7 +56,13 @@ export default function CarteProduit({ produit, quantite, compteur, onAjouter, o
       )}
 
       <Link href={`/produits/${produit.slug}`} style={lienDetail}>
-        {produit.type === "coffret" ? "Voir la composition" : "Se déguste en gin tonic ou en cocktail →"}
+        {/* Texte du lien remplacé le 03/10/2026 à la demande de Laurent :
+            "Découvrez la fiche complète et les suggestions de dégustation du
+            [nom de la cuvée]". Tous les noms de cuvée commencent par "Le" →
+            on contracte "de le" en "du" (ex : "du Secret d'Antoinette"). */}
+        {produit.type === "coffret"
+          ? "Voir la composition"
+          : `Découvrez la fiche complète et les suggestions de dégustation du ${produit.nom.replace(/^Le\s+/, "")}`}
       </Link>
 
       <p style={{ fontSize: 13, color: "#5b6f63", margin: "10px 0 4px" }}>
