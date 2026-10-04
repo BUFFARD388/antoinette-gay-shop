@@ -471,7 +471,7 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
           initié par Pierre puis Antoinette Gay au Passage Gay, sur la colline de Fourvière, en
           1861. Notre distillerie artisanale élabore aujourd&apos;hui des gins haut de gamme à
           partir de baies de genièvre et de fruits frais de notre jardin. Que vous cherchiez un
-          spiritueux lyonnais original à offrir pour la Fête des Lumières ou un dry gin français
+          gin original lyonnais à offrir pour la Fête des Lumières ou un dry gin français
           de caractère, réservez dès maintenant votre bouteille numérotée de notre première
           édition, expédiée dans toute la France.
         </p>
