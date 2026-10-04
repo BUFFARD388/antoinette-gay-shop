@@ -219,13 +219,19 @@ export default function PageHistoire() {
                 Pauline, la fille d&apos;Antoinette, est devenue mon arrière-grand-mère. C&apos;est
                 sa fille, Lauraine, qui m&apos;a élevé. En retrouvant les vieilles photos de famille
                 oubliées dans un tiroir, une évidence m&apos;a frappé : cette histoire lyonnaise
-                méritait de revivre.
+                méritait de revivre. En perpétuant cet héritage lyonnais, notre ambition est de
+                façonner un gin artisanal français d&apos;exception, que nous voulons faire
+                reconnaître comme un gin original et haut de gamme par les amateurs de spiritueux
+                fins.
               </p>
               <p style={{ ...citationTexte, marginTop: 16 }}>
                 Amateur de spiritueux, j&apos;ai voulu faire infuser cet héritage familial dans des
                 gins artisanaux. Sans formation initiale, j&apos;apprends l&apos;art de la
                 distillation essai après essai, cuvée après cuvée, à l&apos;aide de mon alambic à
-                colonne à plateaux et de mon panier à gin.
+                colonne à plateaux et de mon panier à gin. De la sélection rigoureuse de l&apos;alcool
+                surfin à l&apos;infusion délicate des fruits frais dans notre alambic, chaque étape
+                est pensée pour hisser nos cuvées parmi ce qui se fait de meilleur en gin français
+                artisanal.
               </p>
               <p style={{ ...citationTexte, marginTop: 16 }}>
                 Mon but ? Vous proposer un gin d&apos;exception, distillé au nord de Lyon avec le
