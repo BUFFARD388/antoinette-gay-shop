@@ -9,9 +9,11 @@ import PhotoZoom from "@/components/PhotoZoom";
 // déjà "Fourvière" mais pas "Passage Gay" ni "Tour Métallique", pourtant
 // très présents dans le texte réel de la page ci-dessous.
 export const metadata = {
-  title: `Du Passage Gay à la Tour Métallique de Lyon — Notre Histoire | ${NOM_MAISON}`,
+  // Titre et description remplacés le 07/10/2026 à la demande de Laurent
+  // (conseils SEO : "gin artisanal français", héritage lyonnais).
+  title: "Notre Histoire | De Fourvière au Gin Artisanal Français",
   description:
-    "1861, la colline de Fourvière et le Passage Gay, tout près de la Tour Métallique de Lyon : l'histoire vraie derrière Maison Antoinette Gay, quatre générations plus tard.",
+    "Découvrez l'héritage de la Maison Antoinette Gay, de la Tour Métallique de Fourvière en 1892 à notre atelier de distillation artisanale lyonnais.",
   alternates: {
     canonical: "/notre-histoire",
   },

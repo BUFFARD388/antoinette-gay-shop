@@ -7,8 +7,12 @@ import { NOM_MAISON, ACCROCHE, URL_SITE, ADRESSE_MAISON, TELEPHONE_CONTACT, INST
 
 export const metadata = {
   metadataBase: new URL(URL_SITE),
-  title: `${NOM_MAISON} — Gin artisanal, distillerie du Passage Gay à Lyon`,
-  description: ACCROCHE,
+  // Titre et description de la page d'accueil remplacés le 07/10/2026 à la
+  // demande de Laurent (conseils SEO : "gin artisanal Lyon", "distillerie
+  // française"). Toutes les autres pages définissent leur propre titre.
+  title: "Maison Antoinette Gay | Gin Artisanal Lyon & Distillerie",
+  description:
+    "Distillerie de gin artisanal au nord de Lyon. Nos gins français de caractère sont distillés en petites séries. Précommandes ouvertes pour début 2027 !",
   alternates: {
     canonical: "/",
   },

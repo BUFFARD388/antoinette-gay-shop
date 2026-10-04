@@ -100,6 +100,8 @@ export type Produit = {
   sousTitreSEO?: string; // ex: "Gin Artisanal au Raisin Fragola" — affiché juste sous le nom, dans le <h3>
   // de la carte produit et le <h1> de la fiche produit, pour enrichir ces titres avec de vrais mots-clés
   // recherchés (ajouté le 14/09/2026 à la demande de Laurent, suite à des conseils SEO reçus).
+  metaTitle?: string; // <title> de la fiche produit (SEO) — sinon titre généré automatiquement par app/produits/[slug]/page.tsx
+  metaDescription?: string; // meta description de la fiche produit (SEO) — sinon la description du produit
   categorie: string; // ex: "Gin aromatisé" — la famille de spiritueux, affichée à côté de la cuvée
   ingredients: string; // ex: "Raisin fragola rouge et genièvre" — repris du recto de l'étiquette
   description: string;
@@ -127,6 +129,9 @@ export const produits: Produit[] = [
     cuvee: "Cuvée I",
     sousTitreSEO: "Gin Artisanal au Raisin Fragola",
     mention: "Fragola de notre jardin",
+    metaTitle: "Gin au Raisin Fragola | Le Jardin de l'Angélique",
+    metaDescription:
+      "Un gin original français distillé au raisin fragola rouge de notre jardin. Une cuvée aux notes de fraises des bois inspirée des cures de Fourvière.",
     categorie: "Gin aromatisé",
     ingredients: "Raisin fragola rouge et genièvre",
     description:
@@ -172,6 +177,9 @@ export const produits: Produit[] = [
     cuvee: "Cuvée II",
     sousTitreSEO: "Gin Distillé à la Rhubarbe (Nord de Lyon)",
     mention: "Le secret du printemps",
+    metaTitle: "Gin à la Rhubarbe | Le Secret d'Antoinette - Lyon",
+    metaDescription:
+      "Un gin artisanal à la rhubarbe et au genièvre distillé au nord de Lyon. Découvrez la fraîcheur acidulée de notre cuvée saisonnière exclusive.",
     categorie: "Gin aromatisé",
     ingredients: "Rhubarbe et genièvre",
     description:
@@ -217,6 +225,9 @@ export const produits: Produit[] = [
     cuvee: "Cuvée III",
     sousTitreSEO: "Gin aux Épices Douces (Spécial Fête des Lumières)",
     mention: "Le 8 décembre, Fête des Lumières",
+    metaTitle: "Gin aux Épices Douces | Le Vœu d'Antoinette - Lyon",
+    metaDescription:
+      "Un gin lyonnais puissant aux épices douces et à la pomme gourmande, créé en hommage au 8 décembre et aux lumignons de la Fête des Lumières.",
     categorie: "Gin aromatisé",
     ingredients: "Épices douces, pomme et genièvre",
     description:

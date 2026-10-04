@@ -19,14 +19,17 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
   const produit = getProduitBySlug(params.slug);
   if (!produit) return {};
   return {
-    title: `${produit.nom} — Gin artisanal ${produit.cuvee} | ${NOM_MAISON}`,
-    description: produit.description,
+    // metaTitle / metaDescription (lib/produits.ts) : titres et descriptions
+    // SEO fournis par Laurent le 07/10/2026 pour les 3 cuvées ; le coffret
+    // garde le titre et la description générés automatiquement.
+    title: produit.metaTitle ?? `${produit.nom} — Gin artisanal ${produit.cuvee} | ${NOM_MAISON}`,
+    description: produit.metaDescription ?? produit.description,
     alternates: {
       canonical: `/produits/${produit.slug}`,
     },
     openGraph: {
       title: `${produit.nom} — ${NOM_MAISON}`,
-      description: produit.description,
+      description: produit.metaDescription ?? produit.description,
       url: `${URL_SITE}/produits/${produit.slug}`,
       images: produit.photos && produit.photos.length > 0 ? [{ url: produit.photos[0] }] : undefined,
     },
