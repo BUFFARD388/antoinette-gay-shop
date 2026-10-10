@@ -3,6 +3,7 @@ import BandeauLegal from "@/components/BandeauLegal";
 import VerificationAge from "@/components/VerificationAge";
 import EnTete from "@/components/EnTete";
 import Pied from "@/components/Pied";
+import { Analytics } from "@vercel/analytics/next";
 import { NOM_MAISON, ACCROCHE, URL_SITE, ADRESSE_MAISON, TELEPHONE_CONTACT, INSTAGRAM_URL } from "@/lib/config";
 
 export const metadata = {
@@ -77,6 +78,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <EnTete />
         {children}
         <Pied />
+        {/* Mesure d'audience Vercel Web Analytics ajoutée le 10/10/2026 à la
+            demande de Laurent : visiteurs, pages vues, provenance, pays, appareil.
+            Sans cookie. À activer aussi dans Vercel (onglet Analytics du projet). */}
+        <Analytics />
       </body>
     </html>
   );
