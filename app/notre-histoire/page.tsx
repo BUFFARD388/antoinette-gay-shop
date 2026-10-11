@@ -188,8 +188,7 @@ export default function PageHistoire() {
           Si nos ancêtres ne distillaient pas encore, ils nous ont légué le plus précieux des
           héritages : l&apos;amour fou de notre région, le respect des fruits et le sens de
           l&apos;accueil. C&apos;est cet esprit, et ce nom, celui d&apos;Antoinette Gay, que notre
-          distillerie fait revivre aujourd&apos;hui. Notre ambition est de façonner un gin
-          artisanal français d&apos;exception, ancré dans notre patrimoine rhodanien.
+          distillerie fait revivre aujourd&apos;hui.
         </p>
       </section>
 
