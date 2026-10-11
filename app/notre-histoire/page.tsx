@@ -195,6 +195,55 @@ export default function PageHistoire() {
         </div>
       </section>
 
+      {/* Synthèse historique ajoutée le 11/10/2026 à la demande de Laurent, à
+          partir d'un texte généalogique et historique qu'il a fourni (Pierre
+          Gay, Antoinette Jonard, George Rusterholz, construction de la Tour
+          Métallique) : faits et dates repris tels quels de ce texte. Omis
+          volontairement : l'entrefilet de presse de 1894 sur un suicide
+          depuis la plateforme (sans rapport avec le propos de la Maison).
+          Les prénoms des deux filles Rusterholz ne sont pas repris (demi-sœurs
+          de Pauline Gay, à ne pas confondre avec elle). Précision de Laurent
+          le 11/10/2026 : Pauline Gay (1876-1971), cadette de Pierre Gay et
+          Antoinette Jonard, épouse Buchin, est son arrière-grand-mère ; sa
+          fille Lauraine Buchin est sa grand-mère. */}
+      <section style={{ marginTop: 48 }}>
+        <p style={eyebrow}>Une famille, une tour</p>
+        <h2 style={{ ...titre, margin: "8px 0 12px" }}>
+          Pierre Gay, Antoinette et la Tour Métallique de Fourvière
+        </h2>
+        <p style={paragraphe}>
+          Originaire de Condrieu, Pierre Gay s&apos;était fait une sorte de célébrité par la manière
+          originale dont il exploitait son domaine de Fourvière : ses réclames, répandues à
+          profusion, attiraient tous les étrangers désireux d&apos;embrasser d&apos;un coup d&apos;œil
+          le magnifique panorama de Lyon. Créer des observatoires était sa spécialité, et il en
+          préparait toute une série sur les bords de la Méditerranée, à Marseille, à Nice et à
+          Cannes, quand il est mort, le 3 avril 1878, à 54 ans. On le disait estimable, généreux,
+          excentrique et tout à fait de son temps. Il avait épousé en 1867 Marguerite Antoinette
+          Jonard, née en 1843 à Rive-de-Gier ; le couple eut quatre enfants, dont la cadette,
+          Pauline, née en 1876, notre arrière-grand-mère. Devenue Pauline Buchin, elle vécut
+          jusqu&apos;à 95 ans et connut le Passage Gay, son observatoire, puis la Tour Métallique.
+        </p>
+        <p style={{ ...paragraphe, marginTop: 16 }}>
+          Devenue veuve, Antoinette se remarie en 1881 avec George Rusterholz — qui, selon la
+          tradition familiale, était cuisinier au restaurant Gay — et le couple aura deux filles.
+          Le 11 décembre 1891, George Rusterholz et Antoinette Jonard, veuve Gay, signent
+          l&apos;accord qui concède le terrain à la Société anonyme de la Tour métallique de
+          Fourvière, pour y bâtir la « dame de fer ». En échange, le restaurant Gay, à la base de
+          la tour, et la vente des cartes postales et des souvenirs restent à la famille
+          Rusterholz-Gay. Le terrain est concédé le 28 octobre 1892, la tour est inaugurée le 2 mai
+          1894 et ouverte au public le 3 mai, jour de l&apos;ouverture de l&apos;Exposition
+          universelle de Lyon. En 1905, Antoinette en devient propriétaire, après en avoir possédé
+          le terrain, le restaurant et le magasin de souvenirs. Elle s&apos;éteint en 1924, et la
+          famille vendra la tour à l&apos;ORTF en 1953.
+        </p>
+        <p style={{ ...paragraphe, marginTop: 16 }}>
+          Plus d&apos;un siècle plus tard, nous voulons faire renaître cette histoire de famille.
+          C&apos;est le sens de la Maison Antoinette Gay, distillerie artisanale au nord de Lyon :
+          donner une nouvelle vie, dans chaque bouteille, au nom de celle qui a rendu possible la
+          Tour Métallique et à l&apos;esprit d&apos;accueil du Passage Gay.
+        </p>
+      </section>
+
       {/* Partie 2 — Le mot du fondateur (fusionne les anciens paragraphes
           Pauline et "Pourquoi cette distillerie") */}
       <section style={{ marginTop: 48 }}>
