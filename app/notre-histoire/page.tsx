@@ -112,6 +112,19 @@ const GALERIE = [
   { src: "/images/histoire-terrasse-restaurant-gay.jpg", legende: "« La Terrasse du Restaurant Gay » — le plus beau panorama de Lyon, à table." },
 ];
 
+// 3 documents d'archive supplémentaires fournis par Laurent le 11/10/2026,
+// affichés juste après la section "Une famille, une tour" : gravure de
+// l'Observatoire Gay, dessin des écriteaux du passage Gay (légende déjà
+// imprimée sur l'image d'origine), et plan de Lyon avec le Passage Gay
+// encadré en jaune. Affichés en entier (pas de recadrage) : le dessin des
+// écriteaux est très haut et le plan perdrait son cadre jaune une fois
+// recadré. Le zoom plein écran (PhotoZoom) reste disponible sur les trois.
+const PHOTOS_FAMILLE = [
+  { src: "/images/histoire-observatoire-gay.jpg", legende: "L'Observatoire Gay — gravure d'époque." },
+  { src: "/images/histoire-ecriteaux-passage-gay.jpg", legende: "Les écriteaux du passage Gay, l'une des deux montées payantes menant à Fourvière, ouvertes sous le Second Empire." },
+  { src: "/images/histoire-plan-fourviere-passage-gay.jpg", legende: "Le Passage Gay (encadré en jaune) sur un ancien plan de Lyon, sur la colline de Fourvière." },
+];
+
 // Résumés punchy par cuvée pour cette page (distincts de `signature` dans
 // lib/produits.ts, qui reste la phrase de clôture imprimée au dos de la
 // bouteille). Texte fourni par Laurent le 23/08/2026, mis à jour le
@@ -242,6 +255,20 @@ export default function PageHistoire() {
           donner une nouvelle vie, dans chaque bouteille, au nom de celle qui a rendu possible la
           Tour Métallique et à l&apos;esprit d&apos;accueil du Passage Gay.
         </p>
+        <div style={{ display: "flex", gap: 18, flexWrap: "wrap", alignItems: "flex-start", marginTop: 28 }}>
+          <figure style={{ margin: 0, flex: "1 1 220px", maxWidth: 300 }}>
+            <PhotoZoom src={PHOTOS_FAMILLE[1].src} alt={PHOTOS_FAMILLE[1].legende} style={photoEntiere} />
+            <figcaption style={galerieLegende}>{PHOTOS_FAMILLE[1].legende}</figcaption>
+          </figure>
+          <div style={{ flex: "2 1 300px", display: "flex", flexDirection: "column", gap: 18 }}>
+            {[PHOTOS_FAMILLE[0], PHOTOS_FAMILLE[2]].map((photo) => (
+              <figure key={photo.src} style={{ margin: 0 }}>
+                <PhotoZoom src={photo.src} alt={photo.legende} style={photoEntiere} />
+                <figcaption style={galerieLegende}>{photo.legende}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* Partie 2 — Le mot du fondateur (fusionne les anciens paragraphes
@@ -399,6 +426,14 @@ const galerieImg: React.CSSProperties = {
   width: "100%",
   height: 200,
   objectFit: "cover",
+  display: "block",
+  border: "1px solid #e3d3a4",
+};
+
+// Photo affichée en entier, sans recadrage (voir PHOTOS_FAMILLE).
+const photoEntiere: React.CSSProperties = {
+  width: "100%",
+  height: "auto",
   display: "block",
   border: "1px solid #e3d3a4",
 };
