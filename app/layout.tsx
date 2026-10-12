@@ -4,6 +4,7 @@ import VerificationAge from "@/components/VerificationAge";
 import EnTete from "@/components/EnTete";
 import Pied from "@/components/Pied";
 import { Analytics } from "@vercel/analytics/next";
+import GoogleAds from "@/components/GoogleAds";
 import { NOM_MAISON, ACCROCHE, URL_SITE, ADRESSE_MAISON, TELEPHONE_CONTACT, INSTAGRAM_URL } from "@/lib/config";
 
 export const metadata = {
@@ -82,6 +83,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             demande de Laurent : visiteurs, pages vues, provenance, pays, appareil.
             Sans cookie. À activer aussi dans Vercel (onglet Analytics du projet). */}
         <Analytics />
+        {/* Balise Google Ads (AW-18506524161) ajoutée le 12/10/2026, consentement
+            refusé par défaut (Consent Mode v2) — voir components/GoogleAds.tsx. */}
+        <GoogleAds />
       </body>
     </html>
   );
