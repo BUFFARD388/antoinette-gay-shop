@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { NOM_MAISON, TELEPHONE_CONTACT, INSTAGRAM_HANDLE, INSTAGRAM_URL } from "@/lib/config";
 import Sceau from "./Sceau";
+import GererCookies from "./GererCookies";
 
 // Le lien "Contact" pointait autrefois directement vers un mailto — il mène
 // désormais vers app/contact/page.tsx (créée le 02/09/2026 sur demande de
@@ -22,6 +23,7 @@ export default function Pied() {
         <Link href="/contact" style={lien}>
           Contact
         </Link>
+        <GererCookies style={lien} />
         <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" style={lien}>
           Instagram
         </a>

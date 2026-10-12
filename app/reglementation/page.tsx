@@ -99,6 +99,21 @@ export default function PageReglementation() {
         </p>
       </section>
 
+      {/* Section cookies ajoutée le 12/10/2026 avec le bandeau de consentement. */}
+      <section id="cookies" style={{ marginTop: 44 }}>
+        <h2 style={titre}>Cookies et mesure d&apos;audience</h2>
+        <p style={paragraphe}>
+          La fréquentation du site est mesurée avec Vercel Web Analytics, qui fonctionne sans cookie et
+          sans identifier les visiteurs. Si tu l&apos;acceptes, des cookies publicitaires de Google (Google
+          Ads) sont aussi déposés pour mesurer l&apos;efficacité de nos annonces, par exemple le nombre de
+          précommandes faites après un clic sur une annonce. Sans ton accord, aucun cookie publicitaire
+          n&apos;est déposé. Ton choix est mémorisé dans ton navigateur pendant 6 mois, et tu peux le modifier
+          à tout moment avec le lien « Gérer les cookies » en bas de chaque page. Seul un indicateur
+          technique indiquant que tu as confirmé ta majorité est conservé, sans durée de vie
+          publicitaire, pour ne pas te redemander ton âge à chaque visite.
+        </p>
+      </section>
+
       <section style={{ marginTop: 44 }}>
         <h2 style={titre}>Mentions légales</h2>
         <ul style={liste}>
