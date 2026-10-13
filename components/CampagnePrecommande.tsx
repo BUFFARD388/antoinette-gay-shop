@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { Produit } from "@/lib/produits";
 import CarteProduit from "@/components/CarteProduit";
 import PhotoZoom from "@/components/PhotoZoom";
+import { suivreConversionPrecommande } from "@/lib/googleAds";
 import { NOM_MAISON, DATE_LIVRAISON_PREVUE, FRAIS_PORT, SEUIL_PORT_GRATUIT } from "@/lib/config";
 
 type LigneConfirmee = { slug: string; nom: string; quantite: number; numeros: number[] };
@@ -39,6 +40,141 @@ const ETAPES = [
     periode: `Livraison ${DATE_LIVRAISON_PREVUE}`,
     titre: "Expédition",
     texte: "Tu es contacté·e par email pour finaliser et régler ta commande avant expédition.",
+  },
+];
+
+// Sélection pour le bandeau défilant (26/09/2026) : 2 photos par produit
+// (la photo principale + un détail), parmi les vraies photos déjà en place
+// sur les fiches produit depuis le même jour (voir lib/produits.ts). Le
+// 26/09/2026 (2), sur demande de Laurent, 3 photos d'archive (déjà présentes
+// dans la galerie de app/notre-histoire/page.tsx depuis le 21/09/2026) ont
+// été intercalées régulièrement parmi les photos produit, pour relier
+// visuellement l'histoire familiale (Passage Gay, Tour Métallique de
+// Fourvière) à la création du gin. Complété le 26/09/2026 (3) avec 2 photos
+// d'archive supplémentaires (le portail du Passage Gay, le bâtiment de
+// l'Observatoire — déjà présentes dans la galerie Notre Histoire depuis le
+// 23/08/2026, mais pas encore reprises dans ce bandeau), 5 au total.
+// Complété le 26/09/2026 (4) avec 3 photos du chantier de construction de la
+// Tour (1892-1894, nouvellement ajoutées à la galerie Notre Histoire), sur
+// demande de Laurent — 8 photos d'archive au total, soit autant que de
+// photos produit. La cadence est donc passée d'une alternance irrégulière à
+// une stricte alternance produit/archive sur tout le bandeau. Ces photos ont
+// un traitement visuel distinct (teinte sépia, légende différente) et
+// renvoient vers /notre-histoire plutôt que vers une fiche produit — champ
+// `archive: true` et `href` dédié, au lieu du `slug` utilisé pour les
+// photos produit.
+const PHOTOS_BANDEAU = [
+  {
+    slug: "fragola",
+    nom: "Le Jardin de l'Angélique",
+    href: "/produits/fragola",
+    src: "/images/fragola-1.jpg",
+    alt: "Bouteille 70cl du Jardin de l'Angélique, de face",
+  },
+  {
+    archive: true,
+    nom: "Depuis 1861 — La Tour Métallique",
+    href: "/notre-histoire",
+    src: "/images/histoire-photo-tour-metallique.jpg",
+    alt: "Photo d'époque de la Tour Métallique de Fourvière, telle que la connaissaient Pierre et Antoinette Gay",
+  },
+  {
+    slug: "fragola",
+    nom: "Le Jardin de l'Angélique",
+    href: "/produits/fragola",
+    src: "/images/fragola-3.jpg",
+    alt: "Détail du cachet de cire du Jardin de l'Angélique",
+  },
+  {
+    archive: true,
+    nom: "Le portail du Passage Gay",
+    href: "/notre-histoire",
+    src: "/images/histoire-entree.jpg",
+    alt: "Photo d'époque de l'entrée du Passage Gay — restaurant, observatoire, vue merveilleuse",
+  },
+  {
+    slug: "rhubarbe",
+    nom: "Le Secret d'Antoinette",
+    href: "/produits/rhubarbe",
+    src: "/images/rhubarbe-1.jpg",
+    alt: "Bouteille 70cl du Secret d'Antoinette, de face",
+  },
+  {
+    archive: true,
+    nom: "Passage Gay, à Fourvière",
+    href: "/notre-histoire",
+    src: "/images/histoire-gravure-observatoire.jpg",
+    alt: "Gravure d'époque « Observatoire & Passage Gay », annonçant le plus riche des panoramas",
+  },
+  {
+    slug: "rhubarbe",
+    nom: "Le Secret d'Antoinette",
+    href: "/produits/rhubarbe",
+    src: "/images/rhubarbe-3.jpg",
+    alt: "Détail du cachet de cire du Secret d'Antoinette",
+  },
+  {
+    archive: true,
+    nom: "Le bâtiment de l'Observatoire",
+    href: "/notre-histoire",
+    src: "/images/histoire-batiment.jpg",
+    alt: "Photo d'époque de l'entrée principale de la Tour Métallique, avec ses tourelles et sa véranda",
+  },
+  {
+    slug: "decembre",
+    nom: "Le Vœu d'Antoinette",
+    href: "/produits/decembre",
+    src: "/images/decembre-1.jpg",
+    alt: "Bouteille 70cl du Vœu d'Antoinette, de face",
+  },
+  {
+    archive: true,
+    nom: "Notre histoire familiale",
+    href: "/notre-histoire",
+    src: "/images/histoire-carte-buchin-gay.jpg",
+    alt: "Carte d'époque de la Tour Métallique au nom de Buchin-Gay, le même nom que Pauline Gay Bûchin",
+  },
+  {
+    slug: "decembre",
+    nom: "Le Vœu d'Antoinette",
+    href: "/produits/decembre",
+    src: "/images/decembre-3.jpg",
+    alt: "Détail du cachet de cire du Vœu d'Antoinette",
+  },
+  {
+    archive: true,
+    nom: "1892 — La Tour en chantier",
+    href: "/notre-histoire",
+    src: "/images/histoire-chantier-base.jpg",
+    alt: "Photo d'époque de la base de la Tour Métallique en construction, sous son échafaudage",
+  },
+  {
+    slug: "coffret-decouverte",
+    nom: "Coffret Découverte",
+    href: "/produits/coffret-decouverte",
+    src: "/images/coffret-decouverte-1.jpg",
+    alt: "Coffret Découverte avec ses 3 mignonnettes 20cl",
+  },
+  {
+    archive: true,
+    nom: "Le pavillon en construction",
+    href: "/notre-histoire",
+    src: "/images/histoire-chantier-pavillon.jpg",
+    alt: "Photo d'époque du pavillon d'entrée de la Tour Métallique en cours de construction",
+  },
+  {
+    slug: "coffret-decouverte",
+    nom: "Coffret Découverte",
+    href: "/produits/coffret-decouverte",
+    src: "/images/coffret-decouverte-3.jpg",
+    alt: "Détail des 3 cachets de cire du Coffret Découverte",
+  },
+  {
+    archive: true,
+    nom: "La Tour, encore en chantier",
+    href: "/notre-histoire",
+    src: "/images/histoire-chantier-rue.jpg",
+    alt: "Photo d'époque de la Tour Métallique presque achevée, encore cernée d'échafaudages",
   },
 ];
 
@@ -133,6 +269,7 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
         return;
       }
       setSucces(data.lignes);
+      suivreConversionPrecommande(); // conversion Google Ads (12/10/2026)
       setCompteurs((c) => {
         const copie = { ...c };
         for (const ligne of data.lignes as LigneConfirmee[]) {
@@ -222,17 +359,46 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
         ))}
       </section>
 
-      {/* Bannière d'ambiance au-dessus des cuvées — visuel généré par IA
-          fourni par Laurent le 04/09/2026 (mise en situation du Coffret
-          Découverte, colline de Fourvière en arrière-plan). Même principe de
-          transparence que les photos produit : mention visible sur l'image. */}
-      <div style={bandeauAmbiance}>
-        <img
-          src="/images/ambiance-coffret-ia.jpg"
-          alt="Trois amis trinquent avec un gin tonic Maison Antoinette Gay ; le Coffret Découverte est posé devant eux, la colline de Fourvière en arrière-plan"
-          style={imgAmbiance}
-        />
-        <span style={badgeIAAmbiance}>Visuel généré par IA</span>
+      {/* Bandeau photos qui défile — remplace le 26/09/2026 le visuel IA de
+          mise en situation, à la demande de Laurent, qui a maintenant de
+          vraies photos pour les 4 produits. Bande continue façon "photomaton"
+          (2 photos par produit : la photo principale + un détail), boucle
+          CSS pure via app/globals.css (@keyframes bandeau-defile), en pause
+          au survol et désactivée si `prefers-reduced-motion` est demandé.
+          Chaque photo produit renvoie vers sa fiche produit. Depuis le
+          26/09/2026 (2), 3 photos d'archive (Passage Gay, Tour Métallique,
+          carte de famille) sont intercalées régulièrement, avec un léger
+          traitement sépia et une légende différente, et renvoient vers
+          /notre-histoire — pour relier visuellement l'histoire familiale à
+          la création du gin. Le second jeu de photos (nécessaire pour
+          boucler sans coupure) est masqué aux lecteurs d'écran (aria-hidden
+          + tabIndex -1) pour ne pas dupliquer les liens perçus au
+          clavier/lecteur d'écran. */}
+      <div className="bandeauDefile" style={bandeauDefileConteneur}>
+        <div className="bandeauDefileTrack" style={bandeauDefileTrack}>
+          {[...PHOTOS_BANDEAU, ...PHOTOS_BANDEAU].map((photo, i) => {
+            const dupliquee = i >= PHOTOS_BANDEAU.length;
+            return (
+              <Link
+                key={`${photo.href}-${photo.src}-${i}`}
+                href={photo.href}
+                style={bandeauDefileItem}
+                aria-hidden={dupliquee ? true : undefined}
+                tabIndex={dupliquee ? -1 : undefined}
+                aria-label={
+                  dupliquee ? undefined : photo.archive ? `Découvrir notre histoire — ${photo.nom}` : `Découvrir ${photo.nom}`
+                }
+              >
+                <img
+                  src={photo.src}
+                  alt={dupliquee ? "" : photo.alt}
+                  style={photo.archive ? bandeauDefileImgArchive : bandeauDefileImg}
+                />
+                <span style={photo.archive ? bandeauDefileLabelArchive : bandeauDefileLabel}>{photo.nom}</span>
+              </Link>
+            );
+          })}
+        </div>
       </div>
 
       {/* Produits */}
@@ -320,7 +486,7 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
           initié par Pierre puis Antoinette Gay au Passage Gay, sur la colline de Fourvière, en
           1861. Notre distillerie artisanale élabore aujourd&apos;hui des gins haut de gamme à
           partir de baies de genièvre et de fruits frais de notre jardin. Que vous cherchiez un
-          spiritueux lyonnais original à offrir pour la Fête des Lumières ou un dry gin français
+          gin original lyonnais à offrir pour la Fête des Lumières ou un dry gin français
           de caractère, réservez dès maintenant votre bouteille numérotée de notre première
           édition, expédiée dans toute la France.
         </p>
@@ -442,30 +608,65 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
   );
 }
 
-const bandeauAmbiance: React.CSSProperties = {
+const bandeauDefileConteneur: React.CSSProperties = {
   marginTop: 56,
-  position: "relative",
   overflow: "hidden",
   borderRadius: 4,
   background: "#1F3D2E",
+  padding: "18px 0",
 };
 
-const imgAmbiance: React.CSSProperties = {
-  width: "100%",
-  height: "auto",
+const bandeauDefileTrack: React.CSSProperties = {
+  display: "flex",
+  gap: 14,
+  width: "fit-content",
+  padding: "0 14px",
+};
+
+const bandeauDefileItem: React.CSSProperties = {
+  position: "relative",
+  display: "block",
+  height: "clamp(170px, 30vw, 260px)",
+  flexShrink: 0,
+  borderRadius: 4,
+  overflow: "hidden",
+};
+
+const bandeauDefileImg: React.CSSProperties = {
+  height: "100%",
+  width: "auto",
   display: "block",
 };
 
-const badgeIAAmbiance: React.CSSProperties = {
+const bandeauDefileLabel: React.CSSProperties = {
   position: "absolute",
-  bottom: 12,
-  right: 12,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  margin: 0,
+  padding: "6px 10px",
   fontSize: 11,
   letterSpacing: 0.3,
-  color: "#fff",
-  background: "rgba(31, 61, 46, 0.72)",
-  padding: "4px 10px",
-  borderRadius: 2,
+  color: "#F3ECDA",
+  fontFamily: "var(--font-ui), Arial, sans-serif",
+  background: "linear-gradient(to top, rgba(20,38,29,0.85), rgba(20,38,29,0))",
+};
+
+// Photos d'archive intercalées le 26/09/2026 (2) : même gabarit que les
+// photos produit, mais teinte sépia (`filter`) et légende dorée en
+// italique pour signaler d'un coup d'œil qu'il s'agit d'une photo d'époque
+// et non d'un produit — incite à cliquer vers /notre-histoire plutôt que
+// vers une fiche produit.
+const bandeauDefileImgArchive: React.CSSProperties = {
+  ...bandeauDefileImg,
+  filter: "sepia(0.55) contrast(1.05) brightness(0.92)",
+};
+
+const bandeauDefileLabelArchive: React.CSSProperties = {
+  ...bandeauDefileLabel,
+  color: "#F3D9A0",
+  fontStyle: "italic",
+  background: "linear-gradient(to top, rgba(40,28,10,0.88), rgba(40,28,10,0))",
 };
 
 const badgePrecommande: React.CSSProperties = {
