@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import type { Produit } from "@/lib/produits";
 import CarteProduit from "@/components/CarteProduit";
+import PhotoZoom from "@/components/PhotoZoom";
 import { NOM_MAISON, DATE_LIVRAISON_PREVUE, FRAIS_PORT, SEUIL_PORT_GRATUIT } from "@/lib/config";
 
 type LigneConfirmee = { slug: string; nom: string; quantite: number; numeros: number[] };
@@ -284,6 +285,18 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
             la Tour Métallique dans les années 1890, avant que leur descendance ne se lance
             aujourd&apos;hui dans la distillation.
           </p>
+          {/* Photo de l'entrée du Passage Gay ajoutée le 13/10/2026 à la demande
+              de Laurent, à côté de la Tour Métallique. Zoom plein écran au clic. */}
+          <figure style={blocHistoireFigure}>
+            <PhotoZoom
+              src="/images/histoire-passage-gay-entree.jpg"
+              alt="L'entrée du Passage Gay : observatoire, restaurant et vue panoramique, sur la colline de Fourvière"
+              style={blocHistoireImage}
+            />
+            <figcaption style={blocHistoireLegende}>
+              L&apos;entrée du Passage Gay : observatoire, restaurant et vue panoramique.
+            </figcaption>
+          </figure>
           <Link href="/notre-histoire" style={blocHistoireLien}>
             Découvrir l&apos;histoire complète du Passage Gay et de la Tour Métallique de Fourvière →
           </Link>
@@ -608,6 +621,16 @@ const blocHistoireParagraphe: React.CSSProperties = {
   lineHeight: 1.7,
   color: "#3f5346",
   margin: "0 0 18px",
+};
+
+const blocHistoireFigure: React.CSSProperties = {
+  margin: "0 0 18px",
+};
+
+const blocHistoireLegende: React.CSSProperties = {
+  fontSize: 12.5,
+  color: "#5b6f63",
+  marginTop: 6,
 };
 
 const blocHistoireLien: React.CSSProperties = {
