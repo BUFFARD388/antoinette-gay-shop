@@ -342,6 +342,13 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
             Découvrir nos 3 cuvées
           </a>
         </div>
+
+        {/* Précision sous le bouton principal, ajoutée le 16/10/2026 à la
+            demande de Laurent : ce que reçoit la personne qui réserve. */}
+        <p style={heroNoteReservation}>
+          Réservez à 0 € et recevez votre invitation exclusive pour la récupérer à la distillerie lors de notre
+          soirée de lancement début 2027. (Option de livraison à domicile disponible).
+        </p>
       </header>
 
       {/* Timeline */}
@@ -722,6 +729,15 @@ const heroReassuranceItem: React.CSSProperties = {
   color: "#dce6de",
   fontSize: 14,
   lineHeight: 1.5,
+};
+
+const heroNoteReservation: React.CSSProperties = {
+  color: "#dce6de",
+  fontSize: 14,
+  lineHeight: 1.55,
+  maxWidth: 560,
+  margin: "16px auto 0",
+  textAlign: "center",
 };
 
 const btnHeroPrincipal: React.CSSProperties = {
