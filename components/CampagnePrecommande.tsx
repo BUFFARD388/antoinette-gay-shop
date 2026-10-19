@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import type { Produit } from "@/lib/produits";
 import CarteProduit from "@/components/CarteProduit";
@@ -213,6 +213,13 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
   // dans le lien reçu), ajoutés le 18/10/2026. Le ref est gardé le temps de
   // l'onglet (sessionStorage) pour survivre à un détour par une autre page ;
   // il n'est envoyé qu'avec la précommande, sur validation du formulaire.
+  // Message d'erreur du formulaire : mis en évidence et amené à l'écran quand
+  // il apparaît (ajouté le 19/10/2026 : arrivé depuis "Notre histoire" sans
+  // cuvée choisie, un visiteur ne voyait pas pourquoi la validation échouait).
+  const boiteErreurRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (erreur) boiteErreurRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [erreur]);
   const [source, setSource] = useState("");
   const [parrain, setParrain] = useState("");
   useEffect(() => {
@@ -554,9 +561,15 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
             {totalArticles > 0 ? (
               <p style={{ fontSize: 14, color: "#3f5346" }}>{texteRecap()}</p>
             ) : (
-              <p style={{ fontSize: 14, color: "#3f5346" }}>
-                Choisis d'abord une ou plusieurs cuvées ci-dessus avec les boutons + / −.
-              </p>
+              <div style={boiteChoixCuvee}>
+                <strong>Première étape : choisis au moins une cuvée.</strong>
+                <span>
+                  Utilise les boutons + / − sur les cuvées ci-dessus, puis reviens ici pour valider.{" "}
+                  <a href="#cuvees" style={lienCuvees}>
+                    Voir les cuvées
+                  </a>
+                </span>
+              </div>
             )}
 
             <label style={champLabel}>
@@ -617,7 +630,19 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
               J'accepte d'être recontacté·e par email au sujet de ma précommande.
             </label>
 
-            {erreur && <p style={{ color: "#a13d2f", fontSize: 14 }}>{erreur}</p>}
+            {erreur && (
+              <div ref={boiteErreurRef} role="alert" style={boiteErreur}>
+                {erreur}
+                {totalArticles === 0 && (
+                  <>
+                    {" "}
+                    <a href="#cuvees" style={lienCuvees}>
+                      Voir les cuvées
+                    </a>
+                  </>
+                )}
+              </div>
+            )}
 
             <button type="submit" disabled={envoiEnCours} style={btnValider}>
               {envoiEnCours ? "Envoi..." : "Valider ma précommande"}
@@ -927,6 +952,30 @@ const champInput: React.CSSProperties = {
   fontSize: 15,
   fontFamily: "inherit",
 };
+
+const boiteChoixCuvee: React.CSSProperties = {
+  display: "flex",
+  flexDirection: "column",
+  gap: 4,
+  background: "#FBF3DC",
+  border: "1px solid #C9971F",
+  padding: "12px 14px",
+  fontSize: 14,
+  lineHeight: 1.5,
+  color: "#1F3D2E",
+};
+
+const boiteErreur: React.CSSProperties = {
+  background: "#FBE9E5",
+  border: "1px solid #a13d2f",
+  color: "#7d2a1e",
+  padding: "12px 14px",
+  fontSize: 14,
+  fontWeight: 600,
+  lineHeight: 1.5,
+};
+
+const lienCuvees: React.CSSProperties = { color: "#1F3D2E", fontWeight: 700, textDecoration: "underline" };
 
 const champCase: React.CSSProperties = {
   display: "flex",
