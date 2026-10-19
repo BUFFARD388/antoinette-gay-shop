@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { getProduitBySlug } from "@/lib/produits";
+import { SOURCES_PRECOMMANDE, REGEX_REF_PARRAIN } from "@/lib/sourcesPrecommande";
 
 // Route de la phase precommande : AUCUN paiement n'est pris ici.
 // Le visiteur laisse son email, choisit ses cuvees et une quantite ; on
@@ -21,6 +22,8 @@ export async function POST(req: NextRequest) {
     telephone?: string;
     ageConfirme?: boolean;
     accepteContact?: boolean;
+    source?: string;
+    ref?: string;
     panier?: { slug: string; quantite: number }[];
   };
 
@@ -30,7 +33,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Requête invalide." }, { status: 400 });
   }
 
-  const { email, prenom, telephone, ageConfirme, accepteContact, panier } = body;
+  const { email, prenom, telephone, ageConfirme, accepteContact, panier, source, ref } = body;
 
   if (!ageConfirme) {
     return NextResponse.json(
@@ -107,6 +110,37 @@ export async function POST(req: NextRequest) {
       { error: "Erreur lors de l'enregistrement de la précommande. Réessaie dans un instant." },
       { status: 500 }
     );
+  }
+
+  // Source de la précommande ("Comment as-tu connu la Maison ?") et identifiant
+  // de parrainage (?ref=prenom), ajoutés le 18/10/2026. Étape SÉPARÉE et
+  // volontairement non bloquante : la précommande est déjà enregistrée par
+  // creer_precommande ci-dessus ; si cette mise à jour échoue (colonnes pas
+  // encore créées dans Supabase, par exemple), on journalise l'erreur et la
+  // personne voit quand même sa confirmation.
+  const sourceValide = SOURCES_PRECOMMANDE.some((x) => x.valeur === source) ? (source as string) : null;
+  const refNettoye = typeof ref === "string" ? ref.trim().toLowerCase() : "";
+  const refValide = REGEX_REF_PARRAIN.test(refNettoye) ? refNettoye : null;
+  if (sourceValide || refValide) {
+    try {
+      const { data: derniere } = await supabaseAdmin
+        .from("precommandes")
+        .select("id")
+        .eq("email", email)
+        .gte("created_at", new Date(Date.now() - 60_000).toISOString())
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      if (derniere?.id) {
+        const { error: erreurSource } = await supabaseAdmin
+          .from("precommandes")
+          .update({ source: sourceValide, ref: refValide })
+          .eq("id", derniere.id);
+        if (erreurSource) console.error("precommande: source/ref non enregistres :", erreurSource.message);
+      }
+    } catch (e) {
+      console.error("precommande: source/ref non enregistres :", e);
+    }
   }
 
   return NextResponse.json({ success: true, lignes: lignesNumerotees as LigneNumerotee[] });

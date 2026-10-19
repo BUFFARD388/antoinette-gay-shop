@@ -374,6 +374,18 @@ export default function PageHistoire() {
           Aujourd&apos;hui, nous mettons ce panorama en bouteille.
         </p>
       </section>
+
+      {/* Bouton de réservation ajouté le 18/10/2026 : "Notre histoire" est la
+          2e page la plus visitée (Vercel Analytics) mais ne renvoyait vers la
+          précommande que par le menu du haut. */}
+      <section style={{ marginTop: 40, textAlign: "center" }}>
+        <Link href="/#formulaire" style={boutonReserver}>
+          Réserver ma bouteille (Gratuit)
+        </Link>
+        <p style={{ fontSize: 13, color: "#5b6f63", margin: "12px 0 0" }}>
+          Zéro paiement aujourd&apos;hui. Vos bouteilles sont limitées et numérotées.
+        </p>
+      </section>
     </main>
   );
 }
@@ -476,4 +488,14 @@ const periodeEtape: React.CSSProperties = {
   letterSpacing: 0.5,
   textTransform: "uppercase",
   color: "#93670f",
+};
+
+const boutonReserver: React.CSSProperties = {
+  display: "inline-block",
+  background: "#C9971F",
+  color: "#1F3D2E",
+  textDecoration: "none",
+  padding: "13px 26px",
+  fontWeight: 700,
+  fontSize: 14.5,
 };

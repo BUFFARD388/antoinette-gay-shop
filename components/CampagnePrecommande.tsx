@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { Produit } from "@/lib/produits";
 import CarteProduit from "@/components/CarteProduit";
 import PhotoZoom from "@/components/PhotoZoom";
 import { suivreConversionPrecommande } from "@/lib/googleAds";
+import { SOURCES_PRECOMMANDE, REGEX_REF_PARRAIN } from "@/lib/sourcesPrecommande";
 import { NOM_MAISON, DATE_LIVRAISON_PREVUE, FRAIS_PORT, SEUIL_PORT_GRATUIT } from "@/lib/config";
 
 type LigneConfirmee = { slug: string; nom: string; quantite: number; numeros: number[] };
@@ -208,6 +209,26 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
   const [envoiEnCours, setEnvoiEnCours] = useState(false);
   const [erreur, setErreur] = useState<string | null>(null);
   const [succes, setSucces] = useState<LigneConfirmee[] | null>(null);
+  // "Comment as-tu connu la Maison ?" + identifiant de parrainage (?ref=prenom
+  // dans le lien reçu), ajoutés le 18/10/2026. Le ref est gardé le temps de
+  // l'onglet (sessionStorage) pour survivre à un détour par une autre page ;
+  // il n'est envoyé qu'avec la précommande, sur validation du formulaire.
+  const [source, setSource] = useState("");
+  const [parrain, setParrain] = useState("");
+  useEffect(() => {
+    try {
+      const depuisUrl = (new URLSearchParams(window.location.search).get("ref") || "").trim().toLowerCase();
+      if (REGEX_REF_PARRAIN.test(depuisUrl)) {
+        sessionStorage.setItem("ref_parrain", depuisUrl);
+        setParrain(depuisUrl);
+      } else {
+        const stocke = sessionStorage.getItem("ref_parrain");
+        if (stocke && REGEX_REF_PARRAIN.test(stocke)) setParrain(stocke);
+      }
+    } catch {
+      // navigation privée / stockage bloqué : sans importance, le ref est facultatif
+    }
+  }, []);
 
   function ajouter(slug: string) {
     setPanier((p) => ({ ...p, [slug]: (p[slug] || 0) + 1 }));
@@ -260,6 +281,8 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
           telephone,
           ageConfirme,
           accepteContact,
+          source: source || undefined,
+          ref: parrain || undefined,
           panier: Object.entries(panier).map(([slug, quantite]) => ({ slug, quantite })),
         }),
       });
@@ -567,6 +590,18 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
                 />
               </label>
             </div>
+
+            <label style={champLabel}>
+              Comment as-tu connu la Maison ? (facultatif)
+              <select value={source} onChange={(e) => setSource(e.target.value)} style={{ ...champInput, background: "#fff" }}>
+                <option value="">— Choisir —</option>
+                {SOURCES_PRECOMMANDE.map((x) => (
+                  <option key={x.valeur} value={x.valeur}>
+                    {x.libelle}
+                  </option>
+                ))}
+              </select>
+            </label>
 
             <label style={champCase}>
               <input type="checkbox" checked={ageConfirme} onChange={(e) => setAgeConfirme(e.target.checked)} />
