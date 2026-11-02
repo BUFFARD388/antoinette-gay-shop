@@ -69,13 +69,7 @@ export default function PageBonCadeau() {
         <Link href="/?cadeau=1#formulaire" style={{ ...bouton, background: or, color: "#17301F" }}>
           Réserver la bouteille à offrir
         </Link>
-        <a href="/bon-cadeau-maison-antoinette-gay-A4.pdf" download style={{ ...bouton, background: "transparent", color: vert, border: `1px solid ${vert}` }}>
-          Bon vierge à remplir à la main (A4)
-        </a>
       </div>
-      <p style={{ fontSize: "0.9rem", opacity: 0.8, margin: 0 }}>
-        Imprimez en taille réelle (100&nbsp;%), sur un papier épais si possible. Le bon vierge se remplit au stylo : cuvée, numéro, nom du destinataire et le vôtre.
-      </p>
 
       <div style={{ borderTop: `1px solid ${or}`, marginTop: 48, paddingTop: 20, fontSize: "0.9rem", lineHeight: 1.6, opacity: 0.85 }}>
         <p style={{ margin: "0 0 8px" }}>
