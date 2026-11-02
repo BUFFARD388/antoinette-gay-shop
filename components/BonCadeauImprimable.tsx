@@ -1,11 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 // Bon cadeau personnalisé, imprimable ou enregistrable en PDF depuis le navigateur.
 // Les données (cuvée, numéro, destinataire, offrant) arrivent dans le fragment d'URL
 // (#cuvee=...&n=...&pour=...&de=...) : un fragment n'est jamais envoyé au serveur.
-// Elles restent modifiables avant impression.
+// Elles ne sont pas modifiables dans la page : le bon reprend exactement la réservation.
 
 const VERT = "#1F3D2E";
 const OR = "#C9971F";
@@ -71,7 +72,7 @@ function Filet({ top }: { top: string }) {
 }
 
 export default function BonCadeauImprimable() {
-  const [c, setC] = useState<Champs>({ cuvee: "", n: "", pour: "", de: "" });
+  const [c, setC] = useState<Champs | null>(null);
   const [echelle, setEchelle] = useState(1);
 
   useEffect(() => {
@@ -84,7 +85,7 @@ export default function BonCadeauImprimable() {
         de: (p.get("de") || "").slice(0, 60),
       });
     } catch {
-      // champs laissés vides : on peut les remplir ci-dessous
+      setC({ cuvee: "", n: "", pour: "", de: "" });
     }
     const ajuster = () => setEchelle(Math.min(1, (window.innerWidth - 32) / LARGEUR_FEUILLE_PX));
     ajuster();
@@ -92,8 +93,8 @@ export default function BonCadeauImprimable() {
     return () => window.removeEventListener("resize", ajuster);
   }, []);
 
-  const maj = (k: keyof Champs) => (e: React.ChangeEvent<HTMLInputElement>) =>
-    setC((x) => ({ ...x, [k]: e.target.value }));
+  if (!c) return null;
+  const complet = c.cuvee.trim() !== "" && c.n.trim() !== "";
   const coffret = /coffret/i.test(c.cuvee);
 
   return (
@@ -104,39 +105,39 @@ export default function BonCadeauImprimable() {
         <h1 style={{ fontFamily: POLICE, fontStyle: "italic", fontWeight: 500, fontSize: 34, margin: "0 0 8px" }}>
           Votre bon cadeau
         </h1>
-        <p style={{ fontSize: 15, lineHeight: 1.6, margin: "0 0 16px" }}>
-          Vérifiez les informations, modifiez-les si besoin, puis cliquez sur « Imprimer ». Pour obtenir un fichier
-          PDF, choisissez « Enregistrer au format PDF » dans la fenêtre d&apos;impression (format A4, échelle 100&nbsp;%).
-        </p>
-        <div style={{ display: "grid", gap: 10 }}>
-          {(
-            [
-              ["cuvee", "Cuvée"],
-              ["n", "Numéro de la bouteille"],
-              ["pour", "Pour (destinataire)"],
-              ["de", "De la part de"],
-            ] as [keyof Champs, string][]
-          ).map(([k, lib]) => (
-            <label key={k} style={{ display: "flex", flexDirection: "column", gap: 4, fontSize: 13 }}>
-              {lib}
-              <input
-                value={c[k]}
-                onChange={maj(k)}
-                maxLength={60}
-                style={{ padding: "10px 12px", border: `1px solid ${OR}`, fontSize: 15, fontFamily: "inherit", background: "#fff" }}
-              />
-            </label>
-          ))}
-        </div>
-        <button
-          type="button"
-          onClick={() => window.print()}
-          style={{ marginTop: 16, background: VERT, color: "#fff", border: "none", padding: "13px 26px", fontWeight: 600, fontSize: 15, cursor: "pointer" }}
-        >
-          Imprimer le bon cadeau
-        </button>
+        {complet ? (
+          <>
+            <p style={{ fontSize: 15, lineHeight: 1.6, margin: "0 0 16px" }}>
+              Votre bon est prêt : il reprend la bouteille que vous avez réservée. Cliquez sur « Imprimer ». Pour
+              obtenir un fichier PDF, choisissez « Enregistrer au format PDF » dans la fenêtre d&apos;impression
+              (format A4, échelle 100&nbsp;%).
+            </p>
+            <button
+              type="button"
+              onClick={() => window.print()}
+              style={{ background: VERT, color: "#fff", border: "none", padding: "13px 26px", fontWeight: 600, fontSize: 15, cursor: "pointer" }}
+            >
+              Imprimer le bon cadeau
+            </button>
+          </>
+        ) : (
+          <>
+            <p style={{ fontSize: 15, lineHeight: 1.6, margin: "0 0 16px" }}>
+              Le bon cadeau est préparé à partir d&apos;une bouteille réservée : le numéro et la cuvée y sont inscrits
+              automatiquement. Réservez d&apos;abord votre bouteille en cochant « C&apos;est un cadeau », puis cliquez sur
+              « Imprimer le bon » depuis la page de confirmation.
+            </p>
+            <Link
+              href="/?cadeau=1#formulaire"
+              style={{ display: "inline-block", background: OR, color: "#17301F", padding: "13px 26px", fontWeight: 700, fontSize: 15, textDecoration: "none" }}
+            >
+              Réserver la bouteille à offrir
+            </Link>
+          </>
+        )}
       </div>
 
+      {complet && (
       <div className="bc-impression" style={{ zoom: echelle, maxWidth: "100%" }}>
         <div className="bc-feuille" style={{ boxShadow: "0 0 0 1px #d9cca3" }}>
           {/* ---- RECTO ---- */}
@@ -209,6 +210,7 @@ export default function BonCadeauImprimable() {
           </div>
         </div>
       </div>
+      )}
     </main>
   );
 }

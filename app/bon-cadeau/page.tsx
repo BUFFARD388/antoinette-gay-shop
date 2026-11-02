@@ -69,9 +69,6 @@ export default function PageBonCadeau() {
         <Link href="/?cadeau=1#formulaire" style={{ ...bouton, background: or, color: "#17301F" }}>
           Réserver la bouteille à offrir
         </Link>
-        <Link href="/bon-cadeau/imprimer" style={{ ...bouton, background: vert, color: "#F6EFDD" }}>
-          Préparer mon bon cadeau
-        </Link>
         <a href="/bon-cadeau-maison-antoinette-gay-A4.pdf" download style={{ ...bouton, background: "transparent", color: vert, border: `1px solid ${vert}` }}>
           Bon vierge à remplir à la main (A4)
         </a>
