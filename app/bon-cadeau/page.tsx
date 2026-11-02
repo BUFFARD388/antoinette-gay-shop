@@ -51,8 +51,8 @@ export default function PageBonCadeau() {
           <strong>0&nbsp;€ à payer aujourd’hui.</strong>
         </li>
         <li>
-          <strong>Téléchargez le bon cadeau</strong>, notez la cuvée, le numéro, le nom du destinataire
-          et le vôtre, puis imprimez-le et offrez-le.
+          <strong>Imprimez le bon cadeau</strong> : une fois la réservation validée, il s’affiche déjà rempli
+          (cuvée, numéro de la bouteille, nom du destinataire). Imprimez-le ou enregistrez-le en PDF, puis offrez-le.
         </li>
         <li>
           <strong>Début 2027</strong>, une invitation exclusive à la distillerie permet de retirer la
@@ -69,15 +69,15 @@ export default function PageBonCadeau() {
         <Link href="/?cadeau=1#formulaire" style={{ ...bouton, background: or, color: "#17301F" }}>
           Réserver la bouteille à offrir
         </Link>
-        <a href="/bon-cadeau-maison-antoinette-gay-A4.pdf" download style={{ ...bouton, background: vert, color: "#F6EFDD" }}>
-          Bon cadeau (feuille A4)
-        </a>
-        <a href="/bon-cadeau-maison-antoinette-gay-A6.pdf" download style={{ ...bouton, background: "transparent", color: vert, border: `1px solid ${vert}` }}>
-          Carte postale (A6)
+        <Link href="/bon-cadeau/imprimer" style={{ ...bouton, background: vert, color: "#F6EFDD" }}>
+          Préparer mon bon cadeau
+        </Link>
+        <a href="/bon-cadeau-maison-antoinette-gay-A4.pdf" download style={{ ...bouton, background: "transparent", color: vert, border: `1px solid ${vert}` }}>
+          Bon vierge à remplir à la main (A4)
         </a>
       </div>
       <p style={{ fontSize: "0.9rem", opacity: 0.8, margin: 0 }}>
-        Imprimez en taille réelle (100&nbsp;%), sur un papier épais si possible.
+        Imprimez en taille réelle (100&nbsp;%), sur un papier épais si possible. Le bon vierge se remplit au stylo : cuvée, numéro, nom du destinataire et le vôtre.
       </p>
 
       <div style={{ borderTop: `1px solid ${or}`, marginTop: 48, paddingTop: 20, fontSize: "0.9rem", lineHeight: 1.6, opacity: 0.85 }}>

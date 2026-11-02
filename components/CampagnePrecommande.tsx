@@ -571,17 +571,28 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
               <div style={boiteChoixCuvee}>
                 <strong>Ton bon cadeau</strong>
                 <span>
-                  Note la cuvée et le numéro ci-dessus sur le bon, puis imprime-le et offre-le
-                  {destinataireNom ? ` à ${destinataireNom}` : ""}.
+                  Ton bon est déjà rempli avec la cuvée, le numéro et le nom du destinataire.
+                  Ouvre-le, vérifie-le, puis imprime-le (ou enregistre-le en PDF) et offre-le.
                 </span>
-                <span>
-                  <a href="/bon-cadeau-maison-antoinette-gay-A4.pdf" download style={lienCuvees}>
-                    Télécharger le bon cadeau (feuille A4)
-                  </a>
-                  {" · "}
-                  <a href="/bon-cadeau-maison-antoinette-gay-A6.pdf" download style={lienCuvees}>
-                    Carte postale (A6)
-                  </a>
+                <span style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                  {succes.flatMap((ligne) =>
+                    ligne.numeros.map((num) => (
+                      <Link
+                        key={`${ligne.slug}-${num}`}
+                        href={`/bon-cadeau/imprimer#${new URLSearchParams({
+                          cuvee: ligne.nom,
+                          n: String(num),
+                          pour: destinataireNom.trim(),
+                          de: prenom.trim(),
+                        }).toString()}`}
+                        target="_blank"
+                        rel="noopener"
+                        style={lienCuvees}
+                      >
+                        Imprimer le bon : {ligne.nom} n°{num}
+                      </Link>
+                    ))
+                  )}
                 </span>
               </div>
             )}
