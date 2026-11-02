@@ -24,6 +24,9 @@ export async function POST(req: NextRequest) {
     accepteContact?: boolean;
     source?: string;
     ref?: string;
+    cadeau?: boolean;
+    destinataireNom?: string;
+    livraisonDestinataire?: boolean;
     panier?: { slug: string; quantite: number }[];
   };
 
@@ -33,7 +36,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Requête invalide." }, { status: 400 });
   }
 
-  const { email, prenom, telephone, ageConfirme, accepteContact, panier, source, ref } = body;
+  const { email, prenom, telephone, ageConfirme, accepteContact, panier, source, ref, cadeau, destinataireNom, livraisonDestinataire } = body;
 
   if (!ageConfirme) {
     return NextResponse.json(
@@ -44,6 +47,10 @@ export async function POST(req: NextRequest) {
 
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return NextResponse.json({ error: "Adresse email invalide." }, { status: 400 });
+  }
+
+  if (cadeau === true && !(typeof destinataireNom === "string" && destinataireNom.trim())) {
+    return NextResponse.json({ error: "Nom du destinataire requis pour un cadeau." }, { status: 400 });
   }
 
   if (!Array.isArray(panier) || panier.length === 0) {
@@ -121,7 +128,22 @@ export async function POST(req: NextRequest) {
   const sourceValide = SOURCES_PRECOMMANDE.some((x) => x.valeur === source) ? (source as string) : null;
   const refNettoye = typeof ref === "string" ? ref.trim().toLowerCase() : "";
   const refValide = REGEX_REF_PARRAIN.test(refNettoye) ? refNettoye : null;
-  if (sourceValide || refValide) {
+  // Cadeau (bon cadeau, 02/11/2026) : enregistré dans la même mise à jour non bloquante.
+  const estCadeau = cadeau === true;
+  const nomDestinataire =
+    estCadeau && typeof destinataireNom === "string"
+      ? destinataireNom.replace(/[\u0000-\u001f]/g, " ").trim().slice(0, 80)
+      : "";
+  const miseAJour: Record<string, string | boolean> = {};
+  if (sourceValide) miseAJour.source = sourceValide;
+  if (refValide) miseAJour.ref = refValide;
+  if (estCadeau) {
+    miseAJour.cadeau = true;
+    miseAJour.destinataire_nom = nomDestinataire;
+    miseAJour.livraison_destinataire = livraisonDestinataire === true;
+  }
+  if (estCadeau) console.log("precommande CADEAU :", email, "pour", nomDestinataire);
+  if (Object.keys(miseAJour).length > 0) {
     try {
       const { data: derniere } = await supabaseAdmin
         .from("precommandes")
@@ -134,7 +156,7 @@ export async function POST(req: NextRequest) {
       if (derniere?.id) {
         const { error: erreurSource } = await supabaseAdmin
           .from("precommandes")
-          .update({ source: sourceValide, ref: refValide })
+          .update(miseAJour)
           .eq("id", derniere.id);
         if (erreurSource) console.error("precommande: source/ref non enregistres :", erreurSource.message);
       }

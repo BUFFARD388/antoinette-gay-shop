@@ -3,6 +3,7 @@ import BandeauLegal from "@/components/BandeauLegal";
 import VerificationAge from "@/components/VerificationAge";
 import EnTete from "@/components/EnTete";
 import Pied from "@/components/Pied";
+import BandeauBonCadeau from "@/components/BandeauBonCadeau";
 import { Analytics } from "@vercel/analytics/next";
 import GoogleAds from "@/components/GoogleAds";
 import BandeauCookies from "@/components/BandeauCookies";
@@ -77,6 +78,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       >
         <VerificationAge />
         <BandeauLegal />
+        {/* Bandeau "Bon cadeau" (02/11/2026), masqué automatiquement après le 31/12/2026. */}
+        <BandeauBonCadeau />
         <EnTete />
         {children}
         <Pied />

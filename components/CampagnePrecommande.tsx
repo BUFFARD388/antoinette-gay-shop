@@ -222,6 +222,19 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
   }, [erreur]);
   const [source, setSource] = useState("");
   const [parrain, setParrain] = useState("");
+  // Option "C'est un cadeau" (bon cadeau, 02/11/2026) : la bouteille numérotée est
+  // réservée par l'offrant, avec le nom du destinataire et le choix de livraison.
+  // Le lien /?cadeau=1#formulaire (depuis la page /bon-cadeau) coche la case d'office.
+  const [cadeau, setCadeau] = useState(false);
+  const [destinataireNom, setDestinataireNom] = useState("");
+  const [livraisonDestinataire, setLivraisonDestinataire] = useState(false);
+  useEffect(() => {
+    try {
+      if (new URLSearchParams(window.location.search).get("cadeau") === "1") setCadeau(true);
+    } catch {
+      // sans importance : la case reste décochée
+    }
+  }, []);
   useEffect(() => {
     try {
       const depuisUrl = (new URLSearchParams(window.location.search).get("ref") || "").trim().toLowerCase();
@@ -276,6 +289,10 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
       setErreur("Merci de confirmer que tu as 18 ans ou plus.");
       return;
     }
+    if (cadeau && !destinataireNom.trim()) {
+      setErreur("Indique le prénom ou le nom de la personne à qui tu offres la bouteille.");
+      return;
+    }
 
     setEnvoiEnCours(true);
     try {
@@ -290,6 +307,9 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
           accepteContact,
           source: source || undefined,
           ref: parrain || undefined,
+          cadeau: cadeau || undefined,
+          destinataireNom: cadeau ? destinataireNom.trim() : undefined,
+          livraisonDestinataire: cadeau ? livraisonDestinataire : undefined,
           panier: Object.entries(panier).map(([slug, quantite]) => ({ slug, quantite })),
         }),
       });
@@ -547,6 +567,25 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
             <p style={{ fontSize: 14, color: "#3f5346" }}>
               Ce numéro est celui qui sera gravé en « Lot N° » sur l'étiquette de ta bouteille.
             </p>
+            {cadeau && (
+              <div style={boiteChoixCuvee}>
+                <strong>Ton bon cadeau</strong>
+                <span>
+                  Note la cuvée et le numéro ci-dessus sur le bon, puis imprime-le et offre-le
+                  {destinataireNom ? ` à ${destinataireNom}` : ""}.
+                </span>
+                <span>
+                  <a href="/bon-cadeau-maison-antoinette-gay-A4.pdf" download style={lienCuvees}>
+                    Télécharger le bon cadeau (feuille A4)
+                  </a>
+                  {" · "}
+                  <a href="/bon-cadeau-maison-antoinette-gay-A6.pdf" download style={lienCuvees}>
+                    Carte postale (A6)
+                  </a>
+                </span>
+              </div>
+            )}
+
             <p style={{ fontSize: 14, color: "#3f5346" }}>
               Aucun paiement n'a été pris. Nous te recontacterons par email avant l'expédition
               ({DATE_LIVRAISON_PREVUE}) pour confirmer et régler ta commande.
@@ -615,6 +654,57 @@ export default function CampagnePrecommande({ produits, compteursInitiaux }: Pro
                 ))}
               </select>
             </label>
+
+            <div style={blocCadeau}>
+              <label style={champCase}>
+                <input type="checkbox" checked={cadeau} onChange={(e) => setCadeau(e.target.checked)} />
+                <span>
+                  <strong>C&apos;est un cadeau</strong> : je réserve cette bouteille numérotée pour l&apos;offrir.
+                </span>
+              </label>
+              {cadeau && (
+                <>
+                  <label style={champLabel}>
+                    Prénom ou nom du destinataire *
+                    <input
+                      type="text"
+                      value={destinataireNom}
+                      maxLength={80}
+                      onChange={(e) => setDestinataireNom(e.target.value)}
+                      style={champInput}
+                    />
+                  </label>
+                  <fieldset style={fieldsetCadeau}>
+                    <legend style={{ fontSize: 13, color: "#3f5346", padding: "0 6px" }}>
+                      Où doit aller la bouteille ?
+                    </legend>
+                    <label style={champCase}>
+                      <input
+                        type="radio"
+                        name="livraisonCadeau"
+                        checked={!livraisonDestinataire}
+                        onChange={() => setLivraisonDestinataire(false)}
+                      />
+                      <span>À moi (ou retrait à la distillerie) : je la remets moi-même</span>
+                    </label>
+                    <label style={champCase}>
+                      <input
+                        type="radio"
+                        name="livraisonCadeau"
+                        checked={livraisonDestinataire}
+                        onChange={() => setLivraisonDestinataire(true)}
+                      />
+                      <span>Directement chez le destinataire (nous te demanderons son adresse)</span>
+                    </label>
+                  </fieldset>
+                  <p style={noteCadeau}>
+                    Le destinataire doit avoir 18 ans ou plus. Après validation, tu pourras télécharger le bon
+                    cadeau à imprimer, avec le numéro de la bouteille. Le règlement est demandé avant la remise ou
+                    l&apos;envoi.
+                  </p>
+                </>
+              )}
+            </div>
 
             <label style={champCase}>
               <input type="checkbox" checked={ageConfirme} onChange={(e) => setAgeConfirme(e.target.checked)} />
@@ -1007,6 +1097,31 @@ const panierFlottant: React.CSSProperties = {
   gap: 24,
   alignItems: "center",
   flexWrap: "wrap",
+};
+
+const blocCadeau: React.CSSProperties = {
+  display: "flex",
+  flexDirection: "column",
+  gap: 12,
+  background: "#FBF3DC",
+  border: "1px solid #C9971F",
+  padding: "12px 14px",
+};
+
+const fieldsetCadeau: React.CSSProperties = {
+  border: "1px solid #e0d3ac",
+  display: "flex",
+  flexDirection: "column",
+  gap: 8,
+  padding: "10px 12px",
+  margin: 0,
+};
+
+const noteCadeau: React.CSSProperties = {
+  fontSize: 12.5,
+  lineHeight: 1.5,
+  color: "#3f5346",
+  margin: 0,
 };
 
 const btnCommander: React.CSSProperties = {

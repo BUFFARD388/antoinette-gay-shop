@@ -20,6 +20,9 @@ export default function Pied() {
         <Link href="/reglementation" style={lien}>
           Réglementation &amp; mentions légales
         </Link>
+        <Link href="/bon-cadeau" style={lien}>
+          Bon cadeau
+        </Link>
         <Link href="/contact" style={lien}>
           Contact
         </Link>
