@@ -31,8 +31,8 @@ export default function BandeauBonCadeau() {
         style={{ color: "inherit", textDecoration: "none" }}
       >
         <strong>Nouveau&nbsp;: Offrez un morceau d’histoire pour Noël&nbsp;!</strong>{" "}
-        Téléchargez notre bon cadeau exclusif pour réserver une bouteille du
-        premier tirage 2027 (Réservation à 0&nbsp;€).{" "}
+        Téléchargez notre bon cadeau exclusif pour réserver une bouteille des
+        3 premières cuvées de 2027 (Réservation à 0&nbsp;€).{" "}
         <span style={{ textDecoration: "underline", whiteSpace: "nowrap" }}>
           Découvrir&nbsp;→
         </span>
